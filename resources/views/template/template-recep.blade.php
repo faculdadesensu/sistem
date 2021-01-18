@@ -61,6 +61,14 @@ $user = DB::select('select * from users where id ='.$id_user);
                         </div>
                     </div>
                 </li>
+                    <!-- Divider -->
+                    <hr class="sidebar-divider my-0">
+                    <!-- Divider -->
+                    <hr class="sidebar-divider">
+                    <!-- Heading -->
+                    <div class="sidebar-heading">
+                        CAIXA
+                    </div>
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                         <i class="fas fa-donate"></i>
@@ -71,6 +79,17 @@ $user = DB::select('select * from users where id ='.$id_user);
                             <a class="collapse-item" href="{{route('pagar.index')}}">Contas à Pagar</a>
                             <a class="collapse-item" href="{{route('contas-receber.index')}}">Contas à Receber</a>
                             <a class="collapse-item" href="{{route('movimentacao.index')}}">Movimentação</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities2" aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-donate"></i>
+                        <span>Relatórios</span>
+                    </a>
+                    <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">                            
+                            <a class="collapse-item" href="{{route('relatorio.index')}}">Movimentaçôes</a>
                         </div>
                     </div>
                 </li>

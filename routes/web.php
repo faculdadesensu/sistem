@@ -11,6 +11,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovimentacoesController;
 use App\Http\Controllers\PainelRecepcaoController;
 use App\Http\Controllers\RecepController;
+use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -115,4 +116,8 @@ Route::delete('painel-recepcao/contas-pagar/{item}',                [ContasPagar
 Route::get('painel-recepcao/contas-pagar/{item}',                   [ContasPagarController::class, 'modal'])->name('pagar.modal');
 Route::get('painel-recepcao/constas-pagar/{item}/modal-baixa',      [ContasPagarController::class, 'modal_baixa'])->name('pagar.modal-baixa');
 Route::put('painel-recepcao/constas-pagar/baixa',                   [ContasPagarController::class, 'baixa'])->name('pagar.baixa');
+
+// Rotas Relatório
+
+Route::get('painel-recepcao/relatorio/movimentacoes',      [RelatorioController::class, 'index'])->name('relatorio.index');
 
