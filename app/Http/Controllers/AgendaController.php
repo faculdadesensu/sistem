@@ -138,10 +138,7 @@ class AgendaController extends Controller
 
     public function modal($id){
         $agenda = Agenda::orderby('id', 'desc')->paginate();
-
-
-
-
+        
         //Redirecionamento para as views pertinentes ao usuário logado
         $user_session =  $_SESSION['level_user'];
 

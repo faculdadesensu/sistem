@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ContasReceberes;
+use App\Models\Movimentacao;
 use Illuminate\Support\Facades\DB;
+
+session_start();
 
 class ContasReceberController extends Controller
 {
@@ -25,14 +28,21 @@ class ContasReceberController extends Controller
     }
 
     public function baixa(Request $request){
+        
+        $tabela  = ContasReceberes::find($request->id);
 
-        DB::update('update contas_receberes set status_pagamento = "Sim" where id =' . $request->id . '');
+        $tabela2 =  new Movimentacao;
 
-        $tabela = ContasReceberes::find($request->id);
+        $tabela2->tipo = 'Entrada';
+        $tabela2->recep = $_SESSION['name_user'];
+        $tabela2->data = date('Y-m-d');
+        $tabela2->value = $tabela->value;
+        $tabela2->descricao = $tabela->descricao;
 
         $tabela->status_pagamento = 'Sim';
         $tabela->data_pagamento = date('Y-m-d');
 
+        $tabela2->save();
         $tabela->save();
         
         

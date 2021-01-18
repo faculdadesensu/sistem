@@ -124,8 +124,9 @@ if (!isset($id2)) {
                 <form method="POST" action="{{route('contas-receber.baixa', $id2)}}">
                     @csrf
                     @method('put')
+                   
                     <input type="hidden" name='id' value="{{$id2}}">
-                    <input type="hidden" name='date' value="{{date('Y-m-d')}}">
+                    <input type="hidden" name='value' value="">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-primary">Finalizar Pagamento</button>
                 </form>
