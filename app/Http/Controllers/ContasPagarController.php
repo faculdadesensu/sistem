@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContasPagares;
+use App\Models\Movimentacao;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 @session_start();
@@ -87,10 +88,19 @@ class ContasPagarController extends Controller
         
         $tabela = ContasPagares::find($request->id);
 
+        $tabela2 =  new Movimentacao;
+
+        $tabela2->tipo = 'Entrada';
+        $tabela2->recep = $_SESSION['name_user'];
+        $tabela2->data = date('Y-m-d');
+        $tabela2->value = $tabela->value;
+        $tabela2->descricao = $tabela->descricao;
+
         $tabela->status = 'Pago';
         $tabela->resp_baixa = $_SESSION['name_user'];
         $tabela->data_baixa = date('Y-m-d');
 
+        $tabela2->save();
         $tabela->save();
 
         $itens = ContasPagares::orderby('data_venc', 'asc')->paginate();

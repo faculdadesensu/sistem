@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ContasReceberes;
 use App\Models\Movimentacao;
-use Illuminate\Support\Facades\DB;
 
 session_start();
 
