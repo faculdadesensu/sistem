@@ -90,7 +90,7 @@ class ContasPagarController extends Controller
 
         $tabela2 =  new Movimentacao;
 
-        $tabela2->tipo = 'Entrada';
+        $tabela2->tipo = 'Saida';
         $tabela2->recep = $_SESSION['name_user'];
         $tabela2->data = date('Y-m-d');
         $tabela2->value = $tabela->value;

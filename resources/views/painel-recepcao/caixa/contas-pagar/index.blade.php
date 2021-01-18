@@ -14,6 +14,22 @@ if (!isset($id)) {
 if (!isset($id2)) {
     $id2 = "";
 }
+
+use App\Models\Movimentacao;
+
+$total_saidas = 0;
+
+$data = date('Y-m-d');
+
+$tabela = Movimentacao::where('data', '=', $data)->get();
+
+foreach($tabela as $tab){
+  if ($tab->tipo == 'Saida') {
+    @$total_saidas = $total_saidas + $tab->value;
+  } 
+}
+
+$total_saidas = number_format($total_saidas, 2, ',', '.');
 ?>
 
 <a href="{{route('pagar.inserir')}}" type="button" class="mt-2 mb-4 btn btn-primary">Novo Registro</a>
@@ -69,17 +85,22 @@ if (!isset($id2)) {
                                 <td>R$ {{$value}}</td>
                                 @if (@$item->status != 'Pago')
                                     <td>
-                                        <a title="Finalizar Recebimento" href="{{route('pagar.modal-baixa', $item->id)}}"><i class="fas fa-coins text-success mr-3"></i></a>
-                                        <a title="Excluir Recebimento" href="{{route('pagar.modal', $item)}}"><i class="fas fa-trash text-danger mr-1"></i></a>
+                                        <a title="Finalizar Pagamento" href="{{route('pagar.modal-baixa', $item->id)}}"><i class="fas fa-coins text-success mr-3"></i></a>
+                                        <a title="Excluir Pagamento" href="{{route('pagar.modal', $item)}}"><i class="fas fa-trash text-danger mr-1"></i></a>
                                     </td>
                                 @else
-                                    <td>Finalizado</td>
+                                    <td>PAGO</td>
                                 @endif
                             </tr>
                         @endif
                     @endforeach
                 </tbody>
             </table>
+        </div>
+    </div>
+    <div class="row mb-4 mr-2 " align="right">
+        <div class="col-md-12" >
+          <span class="">Saidas do Dia: <span class="text-danger">R$ -{{@$total_saidas}}</span></span>
         </div>
     </div>
 </div>
