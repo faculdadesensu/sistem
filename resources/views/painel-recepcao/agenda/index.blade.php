@@ -38,6 +38,7 @@ if(!isset($id2)){
           <th>Responsavel por agenda</th>
           <th>Serviço</th>
           <th>Valor</th>
+          <th>Ações</th>
           </tr>
         </thead>
         <tbody>

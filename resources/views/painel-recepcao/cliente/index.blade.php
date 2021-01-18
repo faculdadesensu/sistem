@@ -20,6 +20,7 @@ if(!isset($id)){
           <tr>
           <th>Nome</th>
           <th>Telefone</th>
+          <th>Ações</th>
           </tr>
         </thead>
         <tbody>

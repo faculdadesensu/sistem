@@ -19,6 +19,7 @@ if(!isset($id)){
         <thead>
           <tr>
           <th>Descrição do serviço</th>
+          <th>Ações</th>
           </tr>
         </thead>
         <tbody>

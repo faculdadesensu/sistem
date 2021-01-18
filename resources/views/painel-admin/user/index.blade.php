@@ -23,6 +23,7 @@ if(!isset($id)){
           <th>Login</th>
           <th>Senha</th>
           <th>Level</th>
+          <th>Ações</th>
           </tr>
         </thead>
         <tbody>

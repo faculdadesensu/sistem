@@ -24,6 +24,7 @@ if(!isset($id)){
           <th>Telefone</th>
           <th>Expecialização-1</th>
           <th>Expecialização-2</th>
+          <th>Ações</th>
           </tr>
         </thead>
         <tbody>

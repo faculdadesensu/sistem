@@ -31,6 +31,8 @@ if (!isset($id2)) {
                             <th>Atendente</th>
                             <th>Descrição</th>
                             <th>Valor</th>
+                            <th>Ação</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -51,25 +53,18 @@ if (!isset($id2)) {
                                 <td>{{$item->atendente}}</td>
                                 <td>{{$item->descricao}}</td>
                                 <td>R$ {{$value}}</td>
-                                <td>
-                                    <?php if(@$item->status_pagamento != 'Sim'){ ?>
+                                @if(@$item->status_pagamento != 'Sim')
+                                <td>                                   
                                     <a title="Finalizar Recebimento" href="{{route('contas-receber.modal-baixa', $item->id)}}"><i class="fas fa-coins text-success mr-3"></i></a>
                                     <a title="Excluir Recebimento" href="{{route('contas-receber.modal', $item)}}"><i class="fas fa-trash text-danger mr-1"></i></a>
-                                    <?php }?>
                                 </td>
+                                @else
+                                <td>Finalizado</td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
-                <div class="row ml-2 mb-4 mr-4">
-                    <div class="col-md-8">
-                      <span class="">Entradas do Dia: <span class="text-success">R$ {{@$total_entradas}}</span></span>
-                      <span class="ml-4 ">Saídas do Dia: <span class="text-danger">R$ {{@$total_saidas}}</span></span>
-                    </div>
-                    <div class="col-md-4" align="right">
-                      <span class="">Saldo do Dia: <span class="text-success <?php if (@$saldo < 0) { ?> text-danger <?php } ?>">R$ {{@$saldo}}</span></span>
-                    </div>
-                  </div>
             </div>
         </div>
     </div>

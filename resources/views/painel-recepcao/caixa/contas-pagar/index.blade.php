@@ -24,7 +24,7 @@ if (!isset($id2)) {
         
         <div class="table-responsive">
             <h6 class="mb-4"><i> CONTAS A PAGAR</i></h6><hr>
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>Status</th>
@@ -35,6 +35,8 @@ if (!isset($id2)) {
                         <th>Data Pagamento</th>
                         <th>Arquivo</th>
                         <th>Valor</th>
+                        <th>Ações</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -65,12 +67,14 @@ if (!isset($id2)) {
                                 </td>
                                 <td><?php if($item->upload != ''){ ?><a href="{{ URL::asset(''.$item->upload)}}" target="_blank" ><i class="fas fa-square mr-1 text-success" ></i>Arquivo </a><?php } ?></td>
                                 <td>R$ {{$value}}</td>
-                                <td>
-                                    <?php if(@$item->statu == ''){ ?>
-                                    <a title="Finalizar Recebimento" href="{{route('pagar.modal-baixa', $item->id)}}"><i class="fas fa-coins text-success mr-3"></i></a>
-                                    <a title="Excluir Recebimento" href="{{route('pagar.modal', $item)}}"><i class="fas fa-trash text-danger mr-1"></i></a>
-                                    <?php }?>
-                                </td>
+                                @if (@$item->status != 'Pago')
+                                    <td>
+                                        <a title="Finalizar Recebimento" href="{{route('pagar.modal-baixa', $item->id)}}"><i class="fas fa-coins text-success mr-3"></i></a>
+                                        <a title="Excluir Recebimento" href="{{route('pagar.modal', $item)}}"><i class="fas fa-trash text-danger mr-1"></i></a>
+                                    </td>
+                                @else
+                                    <td>Finalizado</td>
+                                @endif
                             </tr>
                         @endif
                     @endforeach
