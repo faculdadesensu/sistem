@@ -9,9 +9,11 @@ use App\Http\Controllers\ContasReceberController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovimentacoesController;
+use App\Http\Controllers\PainelAtendimentoController;
 use App\Http\Controllers\PainelRecepcaoController;
 use App\Http\Controllers\RecepController;
 use App\Http\Controllers\RelatorioController;
+use App\Http\Controllers\SolicitacoesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -79,6 +81,12 @@ Route::put('admin/{user}',              [AdminController::class, 'edit'])->name(
 Route::get('home-recep',                [PainelRecepcaoController::class, 'index'])->name('painel-recep.index');
 Route::put('painel-recep/{user}',       [PainelRecepcaoController::class, 'edit'])->name('painel-recep.edit');
 
+
+//Rotas painel atendimento
+Route::get('home-atendimento',                [PainelAtendimentoController::class, 'index'])->name('painel-atend.index');
+Route::put('painel-recep/{user}',             [PainelAtendimentoController::class, 'edit'])->name('painel-atend.edit');
+
+
 //Rotas painel recepcionista - Clientes
 Route::get('painel-recepcao/clientes',                [ClientController::class, 'index'])->name('painel-recepcao-clientes.index');
 Route::post('painel-recepcao/clientes',               [ClientController::class, 'insert'])->name('painel-recepcao-clientes.insert');
@@ -118,6 +126,14 @@ Route::get('painel-recepcao/constas-pagar/{item}/modal-baixa',      [ContasPagar
 Route::put('painel-recepcao/constas-pagar/baixa',                   [ContasPagarController::class, 'baixa'])->name('pagar.baixa');
 
 // Rotas Relatório
-
 Route::get('painel-recepcao/relatorio/movimentacoes',      [RelatorioController::class, 'index'])->name('relatorio.index');
+
+//Rotas painel atendentes - Solicitações
+Route::get('solicitacoes',                [SolicitacoesController::class, 'index'])->name('solicitacoes.index');
+Route::post('solicitacoes',               [SolicitacoesController::class, 'insert'])->name('solicitacoes.insert');
+Route::get('solicitacoes/inserir',        [SolicitacoesController::class, 'create'])->name('solicitacoes.inserir');
+Route::get('solicitacoes/{item}/edit',    [SolicitacoesController::class, 'edit'])->name('solicitacoes.edit');
+Route::put('solicitacoes/{item}',         [SolicitacoesController::class, 'editar'])->name('solicitacoes.editar');
+Route::delete('solicitacoes/{item}',      [SolicitacoesController::class, 'delete'])->name('solicitacoes.delete');
+Route::get('solicitacoes/{item}',         [SolicitacoesController::class, 'modal'])->name('solicitacoes.modal');
 

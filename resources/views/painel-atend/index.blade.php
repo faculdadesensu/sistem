@@ -1,4 +1,4 @@
-@extends('template.template-default')
+@extends('template.template-atend')
 @section('title', 'Atendimento')
 @section('content')
 <?php 
