@@ -33,7 +33,7 @@ if(!isset($id)){
               $data = implode('/', array_reverse(explode('-', $item->data)));
              ?>
               <tr>
-                <td><i class="fas fa-check mr-1 text-success <?php if($item->status != true){ ?> text-danger <?php } ?>"></i></td>
+                <td><i class="ml-5 fas fa-check-circle text-success <?php if($item->status != true){ ?> text-danger <?php } ?>"></i></td>
                 <td>{{$item->descricao}}</td>
                 <td>{{$item->atendente}}</td>
                 <td>{{$data}}</td>
