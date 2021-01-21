@@ -22,13 +22,15 @@ Route::get('/',                         HomeController::class)->name('home');
 Route::get('movimentacao',                     [MovimentacoesController::class, 'index'])->name('movimentacao.index');
 
 //Routes atendentes
-Route::get('atendentes',                [CadAtendController::class, 'index'])->name('cadAtend');
-Route::post('atendentes',               [CadAtendController::class, 'insert'])->name('atend.insert');
-Route::get('atendentes/inserir',        [CadAtendController::class, 'create'])->name('atend.inserir');
-Route::get('atendentes/{item}/edit',    [CadAtendController::class, 'edit'])->name('atend.edit');
-Route::put('atendentes/{item}',         [CadAtendController::class, 'editar'])->name('atend.editar');
-Route::delete('atendentes/{item}',      [CadAtendController::class, 'delete'])->name('atend.delete');
-Route::get('atendentes/{item}',         [CadAtendController::class, 'modal'])->name('atend.modal');
+Route::get('atendentes',                        [CadAtendController::class, 'index'])->name('cadAtend');
+Route::post('atendentes',                       [CadAtendController::class, 'insert'])->name('atend.insert');
+Route::get('atendentes/inserir',                [CadAtendController::class, 'create'])->name('atend.inserir');
+Route::get('atendentes/{item}/edit',            [CadAtendController::class, 'edit'])->name('atend.edit');
+Route::put('atendentes/{item}',                 [CadAtendController::class, 'editar'])->name('atend.editar');
+Route::delete('atendentes/{item}',              [CadAtendController::class, 'delete'])->name('atend.delete');
+Route::get('atendenes/{item}',                  [CadAtendController::class, 'modal'])->name('atend.modal');
+Route::get('atendentes/{item}/modal-baixa',     [CadAtendController::class, 'modal_history'])->name('atend.history');
+
 
 //Routes recepcionistas
 Route::get('recep',                [RecepController::class, 'index'])->name('recep.index');

@@ -95,4 +95,9 @@ class CadAtendController extends Controller
         return view('painel-admin.atend.index', ['atendentes' => $atendente, 'id' => $id]);
     }
 
+    public function modal_history($id){
+        $atendente = Atendente::orderby('id', 'desc')->paginate();
+        return view('painel-admin.atend.index', ['atendentes' => $atendente, 'id2' => $id]);
+    }
+
 }
