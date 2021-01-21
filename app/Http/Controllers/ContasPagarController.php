@@ -99,16 +99,15 @@ class ContasPagarController extends Controller
 
         $id = ContasPagares::where('id', '=', $request->id)->first();
 
-
-
-        $tabela3 = Solicitacao::find($id->servico);
-
-        $tabela3->status    = true;
-
-       
+        if($id->servico != null){
+            $tabela3 = Solicitacao::find($id->servico);
+            $tabela3->status    = true;
+            $tabela3->save();
+        }
+              
         $tabela->save();
         $tabela2->save();
-        $tabela3->save();
+        
 
         $itens = ContasPagares::orderby('data_venc', 'asc')->paginate();
         

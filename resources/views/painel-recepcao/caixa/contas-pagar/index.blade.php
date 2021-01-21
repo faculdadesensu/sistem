@@ -65,7 +65,7 @@ $total_saidas = number_format($total_saidas, 2, ',', '.');
                         ?>
                         @if ($item->status_pagamento != 'Sim')
                             <tr>
-                                <td><i class="fas fa-square mr-1 text-success <?php if($item->status != 'Pago'){ ?> text-danger <?php } ?>"></i></td>
+                                <td><i class="fas fa-square ml-4 text-success <?php if($item->status != 'Pago'){ ?> text-danger <?php } ?>"></i></td>
                                 <td>{{$data}}</td>
                                 <td>{{$item->descricao}}</td>
                                 <td>{{$item->resp_cad}}</td>
@@ -82,7 +82,7 @@ $total_saidas = number_format($total_saidas, 2, ',', '.');
                                     {{$data2}}
                                 
                                 </td>
-                                <td><?php if($item->upload != ''){ ?><a href="{{ URL::asset(''.$item->upload)}}" target="_blank" ><i class="fas fa-square mr-1 text-success" ></i>Arquivo </a><?php } ?></td>
+                                <td>@if($item->upload != '')<a href="{{ URL::asset(''.$item->upload)}}" target="_blank" ><i class="fas fa-paperclip mr-1 text-success" ></i>Baixar </a>@else Sem Arquivo @endif</td>
                                 <td>R$ {{$value}}</td>
                                 @if (@$item->status != 'Pago')
                                     <td>
