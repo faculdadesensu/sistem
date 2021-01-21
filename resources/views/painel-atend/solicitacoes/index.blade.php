@@ -18,6 +18,7 @@ if(!isset($id)){
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
+          <th>Status</th>
           <th>Descrição</th>
           <th>Atendente</th>
           <th>Data</th>
@@ -27,11 +28,17 @@ if(!isset($id)){
         </thead>
         <tbody>
             @foreach($solicitacoes as $item)
+             <?php
+              $value = implode(',', explode('.', $item->value));
+              $data = implode('/', array_reverse(explode('-', $item->data)));
+
+             ?>
               <tr>
+                <td><i class="fas fa-check mr-1 text-success <?php if($item->status != true){ ?> text-danger <?php } ?>"></i></td>
                 <td>{{$item->descricao}}</td>
                 <td>{{$item->atendente}}</td>
-                <td>{{$item->data}}</td>
-                <td>{{$item->value}}</td>
+                <td>{{$data}}</td>
+                <td>{{$value}}</td>
                 <td>
                 <a href="{{route('solicitacoes.edit', $item)}}"><i class="fas fa-edit text-info mr-1"></i></a>
                 <a href="{{route('solicitacoes.modal', $item->id)}}"><i class="fas fa-trash text-danger mr-1"></i></a>

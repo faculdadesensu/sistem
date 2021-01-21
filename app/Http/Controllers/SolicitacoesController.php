@@ -17,19 +17,16 @@ class SolicitacoesController extends Controller
     }
 
     public function insert(Request $request){
+
+        $value = implode('.', explode(',', $request->value));
      
         $tabela                   = new Solicitacao();
        
         $tabela->descricao        = $request->descricao;
         $tabela->atendente        = $request->atendente;
-        $tabela->value            = $request->value;
+        $tabela->value            = $value;
+        $tabela->status           = false;
         $tabela->data             = date('Y-m-d');
-
-        $check = Solicitacao::where('name', '=', $request->name)->orwhere('fone', '=', $request->fone)->count();
-        if($check > 0){
-            echo "<script language='javascript'> window.alert('Já existe um cliente com o Nome ou Telefone informado!') </script>";
-            return view('painel-atend.solicitacoes.create');
-        }
 
         $tabela->save();
         
@@ -42,9 +39,11 @@ class SolicitacoesController extends Controller
 
     public function editar(Request $request, Solicitacao $item){
 
+        $value = implode('.', explode(',', $request->value));
+        
         $item->descricao        = $request->descricao;
         $item->atendente        = $request->atendente;
-        $item->value            = $request->value;
+        $item->value            = $value;
         $item->data             = date('Y-m-d');
 
         $item->save();
