@@ -15,7 +15,7 @@ $name_user = @$_SESSION['name_user'];
         <div class="col-md-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">Data Vencimento</label>
-                <input type="datetime" class="form-control" id="data" name="data_venc" required>
+                <input type="date" class="form-control" id="data" name="data_venc" required>
             </div>
         </div>
         <div class="col-md-6">

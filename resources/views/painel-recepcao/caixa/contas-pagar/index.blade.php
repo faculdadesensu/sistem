@@ -40,6 +40,7 @@ $total_saidas = number_format($total_saidas, 2, ',', '.');
         
         <div class="table-responsive">
             <h6 class="mb-4"><i> CONTAS A PAGAR</i></h6><hr>
+            <small>
             <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
@@ -86,7 +87,9 @@ $total_saidas = number_format($total_saidas, 2, ',', '.');
                                 @if (@$item->status != 'Pago')
                                     <td>
                                         <a title="Finalizar Pagamento" href="{{route('pagar.modal-baixa', $item->id)}}"><i class="fas fa-coins text-success mr-3"></i></a>
-                                        <a title="Excluir Pagamento" href="{{route('pagar.modal', $item)}}"><i class="fas fa-trash text-danger mr-1"></i></a>
+                                        @if ($item->servico == null)
+                                            <a title="Excluir Pagamento" href="{{route('pagar.modal', $item)}}"><i class="fas fa-trash text-danger mr-1"></i></a>
+                                        @endif
                                     </td>
                                 @else
                                     <td>PAGO</td>
@@ -96,6 +99,7 @@ $total_saidas = number_format($total_saidas, 2, ',', '.');
                     @endforeach
                 </tbody>
             </table>
+        </small>
         </div>
     </div>
     <div class="row mb-4 mr-2 " align="right">

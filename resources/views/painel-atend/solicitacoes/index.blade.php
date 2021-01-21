@@ -31,7 +31,6 @@ if(!isset($id)){
              <?php
               $value = implode(',', explode('.', $item->value));
               $data = implode('/', array_reverse(explode('-', $item->data)));
-
              ?>
               <tr>
                 <td><i class="fas fa-check mr-1 text-success <?php if($item->status != true){ ?> text-danger <?php } ?>"></i></td>
@@ -40,8 +39,12 @@ if(!isset($id)){
                 <td>{{$data}}</td>
                 <td>{{$value}}</td>
                 <td>
-                <a href="{{route('solicitacoes.edit', $item)}}"><i class="fas fa-edit text-info mr-1"></i></a>
-                <a href="{{route('solicitacoes.modal', $item->id)}}"><i class="fas fa-trash text-danger mr-1"></i></a>
+                  @if($item->status != true)
+                    <a href="{{route('solicitacoes.edit', $item)}}"><i class="fas fa-edit text-info mr-1"></i></a>
+                    <a href="{{route('solicitacoes.modal', $item->id)}}"><i class="fas fa-trash text-danger mr-1"></i></a>                      
+                  @else
+                      Pago
+                  @endif
                 </td>
               </tr>
             @endforeach 

@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\ContasPagares;
 use App\Models\Movimentacao;
+use App\Models\Solicitacao;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+
 @session_start();
 
 class ContasPagarController extends Controller
@@ -47,11 +48,7 @@ class ContasPagarController extends Controller
         $tabela->status           = 'Não Pago ';
         $tabela->upload           = $imagem;
 
-
-        $user_session =  $_SESSION['level_user'];
-
         $tabela->save();
-
         
         if($ext == 'png' or $ext == 'jpg' or $ext == 'jpeg' or $ext == 'gif' or $ext == 'pdf' or $ext == ''){ 
             move_uploaded_file($imagem_temp, $caminho);
@@ -90,18 +87,28 @@ class ContasPagarController extends Controller
 
         $tabela2 =  new Movimentacao;
 
-        $tabela2->tipo = 'Saida';
-        $tabela2->recep = $_SESSION['name_user'];
-        $tabela2->data = date('Y-m-d');
-        $tabela2->value = $tabela->value;
+        $tabela2->tipo      = 'Saida';
+        $tabela2->recep     = $_SESSION['name_user'];
+        $tabela2->data      = date('Y-m-d');
+        $tabela2->value     = $tabela->value;
         $tabela2->descricao = $tabela->descricao;
 
         $tabela->status = 'Pago';
         $tabela->resp_baixa = $_SESSION['name_user'];
         $tabela->data_baixa = date('Y-m-d');
 
-        $tabela2->save();
+        $id = ContasPagares::where('id', '=', $request->id)->first();
+
+
+
+        $tabela3 = Solicitacao::find($id->servico);
+
+        $tabela3->status    = true;
+
+       
         $tabela->save();
+        $tabela2->save();
+        $tabela3->save();
 
         $itens = ContasPagares::orderby('data_venc', 'asc')->paginate();
         

@@ -81,10 +81,9 @@ Route::put('admin/{user}',              [AdminController::class, 'edit'])->name(
 Route::get('home-recep',                [PainelRecepcaoController::class, 'index'])->name('painel-recep.index');
 Route::put('painel-recep/{user}',       [PainelRecepcaoController::class, 'edit'])->name('painel-recep.edit');
 
-
 //Rotas painel atendimento
 Route::get('home-atendimento',                [PainelAtendimentoController::class, 'index'])->name('painel-atend.index');
-Route::put('painel-recep/{user}',             [PainelAtendimentoController::class, 'edit'])->name('painel-atend.edit');
+Route::put('painel-atendimento/{user}',             [PainelAtendimentoController::class, 'edit'])->name('painel-atend.edit');
 
 
 //Rotas painel recepcionista - Clientes
