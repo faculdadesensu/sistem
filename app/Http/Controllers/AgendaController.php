@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Agenda;
 use App\Models\ContasReceberes;
+use App\Models\Hora;
 use Illuminate\Http\Request;
 @session_start();
 
@@ -12,24 +13,29 @@ class AgendaController extends Controller
 
     public function index(){                
         $agenda = Agenda::orderby('id', 'desc')->paginate();
+        $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
         
         $user_session =  $_SESSION['level_user'];
 
         if ($user_session == 'admin') {
             return view('painel-admin.agenda.index', ['agenda' => $agenda]);
-        }else{
+        }if($user_session == 'recep'){
             return view('painel-recepcao.agenda.index', ['agenda' => $agenda]);
+        }else{
+            return view('painel-atend.agenda.index', ['agenda_hora' => $agenda_hora]);
         }
     }
     
-    public function create(){
+    public function create($item){
 
         $user_session =  $_SESSION['level_user'];
 
         if ($user_session == 'admin') {
             return view('painel-admin.agenda.create');
-        }else{
+        }if($user_session == 'recep'){
             return view('painel-recepcao.agenda.create');
+        }else{
+            return view('painel-atend.agenda.create', ['hora' => $item]);
         }
     }
 

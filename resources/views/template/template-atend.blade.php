@@ -89,7 +89,7 @@ $usuario = DB::select('select * from users where id ='.$id_usuario);
             </div>
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{route('painel-atendimentos-agendas.index')}}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Agenda</span>
                 </a>
