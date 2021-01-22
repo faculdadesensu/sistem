@@ -54,10 +54,10 @@ class AgendaController extends Controller
         $agenda->description    = $request->description;
         $agenda->value_service  = $value;
 
-        $check                  = Agenda::where('data', '=', $request->date)->where('time', '=', $request->time)->count();
+        $check                  = Agenda::where('data', '=', $request->date)->where('time', '=', $request->time)->where('atendente', '=', $request->atendente)->count();
     
         if($check > 0){
-            echo "<script language='javascript'> window.alert('Já existe um serviço agendado nesse horário informado!') </script>";
+            echo "<script language='javascript'> window.alert('Já existe um serviço agendado para este atendente no horário informado!') </script>";
             $user_session =  $_SESSION['level_user'];
 
             if ($user_session == 'admin') {

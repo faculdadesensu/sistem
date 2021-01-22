@@ -59,8 +59,7 @@ $name_user = @$_SESSION['name_user'];
         <div class="col-md-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">Horário</label>
-                <input type="time" value="<?php echo $hora?>" class="form-control" disabled>
-                <input type="hidden" value="<?php echo $hora?>">
+                <input type="time" name="time" value="<?php echo $hora?>" class="form-control" disabled>
             </div>
         </div>
         <div class="col-md-2">
