@@ -8,6 +8,7 @@ use App\Http\Controllers\ContasPagarController;
 use App\Http\Controllers\ContasReceberController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HoraController;
 use App\Http\Controllers\MovimentacoesController;
 use App\Http\Controllers\PainelAtendimentoController;
 use App\Http\Controllers\PainelRecepcaoController;
@@ -17,7 +18,7 @@ use App\Http\Controllers\SolicitacoesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/',                         HomeController::class)->name('home');
+Route::get('/', HomeController::class)->name('home');
 
 Route::get('movimentacao',                     [MovimentacoesController::class, 'index'])->name('movimentacao.index');
 
@@ -49,6 +50,15 @@ Route::get('service/{item}/edit',    [ServiceController::class, 'edit'])->name('
 Route::put('service/{item}',         [ServiceController::class, 'editar'])->name('service.editar');
 Route::delete('service/{item}',      [ServiceController::class, 'delete'])->name('service.delete');
 Route::get('service/{item}',         [ServiceController::class, 'modal'])->name('service.modal');
+
+// Routes Horario
+Route::get('hora',                [HoraController::class, 'index'])->name('hora.index');
+Route::post('hora',               [HoraController::class, 'insert'])->name('hora.insert');
+Route::get('hora/inserir',        [HoraController::class, 'create'])->name('hora.inserir');
+Route::get('hora/{item}/edit',    [HoraController::class, 'edit'])->name('hora.edit');
+Route::put('hora/{item}',         [HoraController::class, 'editar'])->name('hora.editar');
+Route::delete('hora/{item}',      [HoraController::class, 'delete'])->name('hora.delete');
+Route::get('hora/{item}',         [HoraController::class, 'modal'])->name('hora.modal');
 
 //Route agendas
 Route::get('agendas',                [AgendaController::class, 'index'])->name('agendas.index');

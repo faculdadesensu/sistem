@@ -9,10 +9,12 @@
 use App\Models\service;
 use App\Models\atendente;
 use App\Models\cliente;
+use App\Models\Hora;
 
-$tabela = service::all();
-$atendente_list = atendente::all();
-$cliente_list = cliente::all();
+$tabela = Service::all();
+$atendente_list = Atendente::all();
+$cliente_list = Cliente::all();
+$hora = Hora::all();
 
 $name_user = @$_SESSION['name_user']; 
 ?>
@@ -57,7 +59,11 @@ $name_user = @$_SESSION['name_user'];
         <div class="col-md-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">Horário</label>
-                <input type="time" class="form-control" id="" name="time" required>
+                <select class="form-control" name="time" required>
+                    @foreach ($hora as $item)
+                        <option value="{{$item->hora}}">{{$item->hora}}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
         <div class="col-md-2">

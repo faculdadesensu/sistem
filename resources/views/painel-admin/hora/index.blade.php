@@ -1,9 +1,8 @@
 @extends('template.template-admin')
-@section('title', 'Agenda')
+@section('title', 'Horários')
 @section('content')
 <?php 
 @session_start();
-
 if(@$_SESSION['level_user'] != 'admin'){ 
   echo "<script language='javascript'> window.location='./' </script>";
 }
@@ -11,8 +10,7 @@ if(!isset($id)){
   $id = "";
 }
 ?>
-
-<a href="{{route('agendas.inserir')}}" type="button" class="mt-2 mb-4 btn btn-primary">Nova Agenda</a>
+<a href="{{route('hora.inserir')}}" type="button" class="mt-4 mb-4 btn btn-primary">Novo Horário</a>
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-body">
@@ -20,32 +18,17 @@ if(!isset($id)){
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
-          <th>Data</th>
           <th>Horário</th>
-          <th>Nome Cliente</th>
-          <th>Telefone Cliente</th>
-          <th>Atendente</th>
-          <th>Responsavel por agenda</th>
-          <th>Serviço</th>
-          <th>Valor R$</th>
           <th>Ações</th>
           </tr>
         </thead>
         <tbody>
-          @foreach($agenda as $item)
-          <?php $data = implode('/', array_reverse(explode('-', $item->data))); ?>
+          @foreach($hora as $item)
             <tr>
-              <td>{{$data}}</td>
-              <td>{{$item->time}}</td>
-              <td>{{$item->name_client}}</td>
-              <td>{{$item->fone_client}}</td>
-              <td>{{$item->atendente}}</td>
-              <td>{{$item->create_by}}</td>
-              <td>{{$item->description}}</td>
-              <td>{{$item->value_service}}</td>
+              <td>{{$item->hora}}</td>
               <td>
-              <a href="{{route('agendas.edit', $item)}}"><i class="fas fa-edit text-info mr-1"></i></a>
-              <a href="{{route('agendas.modal', $item->id)}}"><i class="fas fa-trash text-danger mr-1"></i></a>
+              <a href="{{route('hora.edit', $item)}}"><i class="fas fa-edit text-info mr-1"></i></a>
+              <a href="{{route('hora.modal', $item->id)}}"><i class="fas fa-trash text-danger mr-1"></i></a>
               </td>
             </tr>
           @endforeach 
@@ -54,7 +37,6 @@ if(!isset($id)){
     </div>
   </div>
 </div>
-  <!-- {{$agenda->links()}} -->
 <script type="text/javascript">
   $(document).ready(function () {
     $('#dataTable').dataTable({
@@ -77,7 +59,7 @@ if(!isset($id)){
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <form method="POST" action="{{route('agendas.delete', $id)}}">
+        <form method="POST" action="{{route('hora.delete', $id)}}">
           @csrf
           @method('delete')
           <button type="submit" class="btn btn-danger">Excluir</button>

@@ -9,10 +9,12 @@ $name_user = @$_SESSION['name_user'];
 use App\Models\Service;
 use App\Models\Atendente;
 use App\Models\Cliente;
+use App\Models\Hora;
 
 $tabela = Service::all();
 $atendente_list = Atendente::all();
 $cliente_list = Cliente::all();
+$hora = Hora::all();
 
 ?>
 
@@ -46,7 +48,11 @@ $cliente_list = Cliente::all();
         <div class="col-md-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">Horário</label>
-                <input type="time" value="{{$item->time}}" class="form-control" id="" name="time" required>
+                <select class="form-control" name="time" required>
+                    @foreach ($hora as $item)
+                        <option value="{{$item->hora}}">{{$item->hora}}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
     </div>
@@ -54,7 +60,7 @@ $cliente_list = Cliente::all();
         <div class="col-md-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">Valor</label>
-                <input type="text" value="{{$item->value_service}}" class="form-control" name="value_service" required>
+                <input type="number" value="{{$item->value_service}}" class="form-control" name="value_service" required>
             </div>
         </div>
         <div class="col-md-2">

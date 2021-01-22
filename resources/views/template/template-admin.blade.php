@@ -42,7 +42,6 @@ $usuario = DB::select('select * from users where id ='.$id_usuario);
 </head>
 
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -54,22 +53,14 @@ $usuario = DB::select('select * from users where id ='.$id_usuario);
 
                 <div class="sidebar-brand-text mx-3">Administrador</div>
             </a>
-
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
-
-
             <!-- Divider -->
             <hr class="sidebar-divider">
-
             <!-- Heading -->
             <div class="sidebar-heading">
                 Cadastros
             </div>
-
-
-
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-users"></i>
@@ -94,6 +85,7 @@ $usuario = DB::select('select * from users where id ='.$id_usuario);
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{route('service.index')}}">Serviços</a>
+                        <a class="collapse-item" href="{{route('hora.index')}}">Horários</a>
 
                     </div>
                 </div>
