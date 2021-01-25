@@ -53,13 +53,14 @@ $name_user = @$_SESSION['name_user'];
         <div class="col-md-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">Data</label>
-                <input type="date"  value="<?php echo date('Y-m-d');?>" class="form-control" id="" name="date" required>
+                <input type="date"  value="{{$data}}" class="form-control" id="" name="date" required>
             </div>
         </div>
         <div class="col-md-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">Horário</label>
-                <input type="time" name="time" value="<?php echo $hora?>" class="form-control" disabled>
+                <input type="time" value="<?php echo $hora?>" class="form-control" disabled>
+                <input type="hidden" name="time" value="<?php echo $hora?>">
             </div>
         </div>
         <div class="col-md-2">
