@@ -74,6 +74,19 @@ class AgendaController extends Controller
 
         $agenda->save();
 
+        $agenda2                 = new ContasReceberes();
+        
+        $agenda2->date              = $request->date;
+        $agenda2->client            = $request->name_client;
+        $agenda2->atendente         = $request->atendente;
+        $agenda2->descricao         = $request->description;
+        $agenda2->value             = $value;
+        $agenda2->status_pagamento  = 'Não';
+        $agenda2->id_agenda         = $agenda->id;
+
+       
+        $agenda2->save();
+
         $user_session =  $_SESSION['level_user'];
 
         if ($user_session == 'admin') {
@@ -137,10 +150,16 @@ class AgendaController extends Controller
     }
 
     public function delete(Agenda $item, $data){
-        $item->delete();
-
+        
         //Redirecionamento para as views pertinentes ao usuário logado
         $user_session =  $_SESSION['level_user'];
+
+        if($user_session == 'atend'){
+            $contaReceber = ContasReceberes::where('id_agenda', '=', $item->id);
+            $contaReceber->delete();
+        }
+
+        $item->delete();
 
         if ($user_session == 'admin') {
             return redirect()->route('agendas.index');

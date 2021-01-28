@@ -32,14 +32,15 @@ class ContasReceberController extends Controller
 
         $tabela2 =  new Movimentacao;
 
-        $tabela2->tipo = 'Entrada';
-        $tabela2->recep = $_SESSION['name_user'];
-        $tabela2->data = date('Y-m-d');
-        $tabela2->value = $tabela->value;
+        $tabela2->tipo      = 'Entrada';
+        $tabela2->recep     = $_SESSION['name_user'];
+        $tabela2->data      = date('Y-m-d');
+        $tabela2->value     = $tabela->value;
         $tabela2->descricao = $tabela->descricao;
 
-        $tabela->status_pagamento = 'Sim';
-        $tabela->data_pagamento = date('Y-m-d');
+        $tabela->responsavel_receb  = $_SESSION['name_user'];
+        $tabela->status_pagamento   = 'Sim';
+        $tabela->data_pagamento     = date('Y-m-d');
 
         $tabela2->save();
         $tabela->save();
