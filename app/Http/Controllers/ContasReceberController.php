@@ -6,6 +6,7 @@ use App\Models\Comissoe;
 use Illuminate\Http\Request;
 use App\Models\ContasReceberes;
 use App\Models\Movimentacao;
+use App\Models\Service;
 
 session_start();
 
@@ -48,8 +49,10 @@ class ContasReceberController extends Controller
 
         $tabela3 = new Comissoe();
 
+        $comissao = Service::where('description', '=', $tabela->descricao)->first();
+
         $tabela3->descricao     = $tabela->descricao;
-        $tabela3->value         = $tabela->value;
+        $tabela3->value         = $comissao->comissao;
         $tabela3->atendente     = $tabela->atendente;
         $tabela3->data          = date('Y-m-d');
 

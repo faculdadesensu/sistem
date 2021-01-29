@@ -10,7 +10,6 @@ if (@$_SESSION['level_user'] != 'recep') {
 if (!isset($id)) {
     $id = "";
 }
-
 if (!isset($id2)) {
     $id2 = "";
 }
@@ -25,7 +24,7 @@ $tabela = Movimentacao::where('data', '=', $data)->get();
 
 foreach($tabela as $tab){
   if ($tab->tipo == 'Entrada') {
-    @$total_entradas = $total_entrada + $tab->value;
+    @$total_entradas = $total_entradas + $tab->value;
   } 
 }
 

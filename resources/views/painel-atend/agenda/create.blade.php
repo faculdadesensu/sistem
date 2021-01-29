@@ -10,7 +10,6 @@ use App\Models\service;
 use App\Models\atendente;
 use App\Models\cliente;
 
-
 $tabela = Service::all();
 $atendente_list = Atendente::all();
 $cliente_list = Cliente::all();
@@ -25,7 +24,7 @@ $name_user = @$_SESSION['name_user'];
         <div class="col-md-6">
             <div class="form-group">
                 <label for="exampleInputEmail1">Nome cliente</label>
-                <select class="form-control" name="name_client" required>
+                <select class="form-control" id="name_client" name="name_client" required>
                     @foreach ($cliente_list as $item)
                         <option  name="name" value="{{$item->name}}">{{$item->name}}</option>
                     @endforeach
@@ -35,7 +34,7 @@ $name_user = @$_SESSION['name_user'];
         <div class="col-md-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">Telefone Cliente</label>
-                <input type="text" class="form-control" id="telefone" name="fone_client" required>
+                <input type="text" class="form-control" id="fone_client" name="fone_client" required>
             </div>
         </div>
         <div class="col-md-4">
@@ -66,7 +65,7 @@ $name_user = @$_SESSION['name_user'];
         <div class="col-md-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">Serviço</label>
-                <select class="form-control" name="description" required>
+                <select class="form-control" name="description" id="descrition" required>
                     @foreach ($tabela as $item)
                         <option value="{{$item->description}}">{{$item->description}}</option>
                     @endforeach
@@ -76,7 +75,7 @@ $name_user = @$_SESSION['name_user'];
         <div class="col-md-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">Valor</label>
-                <input type="text" class="form-control" id="money" name="value_service">
+                <input type="text" value="" class="form-control" id="value_service" name="value_service">
             </div>
         </div>
         <div class="col-md-2">
@@ -86,10 +85,36 @@ $name_user = @$_SESSION['name_user'];
                 <input type="hidden" class="form-control" value="{{$name_user}}" name="create_by">
             </div>
         </div>
-
     </div>
     <p align="right">
         <button type="submit" class="btn btn-primary">Salvar</button>
     </p>
 </form>
+<script>
+    $(document).on("change", "#descrition", function () {
+        var value = $(this).val();
+        $.ajax({
+            url:"{{ route('getService') }}",
+            method:"get",
+            data:{value:value},
+            success:function(result){
+            console.log(result)//exibir o resultado da pesquisa no controller
+            $("#value_service").val(result[0]['valor']);
+            }
+        })
+    });
+
+    $(document).on("change", "#name_client", function () {
+        var value = $(this).val();
+        $.ajax({
+            url:"{{ route('getClientes') }}",
+            method:"get",
+            data:{value:value},
+            success:function(result){
+            console.log(result)//exibir o resultado da pesquisa no controller
+            $("#fone_client").val(result[0]['fone']);
+            }
+        })
+    });
+</script>
 @endsection

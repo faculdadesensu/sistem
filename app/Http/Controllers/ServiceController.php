@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ServiceController extends Controller
 {
@@ -11,7 +12,16 @@ class ServiceController extends Controller
         $service = Service::orderby('id', 'desc')->paginate();
         return view('painel-admin.serv.index', ['service' => $service]);
     }
+
+    public function getService(Request $request) 
+    {
+       $value = $request->value;
     
+       $dadosService = DB::table('services')->select('valor')->where('description', $value)->get();
+    
+      return response()->json($dadosService);
+    }
+
     public function create(){
         return view('painel-admin.serv.create');
     }

@@ -4,11 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 @session_start();
 
 class ClientController extends Controller
 {
+    
+    public function getClientes(Request $request) 
+    {
+       $value = $request->value;
+    
+       $dadosService = DB::table('clientes')->select('fone')->where('name', $value)->get();
+    
+      return response()->json($dadosService);
+    }
+
     public function index(){
         $cliente = Cliente::orderby('id', 'desc')->paginate();
         $user_session =  $_SESSION['level_user'];

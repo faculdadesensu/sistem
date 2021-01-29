@@ -50,6 +50,7 @@ Route::get('service/{item}/edit',    [ServiceController::class, 'edit'])->name('
 Route::put('service/{item}',         [ServiceController::class, 'editar'])->name('service.editar');
 Route::delete('service/{item}',      [ServiceController::class, 'delete'])->name('service.delete');
 Route::get('service/{item}',         [ServiceController::class, 'modal'])->name('service.modal');
+Route::get('getService/',            [ServiceController::class, 'getService'])->name('getService');
 
 // Routes Horario
 Route::get('hora',                [HoraController::class, 'index'])->name('hora.index');
@@ -78,6 +79,7 @@ Route::get('clientes/{item}/edit',    [ClientController::class, 'edit'])->name('
 Route::put('clientes/{item}',         [ClientController::class, 'editar'])->name('clientes.editar');
 Route::delete('clientes/{item}',      [ClientController::class, 'delete'])->name('clientes.delete');
 Route::get('clientes/{item}',         [ClientController::class, 'modal'])->name('clientes.modal');
+Route::get('getClientes/',            [ClientController::class, 'getClientes'])->name('getClientes');
 
 //Routes users
 Route::post('/',                       [UserController::class, 'logout'])->name('user.logout');
