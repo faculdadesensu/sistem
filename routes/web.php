@@ -21,6 +21,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', HomeController::class)->name('home');
 
 Route::get('movimentacao',                     [MovimentacoesController::class, 'index'])->name('movimentacao.index');
+Route::get('comissoes',                        [ComissaoController::class, 'index'])->name('movimentacao.index');
+
+
+// Rotas Relatório
+Route::get('painel-recepcao/relatorio/movimentacoes',      [RelatorioController::class, 'movimentacoes'])->name('relatorio.index');
 
 //Routes atendentes
 Route::get('atendentes',                        [CadAtendController::class, 'index'])->name('cadAtend');
@@ -145,9 +150,6 @@ Route::delete('painel-recepcao/contas-pagar/{item}',                [ContasPagar
 Route::get('painel-recepcao/contas-pagar/{item}',                   [ContasPagarController::class, 'modal'])->name('pagar.modal');
 Route::get('painel-recepcao/constas-pagar/{item}/modal-baixa',      [ContasPagarController::class, 'modal_baixa'])->name('pagar.modal-baixa');
 Route::put('painel-recepcao/constas-pagar/baixa',                   [ContasPagarController::class, 'baixa'])->name('pagar.baixa');
-
-// Rotas Relatório
-Route::get('painel-recepcao/relatorio/movimentacoes',      [RelatorioController::class, 'index'])->name('relatorio.index');
 
 //Rotas painel atendentes - Solicitações
 Route::get('solicitacoes',                [SolicitacoesController::class, 'index'])->name('solicitacoes.index');

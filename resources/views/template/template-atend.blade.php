@@ -60,24 +60,24 @@ $usuario = DB::select('select * from users where id ='.$id_usuario);
             </div>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-users"></i>
-                    <span> Cadastro de Solicitações</span>
+                    <i class="fas fa-sync"></i>
+                    <span>Solicitações</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{route('solicitacoes.index')}}">Solicitações</a>
+                        <a class="collapse-item" href="{{route('solicitacoes.index')}}">Cadastro</a>
                     </div>
                 </div>
             </li>
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-home"></i>
-                    <span>Cadastro Serviço</span>
+                    <i class="fas fa-scroll"></i>
+                    <span>Relatórios</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Serviços</a>
+                        <a class="collapse-item" href="{{route('comissao.index')}}">Comissões</a>
                     </div>
                 </div>
             </li>

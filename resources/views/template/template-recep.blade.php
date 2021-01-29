@@ -2,6 +2,7 @@
 @session_start();
 $id_user = @$_SESSION['id_user'];
 $user = DB::select('select * from users where id ='.$id_user);
+$hoje = date('Y-m-d');
 ?>
 
 <!DOCTYPE html>
@@ -89,7 +90,7 @@ $user = DB::select('select * from users where id ='.$id_user);
                     </a>
                     <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="{{route('relatorio.index')}}" target="_blank">Movimentaçôes</a>
+                            <a class="collapse-item" href="" data-toggle="modal" data-target="#relMov">Movimentaçôes</a>
                         </div>
                     </div>
                 </li>
@@ -206,6 +207,40 @@ $user = DB::select('select * from users where id ='.$id_user);
                 </div>
             </div>
         </div>
+
+        
+    <!-- Modal Mov Rel -->
+    <div class="modal fade" id="relMov" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Selecionar Datas</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline" method="GET" action="{{route('relatorio.index')}}" target="_blank">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input value="{{$hoje}}" class="form-control" name="dataInicial" type="date">
+
+                            </div>
+                            <div class="col-md-6">
+                                <input value="{{$hoje}}" class="form-control " name="dataFinal" type="date">
+
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Gerar Relatório</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
         
         <!-- Core plugin JavaScript-->
         <script src="{{ URL::asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
