@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comissoe;
 use Illuminate\Http\Request;
 use App\Models\ContasReceberes;
 use App\Models\Movimentacao;
@@ -14,7 +15,7 @@ class ContasReceberController extends Controller
     public function delete(ContasReceberes $item){
         $item->delete();
         return redirect()->route('contas-receber.index');
-     }
+    }
 
     public function modal($id){
         $itens = ContasReceberes::orderby('id', 'desc')->paginate();
@@ -44,7 +45,15 @@ class ContasReceberController extends Controller
 
         $tabela2->save();
         $tabela->save();
-        
+
+        $tabela3 = new Comissoe();
+
+        $tabela3->descricao     = $tabela->descricao;
+        $tabela3->value         = $tabela->value;
+        $tabela3->atendente     = $tabela->atendente;
+        $tabela3->data          = date('Y-m-d');
+
+        $tabela3->save();
         
         $itens = ContasReceberes::orderby('id', 'desc')->paginate();
         

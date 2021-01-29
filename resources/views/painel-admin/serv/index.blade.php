@@ -19,6 +19,8 @@ if(!isset($id)){
         <thead>
           <tr>
           <th>Descrição do serviço</th>
+          <th>Valor</th>
+          <th>Comissão</th>
           <th>Ações</th>
           </tr>
         </thead>
@@ -26,6 +28,8 @@ if(!isset($id)){
           @foreach($service as $item)
             <tr>
               <td>{{$item->description}}</td>
+              <td>{{$item->valor}}</td>
+              <td>{{$item->comissao}}</td>
               <td>
               <a href="{{route('service.edit', $item)}}"><i class="fas fa-edit text-info mr-1"></i></a>
               <a href="{{route('service.modal', $item->id)}}"><i class="fas fa-trash text-danger mr-1"></i></a>

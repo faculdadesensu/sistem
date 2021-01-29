@@ -19,8 +19,13 @@ class ServiceController extends Controller
     public function insert(Request $request){
      
         $service               = new Service();
+
+        $valor = implode('.', explode(',', $request->valor));
+        $comissao = implode('.', explode(',', $request->comissao));
        
         $service->description  = $request->description;
+        $service->valor        = $valor;
+        $service->comissao     = $comissao;
 
         $check = Service::where('description', '=', $request->description)->count();
     
@@ -35,12 +40,17 @@ class ServiceController extends Controller
 
     public function edit(Service $item){
        
-        return view('painel-admin.serv.edit', ['item' => $item]);   
+        return view('painel-admin.serv.edit', ['item' => $item]);
      }
   
      public function editar(Request $request, Service $item){
 
+        $valor = implode('.', explode(',', $request->valor));
+        $comissao = implode('.', explode(',', $request->comissao));
+
         $item->description      = $request->description;
+        $item->valor            = $valor;
+        $item->comissao         = $comissao;
         $old                    = $request->old;
 
         if($old != $request->description){
