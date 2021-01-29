@@ -21,11 +21,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', HomeController::class)->name('home');
 
 Route::get('movimentacao',                     [MovimentacoesController::class, 'index'])->name('movimentacao.index');
-Route::get('comissoes',                        [ComissaoController::class, 'index'])->name('movimentacao.index');
+Route::get('comissoes',                        [ComissaoController::class, 'index'])->name('comissao.index');
 
 
 // Rotas Relatório
 Route::get('painel-recepcao/relatorio/movimentacoes',      [RelatorioController::class, 'movimentacoes'])->name('relatorio.index');
+Route::get('painel-recepcao/relatorio/comissoes',          [RelatorioController::class, 'comissoes'])->name('comissoes.index');
 
 //Routes atendentes
 Route::get('atendentes',                        [CadAtendController::class, 'index'])->name('cadAtend');
