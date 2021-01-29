@@ -22,7 +22,7 @@ $tabela = Movimentacao::where('data', '=', $data)->get();
 foreach($tabela as $tab){
 
   if ($tab->tipo == 'Entrada') {
-    @$total_entradas = $total_entrada + $tab->value;
+    @$total_entradas = $total_entradas + $tab->value;
   } else {
     @$total_saidas = $total_saidas + $tab->value;
   }

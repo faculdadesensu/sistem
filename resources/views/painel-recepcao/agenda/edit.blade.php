@@ -33,7 +33,7 @@ $hora = Hora::all();
                 </select>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="form-group">
                 <label for="exampleInputEmail1">Telefone Cliente</label>
                 <input type="text" value="{{$item->fone_client}}" class="form-control" id="fone" name="fone_client" required>
@@ -73,14 +73,14 @@ $hora = Hora::all();
                 </select>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-4">
             <div class="form-group">
                 <label for="exampleInputEmail1">Responsável por agenda</label>
                 <input type="text" class="form-control" value="{{$name_user}}" disabled>
                 <input type="hidden" class="form-control" value="{{$name_user}}" name="create_by">
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="form-group">
                 <label for="exampleInputEmail1">Atendente</label>                
                 <select class="form-control" name="atendente" required>

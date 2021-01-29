@@ -113,7 +113,7 @@ Route::get('painel-recepcao/clientes/{item}',         [ClientController::class, 
 //Rotas painel recepcionista - Agenda
 Route::get('painel-recepcao/agendas',                       [AgendaController::class, 'index'])->name('painel-recepcao-agendas.index');
 Route::post('painel-recepcao/agendas',                      [AgendaController::class, 'insert'])->name('painel-recepcao-agendas.insert');
-Route::get('painel-recepcao/agendas/inserir',               [AgendaController::class, 'create'])->name('painel-recepcao-agendas.inserir');
+Route::get('painel-recepcao/agendas/inserir/',              [AgendaController::class, 'createRecep'])->name('painel-recepcao-agendas.inserir');
 Route::get('painel-recepcao/agendas/{item}/edit',           [AgendaController::class, 'edit'])->name('painel-recepcao-agendas.edit');
 Route::put('painel-recepcao/agendas/{item}',                [AgendaController::class, 'editar'])->name('painel-recepcao-agendas.editar');
 Route::delete('painel-recepcao/agendas/{item}',             [AgendaController::class, 'delete'])->name('painel-recepcao-agendas.delete');

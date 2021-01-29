@@ -28,16 +28,21 @@ class AgendaController extends Controller
     
     public function create($item, $item2){
 
+        return view('painel-atend.agenda.create', ['hora' => $item, 'data' => $item2]);
+    }
+
+    public function createRecep(){
+
         $user_session =  $_SESSION['level_user'];
 
         if ($user_session == 'admin') {
             return view('painel-admin.agenda.create');
-        }if($user_session == 'recep'){
-            return view('painel-recepcao.agenda.create');
         }else{
-            return view('painel-atend.agenda.create', ['hora' => $item, 'data' => $item2]);
+            return view('painel-recepcao.agenda.create');
         }
     }
+    
+
 
     public function insert(Request $request){
        

@@ -76,8 +76,8 @@ $user = DB::select('select * from users where id ='.$id_user);
                     </a>
                     <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">                            
-                            <a class="collapse-item" href="{{route('pagar.index')}}">Contas à Pagar</a>
-                            <a class="collapse-item" href="{{route('contas-receber.index')}}">Contas à Receber</a>
+                            <a class="collapse-item" href="{{route('pagar.index')}}">Contas a Pagar</a>
+                            <a class="collapse-item" href="{{route('contas-receber.index')}}">Contas a Receber</a>
                             <a class="collapse-item" href="{{route('movimentacao.index')}}">Movimentação</a>
                         </div>
                     </div>
@@ -88,7 +88,7 @@ $user = DB::select('select * from users where id ='.$id_user);
                         <span>Relatórios</span>
                     </a>
                     <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">                            
+                        <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="{{route('relatorio.index')}}" target="_blank">Movimentaçôes</a>
                         </div>
                     </div>

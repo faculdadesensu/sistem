@@ -22,7 +22,7 @@ if(!isset($id2)){
 
 <h6 class="mb-4"><i> AGENDA</i></h6><hr>
 
-<a href="{{route('painel-recepcao-agendas.inserir')}}" type="button" class="mt-2 mb-4 btn btn-primary">Nova Agenda</a>
+<a href="{{route('painel-recepcao-agendas.inserir', [@$item, @$item2])}}" type="button" class="mt-2 mb-4 btn btn-primary">Nova Agenda</a>
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-body">
@@ -68,6 +68,7 @@ if(!isset($id2)){
       </table>
     </div>
   </div>
+
 <script type="text/javascript">
   $(document).ready(function () {
     $('#dataTable').dataTable({
