@@ -62,7 +62,7 @@ $name_user = @$_SESSION['name_user'];
                 <input type="hidden" name="time" value="<?php echo $hora?>">
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="form-group">
                 <label for="exampleInputEmail1">Serviço</label>
                 <select class="form-control" name="description" id="descrition" required>
@@ -78,7 +78,7 @@ $name_user = @$_SESSION['name_user'];
                 <input type="text" value="" class="form-control" id="value_service" name="value_service">
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="form-group">
                 <label for="exampleInputEmail1">Responsável por agenda</label>
                 <input type="text" class="form-control" value="{{$name_user}}" disabled>
@@ -98,7 +98,7 @@ $name_user = @$_SESSION['name_user'];
             method:"get",
             data:{value:value},
             success:function(result){
-            console.log(result)//exibir o resultado da pesquisa no controller
+            console.log(result)//exibir o resultado da pesquisa no console
             $("#value_service").val(result[0]['valor']);
             }
         })
@@ -111,7 +111,7 @@ $name_user = @$_SESSION['name_user'];
             method:"get",
             data:{value:value},
             success:function(result){
-            console.log(result)//exibir o resultado da pesquisa no controller
+            console.log(result)//exibir o resultado da pesquisa no console
             $("#fone_client").val(result[0]['fone']);
             }
         })

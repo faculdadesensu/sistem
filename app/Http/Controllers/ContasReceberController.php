@@ -50,9 +50,9 @@ class ContasReceberController extends Controller
         $tabela3 = new Comissoe();
 
         $comissao = Service::where('description', '=', $tabela->descricao)->first();
-
+       
         $tabela3->descricao     = $tabela->descricao;
-        $tabela3->value         = $comissao->comissao;
+        $tabela3->value         = $comissao->valor;
         $tabela3->atendente     = $tabela->atendente;
         $tabela3->data          = date('Y-m-d');
 

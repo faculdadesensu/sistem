@@ -12,7 +12,7 @@ class AgendaController extends Controller
 {
 
     public function index(){                
-        $agenda = Agenda::orderby('id', 'desc')->paginate();
+        $agenda = Agenda::where('status_baixa', '=', 0)->orderby('id', 'desc')->paginate();
         $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
         
         $user_session =  $_SESSION['level_user'];
@@ -206,10 +206,11 @@ class AgendaController extends Controller
 
         $tabela->save();
 
-        $delete = Agenda::find($request->id_agenda);
-        
-        $delete->delete();
+        $tabela2 = Agenda::find($request->id_agenda);
 
+        $tabela2->status_baixa = 1;
+        
+        $tabela2->save();
         //Redirecionamento para as views pertinentes ao usuário logado
         $user_session =  $_SESSION['level_user'];
 
@@ -225,7 +226,7 @@ class AgendaController extends Controller
     public function modal_cobrar($item){
         //dd($item);
 
-        $agenda = Agenda::orderby('id', 'desc')->paginate();
+        $agenda = Agenda::where('status_baixa', '=', 0)->orderby('id', 'desc')->paginate();
 
         //Redirecionamento para as views pertinentes ao usuário logado
         $user_session =  $_SESSION['level_user'];
