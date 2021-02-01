@@ -20,17 +20,17 @@ if(isset($data)){
 
 ?>
 <!-- DataTales Example -->
-<div class="card-body col-lg-4 col-md-8 col-sm-12 ml-2" style="background: #fff; border-radius: 10px; box-shadow: 0px 0px 10px 5px rgba(102,54,16, 0.2)">
+<div class="card-body col-lg-4 col-md-8 col-sm-12 ml-2" style="background: #fff; border-radius: 10px; box-shadow: 0px 0px 50px 10px rgba(102,54,16, .09)">
     <form class="form-inline mb-4" action="{{route('agendas.busca')}}" method="POST">
         @csrf
         <input class="form-control col-md-7 mb-2 mr-2" name="data" value="{{$data}}" type="date" >
-        <button class="btn btn-primary col-md-4 " type="submit">Busar</button>
+        <button class="btn btn-outline-info col-md-4 " type="submit">Busar</button>
       </form>
     <h4 class="mb-4" style="color:#522b0d;"><i>AGENDA DO DIA {{implode('/', array_reverse(explode('-', $data)))}}</i></h4><hr>
     @foreach($agenda_hora as $item)
         <?php $check = Agenda::where('data', '=', $data)->where('time', '=', $item->hora)->where('atendente', '=', $_SESSION['name_user'])->where('status_baixa', '=', 0)->first(); ?>
         @if (!isset($check))
-            <a href="{{route('painel-atendimentos-agendas.inserir', [$item->hora, $data])}}" class="btn btn-primary mb-2 mt-2 " style="margin-left: 10px">{{$item->hora}}</a>
+            <a href="{{route('painel-atendimentos-agendas.inserir', [$item->hora, $data])}}" class="btn btn-outline-info mb-2 mt-2 " style="margin-left: 10px">{{$item->hora}}</a>
         @else 
             <a href="{{route('painel-atendimentos-agendas.modal', [$check->id, $data])}}" class="btn btn-danger mb-2 mt-2 " style="margin-left: 10px">{{$item->hora}}</a>
         @endif

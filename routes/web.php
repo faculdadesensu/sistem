@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\CadAtendController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ComissaoController;
 use App\Http\Controllers\ContasPagarController;
 use App\Http\Controllers\ContasReceberController;
 use App\Http\Controllers\ServiceController;
@@ -21,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', HomeController::class)->name('home');
 
 Route::get('movimentacao',                     [MovimentacoesController::class, 'index'])->name('movimentacao.index');
-Route::get('comissoes',                        [ComissaoController::class, 'index'])->name('comissao.index');
+Route::get('comissoes',                        [ComissaoController::class, 'index'])->name('atendimento-comissao.index');
 
 
 // Rotas Relatório

@@ -46,9 +46,9 @@ $hoje = date('Y-m-d');
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav sidebar accordion " style="color:#663610; background:#D9D9D9;"id="accordionSidebar">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('painel-atend.index') }}">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center"  style="color:#663610" href="{{ route('painel-atend.index') }}">
                 <div class="sidebar-brand-text mx-3">Atendimento</div>
             </a>
             <!-- Divider -->
@@ -59,8 +59,8 @@ $hoje = date('Y-m-d');
             <div class="sidebar-heading">
                 Cadastros
             </div>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+            <li class="nav-item"  style="color:#663610">
+                <a class="nav-link collapsed"  style="color:#663610" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-sync"></i>
                     <span>Solicitações</span>
                 </a>
@@ -72,13 +72,13 @@ $hoje = date('Y-m-d');
             </li>
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                <a class="nav-link collapsed" style="color:#663610" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-scroll"></i>
                     <span>Relatórios</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{route('comissao.index')}}">Comissões</a>
+                        <a class="collapse-item" href="{{route('atendimento-comissao.index')}}">Comissões</a>
                         <a class="collapse-item" href="" data-toggle="modal" data-target="#relMov">Imprimir Relatório</a>
                     </div>
                 </div>
@@ -91,7 +91,7 @@ $hoje = date('Y-m-d');
             </div>
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="{{route('painel-atendimentos-agendas.index')}}">
+                <a class="nav-link" style="color:#663610" href="{{route('painel-atendimentos-agendas.index')}}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Agenda</span>
                 </a>

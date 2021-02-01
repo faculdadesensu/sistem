@@ -46,10 +46,10 @@ $usuario = DB::select('select * from users where id ='.$id_usuario);
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-primary sidebar accordion" style="color:#663610; background:#D9D9D9;"id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin.index') }}">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" style="color:#663610" href="{{ route('admin.index') }}">
 
                 <div class="sidebar-brand-text mx-3">Administrador</div>
             </a>
@@ -61,8 +61,8 @@ $usuario = DB::select('select * from users where id ='.$id_usuario);
             <div class="sidebar-heading">
                 Cadastros
             </div>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+            <li class="nav-item" style="color:#663610">
+                <a class="nav-link collapsed" style="color:#663610" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-users"></i>
                     <span> Cadastro Pessoas</span>
                 </a>
@@ -78,7 +78,7 @@ $usuario = DB::select('select * from users where id ='.$id_usuario);
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                <a class="nav-link collapsed" style="color:#663610" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-home"></i>
                     <span>Cadastro Serviço</span>
                 </a>
@@ -101,7 +101,7 @@ $usuario = DB::select('select * from users where id ='.$id_usuario);
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="{{route('agendas.index')}}">
+                <a class="nav-link" style="color:#663610" href="{{route('agendas.index')}}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Agenda</span>
                 </a>
