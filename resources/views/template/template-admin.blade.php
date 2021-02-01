@@ -1,10 +1,13 @@
 <?php
 
 use App\Models\Usuario;
+use App\Models\Atendente;
 
 @session_start();
 $id_usuario = @$_SESSION['id_user'];
 $usuario = DB::select('select * from users where id ='.$id_usuario);
+$hoje = date('Y-m-d');
+
 ?>
 
 <!DOCTYPE html>
@@ -105,40 +108,39 @@ $usuario = DB::select('select * from users where id ='.$id_usuario);
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Agenda</span>
                 </a>
+            </li>          
+             <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" style="color:#663610" href="#" data-toggle="collapse" data-target="#collapseUtilities2" aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-scroll"></i>
+                    <span>Relatórios</span>
+                </a>
+                <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="" data-toggle="modal" data-target="#relRel">Comissões</a>
+                        <a class="collapse-item" href="" data-toggle="modal" data-target="#relMov">Imprimir Relatório</a>
+                    </div>
+                </div>
             </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
+            <hr class="sidebar-divider">
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
         </ul>
         <!-- End of Sidebar -->
-
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
             <!-- Main Content -->
             <div id="content">
-
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-
-
-
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-
-
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -230,6 +232,54 @@ $usuario = DB::select('select * from users where id ='.$id_usuario);
             </div>
         </div>
     </div>
+
+    <!-- Modal Mov Rel -->
+    <div class="modal fade " id="relRel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Selecionar Datas - Atendente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body ">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form class="form-inline" method="GET" action="{{route('admin-comissao.index')}}">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6><i>Data Inicio</i></h6>
+                                        <input value="{{$hoje}}" class="form-control" name="dataInicial" type="date">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6><i>Data Fim</i></h6>
+                                        <input value="{{$hoje}}" class="form-control " name="dataFinal" type="date">
+                                    </div>
+                                    <div class="col-md-6 mt-4">
+                                        <select class="form-control" name="atendente" required>
+                                            <option selected>Selecione um atendente</option>
+                                            <?php $atendente = Atendente::orderby('id', 'desc')->get() ?>
+                                            @foreach ($atendente as $item)
+                                            <option value="{{$item->name}}">{{$item->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mt-4 ml-1" align="right">
+                                    <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary">Gerar Relatório</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Core plugin JavaScript-->
     <script src="{{ URL::asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>

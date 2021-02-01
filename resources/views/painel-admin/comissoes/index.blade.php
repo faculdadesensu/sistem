@@ -1,9 +1,9 @@
-@extends('template.template-atend')
+@extends('template.template-admin')
 @section('title', 'Comissões')
 @section('content')
 <?php 
 @session_start();
-if(@$_SESSION['level_user'] != 'atend'{ 
+if(@$_SESSION['level_user'] != 'admin' ){ 
   echo "<script language='javascript'> window.location='./' </script>";
 }
 ?>

@@ -70,6 +70,18 @@ $hoje = date('Y-m-d');
                     </div>
                 </div>
             </li>
+            <hr class="sidebar-divider">
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                rotinas
+            </div>
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" style="color:#663610" href="{{route('painel-atendimentos-agendas.index')}}">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Agenda</span>
+                </a>
+            </li>
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" style="color:#663610" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
@@ -85,19 +97,6 @@ $hoje = date('Y-m-d');
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                rotinas
-            </div>
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" style="color:#663610" href="{{route('painel-atendimentos-agendas.index')}}">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Agenda</span>
-                </a>
-            </li>
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
