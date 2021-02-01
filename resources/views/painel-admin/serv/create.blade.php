@@ -1,6 +1,5 @@
-
 @extends('template.template-admin')
-@section('title', 'Inserir Instrutores')
+@section('title', 'Cadastro de Serviços')
 @section('content')
 <h6 class="mb-4"><i>CADASTRO DE RECEPCIONISTA</i></h6><hr>
 <form method="POST" action="{{route('service.insert')}}">
@@ -21,7 +20,14 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label for="exampleInputEmail1">Comissão</label>
-                <input type="text" id="money" class="form-control" name="comissao" required>
+                <input type="number" class="form-control" name="comissao" required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Tipo de comissão</label>
+                <select class="form-control" name="tipo_comissao" required>
+                    <option value="pct">Porcentagem %</option>
+                    <option value="vlf">Valor Fixo</option>
+                </select>
             </div>
         </div>
     </div>

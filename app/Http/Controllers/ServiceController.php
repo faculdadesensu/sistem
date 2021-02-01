@@ -31,12 +31,20 @@ class ServiceController extends Controller
         $service               = new Service();
 
         $valor = implode('.', explode(',', $request->valor));
-        $comissao = implode('.', explode(',', $request->comissao));
-       
-        $service->description  = $request->description;
+        //$comissao = implode('.', explode(',', $request->comissao));
         $service->valor        = $valor;
-        $service->comissao     = $comissao;
+        $service->description  = $request->description;
+        $service->tipo_comissao  = $request->tipo_comissao;
 
+        if($request->tipo_comissao == 'pct'){
+
+            $service->comissao      = ($valor/100) * $request->comissao;
+            $service->qtd_comissao  = $request->comissao;
+
+        }else(
+            $service->comissao = $request->comissao
+        );
+        
         $check = Service::where('description', '=', $request->description)->count();
     
         if($check > 0){
@@ -56,12 +64,22 @@ class ServiceController extends Controller
      public function editar(Request $request, Service $item){
 
         $valor = implode('.', explode(',', $request->valor));
-        $comissao = implode('.', explode(',', $request->comissao));
 
         $item->description      = $request->description;
         $item->valor            = $valor;
-        $item->comissao         = $comissao;
+        $comissao = implode('.', explode(',', $request->comissao));
         $old                    = $request->old;
+
+        if($request->tipo_comissao == 'pct'){
+
+            $item->comissao = ($valor/100) * $comissao;
+            $item->tipo_comissao = 'pct';
+            $item->qtd_comissao  = $comissao;
+
+        }else{
+            $item->comissao         = $comissao;
+            $item->tipo_comissao    = 'vlf';
+        };
 
         if($old != $request->description){
             $check = Service::where('description', '=', $request->description)->count();

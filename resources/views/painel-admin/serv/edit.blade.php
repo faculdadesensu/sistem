@@ -23,6 +23,13 @@
                 <label for="exampleInputEmail1">Comissão</label>
                 <input type="text" value="{{$item->comissao}}" id="money2" class="form-control" name="comissao" required>
             </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Tipo de comissão</label>
+                <select class="form-control" name="tipo_comissao" required>
+                    <option value="pct">Porcentagem %</option>
+                    <option value="vlf">Valor Fixo</option>
+                </select>
+            </div>
         </div>
     </div>
     

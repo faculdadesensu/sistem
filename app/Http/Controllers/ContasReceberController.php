@@ -49,10 +49,16 @@ class ContasReceberController extends Controller
 
         $tabela3 = new Comissoe();
 
-        $comissao = Service::where('description', '=', $tabela->descricao)->first();
+        $service = Service::where('description', '=', $tabela->descricao)->first();
        
         $tabela3->descricao     = $tabela->descricao;
-        $tabela3->value         = $comissao->valor;
+
+        if($service->tipo_comissao == 'pct'){
+            $tabela3->value         = ($request->value_service/100) * $service->qtd_comissao;
+        }else{
+            $tabela3->value         = $service->comissao;
+        }
+       
         $tabela3->atendente     = $tabela->atendente;
         $tabela3->data          = date('Y-m-d');
 
