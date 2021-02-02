@@ -3,7 +3,7 @@
 @section('content')
 <?php 
 @session_start();
-if(@$_SESSION['level_user'] != 'atend'{ 
+if(@$_SESSION['level_user'] != 'atend'){ 
   echo "<script language='javascript'> window.location='./' </script>";
 }
 ?>

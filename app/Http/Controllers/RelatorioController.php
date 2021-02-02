@@ -21,10 +21,21 @@ class RelatorioController extends Controller
 
     public function comissoes(Request $request){
 
-        $data_inicial = $request->dataInicial;
-        $data_final = $request->dataFinal;
+        if($_SESSION['level_user'] == 'atend'){
 
-        $itens = Comissoe::where('data', '>=', $data_inicial)->where('data', '<=', $data_final)->where('atendente', '=', $_SESSION['name_user'])->get();
-        return view('painel-atend.rel.rel_comissao', ['itens' => $itens, 'dataInicial' => $data_inicial, 'dataFinal' => $data_final]);
+            $data_inicial = $request->dataInicial;
+            $data_final = $request->dataFinal;
+    
+            $itens = Comissoe::where('data', '>=', $data_inicial)->where('data', '<=', $data_final)->where('atendente', '=', $_SESSION['name_user'])->get();
+            return view('painel-atend.rel.rel_comissao', ['itens' => $itens, 'dataInicial' => $data_inicial, 'dataFinal' => $data_final]);
+        }else{
+            $data_inicial = $request->dataInicial;
+            $data_final = $request->dataFinal;
+            $atendente = $request->atendente;
+    
+            $itens = Comissoe::where('data', '>=', $data_inicial)->where('data', '<=', $data_final)->where('atendente', '=', $atendente)->get();
+            return view('painel-admin.rel.rel_comissao', ['itens' => $itens, 'dataInicial' => $data_inicial, 'dataFinal' => $data_final, 'atendente' => $atendente]);
+        }
     }
+
 }

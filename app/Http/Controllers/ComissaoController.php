@@ -18,6 +18,13 @@ class ComissaoController extends Controller
 
         $itens = Comissoe::where('atendente', '=', $request->atendente)->where('data', '>=', $request->dataInicial)->where('data', '<=', $request->dataFinal)->orderby('id', 'desc')->get();
         
-        return view('painel-admin.comissoes.index', ['itens' => $itens]);
+        return view('painel-admin.comissoes.index', [
+                
+            'itens' => $itens, 
+            'dataInicial' => $request->dataInicial, 
+            'dataFinal' => $request->dataFinal, 
+            'atendente' => $request->atendente
+                
+        ]);
     }
 }

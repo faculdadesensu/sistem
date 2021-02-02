@@ -118,7 +118,6 @@ $hoje = date('Y-m-d');
                 <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="" data-toggle="modal" data-target="#relRel">Comissões</a>
-                        <a class="collapse-item" href="" data-toggle="modal" data-target="#relMov">Imprimir Relatório</a>
                     </div>
                 </div>
             </li>

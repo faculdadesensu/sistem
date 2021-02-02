@@ -20,7 +20,7 @@ $saldo = 0;
 
 $data = date('Y-m-d');
 
-$tabela = Comissoe::where('data', '>=', $dataInicial)->where('data', '<=', $dataFinal)->where('atendente', '=', $_SESSION['name_user'])->get();
+$tabela = Comissoe::where('data', '>=', $dataInicial)->where('data', '<=', $dataFinal)->where('atendente', '=', $atendente)->get();
 
 foreach($tabela as $tab){
 
@@ -123,6 +123,7 @@ $body1 = "
     <h3 align='center' class='titulo'>Relatório de Movimentações</h3>
     <div align='center' class='datas'>
         De $dataInicial à $dataFinal
+        <h2>$atendente</h2>
     </div>
     <table class='table' width='100%' border='1' cellspacing='0' cellpadding='3'>
         <tr bgcolor='#f9f9f9'>
