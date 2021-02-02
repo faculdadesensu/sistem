@@ -21,9 +21,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 
-Route::get('movimentacao',            [MovimentacoesController::class, 'index'])->name('movimentacao.index');
-Route::get('comissoes',               [ComissaoController::class, 'index'])->name('atendimento-comissao.index');
-Route::get('administrador/comissoes', [ComissaoController::class, 'adminComissoes'])->name('admin-comissao.index');
+Route::get('movimentacao',                  [MovimentacoesController::class, 'index'])->name('movimentacao.index');
+Route::get('administrador/movimentacao',    [MovimentacoesController::class, 'indexMovimentacoes'])->name('admin-movimentacao.index');
+Route::get('comissoes',                     [ComissaoController::class, 'index'])->name('atendimento-comissao.index');
+Route::get('administrador/comissoes',       [ComissaoController::class, 'adminComissoes'])->name('admin-comissao.index');
 
 
 // Rotas Relatório

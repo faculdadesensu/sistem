@@ -2,6 +2,7 @@
 
 use App\Models\Usuario;
 use App\Models\Atendente;
+use App\Models\Recepcionista;
 
 @session_start();
 $id_usuario = @$_SESSION['id_user'];
@@ -47,13 +48,10 @@ $hoje = date('Y-m-d');
 <body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
-
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar accordion" style="color:#663610; background:#D9D9D9;"id="accordionSidebar">
-
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" style="color:#663610" href="{{ route('admin.index') }}">
-
                 <div class="sidebar-brand-text mx-3">Administrador</div>
             </a>
             <!-- Divider -->
@@ -78,7 +76,6 @@ $hoje = date('Y-m-d');
                     </div>
                 </div>
             </li>
-
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" style="color:#663610" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
@@ -93,15 +90,12 @@ $hoje = date('Y-m-d');
                     </div>
                 </div>
             </li>
-
             <!-- Divider -->
             <hr class="sidebar-divider">
-
             <!-- Heading -->
             <div class="sidebar-heading">
                 rotinas
             </div>
-
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" style="color:#663610" href="{{route('agendas.index')}}">
@@ -118,6 +112,7 @@ $hoje = date('Y-m-d');
                 <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="" data-toggle="modal" data-target="#relRel">Comissões</a>
+                        <a class="collapse-item" href="" data-toggle="modal" data-target="#relMov">Movimentaçôes</a>
                     </div>
                 </div>
             </li>
@@ -145,7 +140,6 @@ $hoje = date('Y-m-d');
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{$usuario[0]->name}}</span>
                                 <img class="img-profile rounded-circle" src="{{ URL::asset('img/default.jpg') }}">
-
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -153,7 +147,6 @@ $hoje = date('Y-m-d');
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-primary"></i>
                                     Editar Perfil
                                 </a>
-
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('user.logout')}}">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-danger"></i>
@@ -161,29 +154,20 @@ $hoje = date('Y-m-d');
                                 </a>
                             </div>
                         </li>
-
                     </ul>
-
                 </nav>
                 <!-- End of Topbar -->
-
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
                     @yield('content')
-
                 </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
-
         </div>
         <!-- End of Content Wrapper -->
-
     </div>
     <!-- End of Page Wrapper -->
-
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
@@ -232,7 +216,7 @@ $hoje = date('Y-m-d');
         </div>
     </div>
 
-    <!-- Modal Mov Rel -->
+    <!-- Modal Rel Comissão-->
     <div class="modal fade " id="relRel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog ">
             <div class="modal-content">
@@ -243,42 +227,92 @@ $hoje = date('Y-m-d');
                     </button>
                 </div>
                 <div class="modal-body ">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <form class="form-inline" method="GET" action="{{route('admin-comissao.index')}}">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <h6><i>Data Inicio</i></h6>
-                                        <input value="{{$hoje}}" class="form-control" name="dataInicial" type="date">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <h6><i>Data Fim</i></h6>
-                                        <input value="{{$hoje}}" class="form-control " name="dataFinal" type="date">
-                                    </div>
-                                    <div class="col-md-6 mt-4">
-                                        <select class="form-control" name="atendente" required>
-                                            <option selected>Selecione um atendente</option>
-                                            <?php $atendente = Atendente::orderby('id', 'desc')->get() ?>
-                                            @foreach ($atendente as $item)
-                                            <option value="{{$item->name}}">{{$item->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row mt-4 ml-1" align="right">
-                                    <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Cancelar</button>
-                                    <button type="submit" class="btn btn-primary">Gerar Relatório</button>
-                                </div>
-                            </form>
+                    <form method="GET" action="{{route('admin-comissao.index')}}">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6><i>Data Inicio</i></h6>
+                                <input value="{{$hoje}}" class="form-control" name="dataInicial" type="date">
+                            </div>
+                            <div class="col-md-6">
+                                <h6><i>Data Fim</i></h6>
+                                <input value="{{$hoje}}" class="form-control " name="dataFinal" type="date">
+                            </div>
                         </div>
-                    </div>
-                    
+                        <div class="row mb-4">
+                            <div class="col-md-6 mt-4">
+                                <h6><i>Atendente</i></h6>
+                                <select class="form-control" name="atendente" required>
+                                    <option selected>Selecione um atendente</option>
+                                    <?php $atendente = Atendente::orderby('id', 'desc')->get() ?>
+                                    @foreach ($atendente as $item)
+                                    <option value="{{$item->name}}">{{$item->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Gerar Relatório</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Modal Rel Comissão-->
+    <div class="modal fade " id="relMov" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Selecionar Datas - Movimentaçôes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body ">
+                    <form method="GET" action="{{route('admin-movimentacao.index')}}">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6><i>Data Inicio</i></h6>
+                                <input value="{{$hoje}}" class="form-control" name="dataInicial" type="date">
+                            </div>
+                            <div class="col-md-6">
+                                <h6><i>Data Fim</i></h6>
+                                <input value="{{$hoje}}" class="form-control " name="dataFinal" type="date">
+                            </div>
+                        </div>
+                        <div class="row mt-4 mb-4">
+                            <div class="col-md-6">
+                                <h6><i>Recepcionista</i></h6>
+                                <select class="form-control" name="recepcionista" required>
+                                    <option value="todos2">Todos</option>
+                                    <?php $recepcionista = Recepcionista::orderby('id', 'desc')->get() ?>
+                                    @foreach ($recepcionista as $item)
+                                    <option value="{{$item->name}}">{{$item->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-6 ">
+                                <h6 class=""><i>Tipo</i></h6>
+                                <select class="form-control" name="status">
+                                    <option value="todos">Todos</option>
+                                    <option value="Saida">Saida</option>
+                                    <option value="Entrada">Entrada</option>
+                                </select>
+                            </div>
+                        </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Gerar Relatório</button>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Core plugin JavaScript-->
     <script src="{{ URL::asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>

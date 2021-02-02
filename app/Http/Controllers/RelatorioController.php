@@ -37,5 +37,4 @@ class RelatorioController extends Controller
             return view('painel-admin.rel.rel_comissao', ['itens' => $itens, 'dataInicial' => $data_inicial, 'dataFinal' => $data_final, 'atendente' => $atendente]);
         }
     }
-
 }
