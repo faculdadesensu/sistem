@@ -1,9 +1,32 @@
+<?php
+@include "config.php";
+use App\Models\User;
+
+$usuario = User::where('level', '=', 'admin')->count();
+
+if($usuario == 0){
+    
+    $tabela  = new User();
+
+    $tabela->name       = 'Administrador';
+    $tabela->cpf        = '000.000.000-00';
+    $tabela->user       = $email_adm;
+    $tabela->password   = '123';
+    $tabela->level      = 'admin';
+
+    $tabela->save();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Custom styles for this template-->
+	<link href="{{ URL::asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link href="{{ URL::asset('css/style.css')}}" rel="stylesheet">
@@ -95,6 +118,21 @@
             position: fixed;
             top: 0px;
             z-index:1;
+        }
+
+        .recuperar {
+			font-size: 12px;
+			color: #e3e6e4;
+			margin-top: 10px;
+		}
+
+		.recuperar:hover {
+			color: #d4d4d4;
+		}
+
+        .modalrecuperar{
+            z-index: 100000;
+            position: fixed;
         }
     </style>
     <script>
@@ -220,6 +258,17 @@
         });
 
     </script>
+    
+ <script type="text/javascript">  
+    function showModal(){
+    $('#recuperar').modal('show');
+    $(".modal-backdrop.in").hide();
+    }
+    $(window).load(function(){
+            showModal();
+        });
+
+</script>
 </head>
 <body>
     <div class="container">
@@ -229,15 +278,60 @@
                 <h1 class="logo-caption"><span class="tweak">L</span>ogin</h1>
             </div><!-- /.logo -->
             <div class="controls">
-            <form action="{{route('login')}}" method="post">
-                @csrf
-                <input name="user" type="text" placeholder="Usuário" class="form-control" required="required">
-                <input name="password" type="password" placeholder="senha" class="form-control" required="required">
-                <button class="btn btn-default btn-block btn-custom" type="submit">ENTRAR</button>
-            </form>
+                <form action="{{route('login')}}" method="post">
+                    @csrf
+                    <input name="user" type="text" placeholder="Usuário" class="form-control" required="required">
+                    <input name="password" type="password" placeholder="senha" class="form-control" required="required">
+                    <button class="btn btn-default btn-block btn-custom" type="submit">ENTRAR</button>
+                    <div align="center" class="recuperar"><a href="" class="recuperar" data-toggle="modal" data-target="#recuperar">Recuperar Senha?</a></div>
+                </form>
             </div><!-- /.controls -->
+ 
         </div><!-- /#login-box -->
+        
     </div><!-- /.container -->
     <div id="particles-js"></div>
+
+<div class="modalrecuperar">
+                                    
+    <!-- Modal Recuperar -->
+    <div class="modal  fade" id="recuperar" tabindex="-1" aria-labelledby="exampleModalLabel" role='dialog' data-backdrop="false" aria-hidden="true">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content show">
+    
+                <div class="modal-header">
+    
+                    <h5 class="modal-title"><small>Recupere a sua Senha</small></h5>
+    
+                    <button type="submit" class="close" name="fecharModal">&times;</button>
+    
+                </div>
+    
+                <div class="modal-body ">
+                    <form method="POST" action="">
+                    @csrf
+                        <div class="row">
+    
+                            <div class="form-group col-md-8 col-lg-8 col-sm-12">
+                                <label for="id_produto">Digite seu Email</label>
+                                <input type="email" class="form-control mr-2" name="email" placeholder="Email" required>
+                                <input value="{{$email_adm}}" type="hidden" name="email_adm">
+                            </div>
+                            <label for="id_produto"></label>
+                            <div class="col-md-4 col-lg-4 col-sm-12 mt-4">
+                                <button type="submit" class="btn btn-primary mt-2" name="recuperar">Recuperar </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
 </body>
 </html>
+
+ <!-- Bootstrap core JavaScript-->
+ <script src="{{ URL::asset('vendor/jquery/jquery.min.js') }}"></script>
+ <script src="{{ URL::asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
