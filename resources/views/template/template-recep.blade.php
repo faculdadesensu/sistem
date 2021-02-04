@@ -85,7 +85,7 @@ $hoje = date('Y-m-d');
                 </li>
                 <li class="nav-item">
                     <a class="nav-link collapsed" style="color:#663610" href="#" data-toggle="collapse" data-target="#collapseUtilities2" aria-expanded="true" aria-controls="collapseUtilities">
-                        <i class="fas fa-donate"></i>
+                        <i class="fas fa-fw fa-chart-area"></i>
                         <span>Relatórios</span>
                     </a>
                     <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
@@ -103,7 +103,7 @@ $hoje = date('Y-m-d');
                 <!-- Nav Item - Charts -->
                 <li class="nav-item" style="color:#663610" >
                     <a class="nav-link" style="color:#663610" href="{{route('painel-recepcao-agendas.index')}}">
-                        <i class="fas fa-fw fa-chart-area"></i>
+                        <i class="fas fa-calendar "></i>
                         <span>Agenda</span>
                     </a>
                 </li>

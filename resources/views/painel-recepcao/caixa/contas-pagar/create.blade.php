@@ -32,7 +32,7 @@ $name_user = @$_SESSION['name_user'];
         </div>
         <div class="col-md-2">
             <div class="form-group">
-                <label for="exampleInputEmail1">Responsável por agenda</label>
+                <label for="exampleInputEmail1">Responsável por Cadastro</label>
                 <input type="text" class="form-control" value="{{$name_user}}" disabled>
                 <input type="hidden" class="form-control" value="{{$name_user}}" name="resp_cad">
             </div>
