@@ -32,7 +32,7 @@ if(isset($data)){
         @if (!isset($check))
             <a href="{{route('painel-atendimentos-agendas.inserir', [$item->hora, $data])}}" class="btn btn-outline-info mb-2 mt-2 " style="margin-left: 10px">{{$item->hora}}</a>
         @else 
-            <a href="{{route('painel-atendimentos-agendas.modal', [$check->id, $data])}}" class="btn btn-danger mb-2 mt-2 " style="margin-left: 10px">{{$item->hora}}</a>
+            <a href="{{route('painel-atendimentos-agendas.modal', [$check->id, $data])}}" class="btn btn-primary mb-2 mt-2 " style="margin-left: 10px">{{$item->hora}}</a>
         @endif
     @endforeach
 </div>
@@ -41,21 +41,35 @@ if(isset($data)){
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Deletar horario</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Detalhes Agenda</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
             <div class="modal-body">
-            Deseja Realmente Excluir esta Agenda?
+                <?php $check = Agenda::where('id', '=', $id)->first(); ?>
+                <p>Cliente: {{@$check->name_client}}</p>
+                <p>Descrição: {{@$check->description}}</p>
+                <p>Valor: R$ {{@$check->value_service}}</p>
+
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <form method="POST" action="{{route('painel-atendimentos-agendas.delete', [$id, $data])}}">
-                @csrf
-                @method('delete')
-                <button type="submit" class="btn btn-danger">Excluir</button>
-            </form>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <form method="POST" action="{{route('painel-atendimentos-agendas.delete', [$id, $data])}}">
+                    @csrf
+                    @method('delete')
+                    <button type="submit" class="btn btn-danger">Excluir</button>
+                </form>
+               
+                <form method="POST" action="{{route('painel-recepcao-agendas.cobrar')}}">
+                    @csrf
+                    <input type="hidden" name="id_agenda" value="{{$id}}">
+                    <input type="hidden" name="descricao" value="{{@$check->description}}">
+                    <input type="hidden" name="name_client" value="{{@$check->name_client}}">
+                    <input type="hidden" name="value_service" value="{{@$check->value_service}}">
+                    <input type="hidden" name="atendente" value="{{@$check->atendente}}">
+                    <button type="submit" class="btn btn-primary ml-5" style="padding: 6px 50px">Finalizar</button>
+                </form>
             </div>
         </div>
     </div>

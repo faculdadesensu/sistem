@@ -6,6 +6,8 @@ use App\Models\Agenda;
 use App\Models\ContasReceberes;
 use App\Models\Hora;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 @session_start();
 
 class AgendaController extends Controller
@@ -205,21 +207,21 @@ class AgendaController extends Controller
         $tabela->date               = date('Y-m-d');
 
         $tabela->save();
-
-        $tabela2 = Agenda::find($request->id_agenda);
-
-        $tabela2->status_baixa = 1;
-        
-        $tabela2->save();
+        DB::update('update agendas set status_baixa = 1 where id = '.$request->id_agenda);
+      
+              
         //Redirecionamento para as views pertinentes ao usuário logado
         $user_session =  $_SESSION['level_user'];
 
         if ($user_session == 'admin') {
 
             return redirect()->route('agendas.index');
-        }else{
+        }else if ($user_session == 'recep'){
 
             return redirect()->route('painel-recepcao-agendas.index');
+        }else {
+            $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
+            return view('painel-atend.agenda.index', ['agenda_hora' => $agenda_hora]);
         }
     }
 
