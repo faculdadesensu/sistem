@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', HomeController::class)->name('home');
 
 Route::get('movimentacao',                  [MovimentacoesController::class, 'index'])->name('movimentacao.index');
+Route::get('admin/movimentacao',                  [MovimentacoesController::class, 'index'])->name('administrador.movimentacao.index');
 Route::get('administrador/movimentacao',    [MovimentacoesController::class, 'indexMovimentacoes'])->name('admin-movimentacao.index');
 Route::get('comissoes',                     [ComissaoController::class, 'index'])->name('atendimento-comissao.index');
 Route::get('administrador/comissoes',       [ComissaoController::class, 'adminComissoes'])->name('admin-comissao.index');
@@ -109,7 +110,6 @@ Route::put('painel-recep/{user}',       [PainelRecepcaoController::class, 'edit'
 Route::get('home-atendimento',                      [PainelAtendimentoController::class, 'index'])->name('painel-atend.index');
 Route::put('painel-atendimento/{user}',             [PainelAtendimentoController::class, 'edit'])->name('painel-atend.edit');
 
-
 //Rotas painel recepcionista - Clientes
 Route::get('painel-recepcao/clientes',                [ClientController::class, 'index'])->name('painel-recepcao-clientes.index');
 Route::post('painel-recepcao/clientes',               [ClientController::class, 'insert'])->name('painel-recepcao-clientes.insert');
@@ -138,7 +138,7 @@ Route::delete('painel-atendimentos/agendas/{item}/{item2}',             [AgendaC
 Route::get('painel-atendimentos/agendas/{item}/{item2}',                [AgendaController::class, 'modal'])->name('painel-atendimentos-agendas.modal');
 Route::post('painel-atendimentos/cobrar-agendas/',                      [AgendaController::class, 'cobrar'])->name('painel-atendimentos-agendas.cobrar');
 
-//Rotas Constas a receber
+//Rotas Contas a receber
 Route::delete('painel-recepcao/constas-receber/{item}/delete',                  [ContasReceberController::class, 'delete'])->name('contas-receber.delete');
 Route::get('painel-recepcao/contas-receber/{item}',                             [ContasReceberController::class, 'modal'])->name('contas-receber.modal');
 Route::get('painel-recepcao/contas-receber',                                    [ContasReceberController::class, 'index'])->name('contas-receber.index');
@@ -165,3 +165,20 @@ Route::put('solicitacoes/{item}',         [SolicitacoesController::class, 'edita
 Route::delete('solicitacoes/{item}',      [SolicitacoesController::class, 'delete'])->name('solicitacoes.delete');
 Route::get('solicitacoes/{item}',         [SolicitacoesController::class, 'modal'])->name('solicitacoes.modal');
 
+//Rotas Contas a receber -  Painel administrador
+Route::delete('painel-administrador/constas-receber/{item}/delete',                  [ContasReceberController::class, 'delete'])->name('administrador.contas-receber.delete');
+Route::get('painel-administrador/contas-receber/{item}',                             [ContasReceberController::class, 'modal'])->name('administrador.contas-receber.modal');
+Route::get('painel-administrador/contas-receber',                                    [ContasReceberController::class, 'index'])->name('administrador.contas-receber.index');
+Route::get('painel-administrador/constas-receber/{item}/edit',                       [ContasReceberController::class, 'edit'])->name('administrador.contas-receber.edit');
+Route::put('painel-administrador/constas-receber/{item}',                            [ContasReceberController::class, 'editar'])->name('administrador.contas-receber.editar');
+Route::get('painel-administrador/constas-receber/{item}/modal-baixa',                [ContasReceberController::class, 'modal_baixa'])->name('administrador.contas-receber.modal-baixa');
+Route::put('painel-administrador/constas-baixa',                                     [ContasReceberController::class, 'baixa'])->name('administrador.contas-receber.baixa');
+
+//Rotas Contas Pagar - painel administrador
+Route::get('painel-administrador/contas-pagar',                          [ContasPagarController::class, 'index'])->name('administrador.pagar.index');
+Route::post('painel-administrador/contas-pagar',                         [ContasPagarController::class, 'insert'])->name('administrador.pagar.insert');
+Route::get('painel-administrador/contas-pagar/inserir',                  [ContasPagarController::class, 'create'])->name('administrador.pagar.inserir');
+Route::delete('painel-administrador/contas-pagar/{item}',                [ContasPagarController::class, 'delete'])->name('administrador.pagar.delete');
+Route::get('painel-administrador/contas-pagar/{item}',                   [ContasPagarController::class, 'modal'])->name('administrador.pagar.modal');
+Route::get('painel-administrador/constas-pagar/{item}/modal-baixa',      [ContasPagarController::class, 'modal_baixa'])->name('administrador.pagar.modal-baixa');
+Route::put('painel-administrador/constas-pagar/baixa',                   [ContasPagarController::class, 'baixa'])->name('administrador.pagar.baixa');

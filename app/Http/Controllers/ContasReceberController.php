@@ -15,17 +15,32 @@ class ContasReceberController extends Controller
     
     public function delete(ContasReceberes $item){
         $item->delete();
-        return redirect()->route('contas-receber.index');
+
+        if($_SESSION['level_user'] == 'admin'){
+            return redirect()->route('administrador.contas-receber.index');
+        }else{
+            return redirect()->route('contas-receber.index');
+        }
     }
 
     public function modal($id){
         $itens = ContasReceberes::orderby('id', 'desc')->paginate();
-        return view('painel-recepcao.caixa.contas-receber.index', ['itens' => $itens, 'id' => $id]);
+
+        if($_SESSION['level_user'] == 'admin'){
+            return view('painel-admin.caixa.contas-receber.index', ['itens' => $itens, 'id' => $id]);
+        }else{
+            return view('painel-recepcao.caixa.contas-receber.index', ['itens' => $itens, 'id' => $id]);
+        }
+       
     }
 
     public function index(){
         $itens = ContasReceberes::orderby('id', 'desc')->paginate();
-        return view('painel-recepcao.caixa.contas-receber.index', ['itens' => $itens]);
+        if($_SESSION['level_user'] == 'admin'){
+            return view('painel-admin.caixa.contas-receber.index', ['itens' => $itens]);
+        }else{
+            return view('painel-recepcao.caixa.contas-receber.index', ['itens' => $itens]);
+        }
     }
 
     public function baixa(Request $request){
@@ -65,12 +80,22 @@ class ContasReceberController extends Controller
         $tabela3->save();
         
         $itens = ContasReceberes::orderby('id', 'desc')->paginate();
-        
-        return view('painel-recepcao.caixa.contas-receber.index', ['itens' => $itens]);
+
+        if($_SESSION['level_user'] == 'admin'){
+            return view('painel-admin.caixa.contas-receber.index', ['itens' => $itens]);
+        }else{
+            return view('painel-recepcao.caixa.contas-receber.index', ['itens' => $itens]);
+        }
     }
 
     public function modal_baixa($id2){
         $itens = ContasReceberes::orderby('id', 'desc')->paginate();
-        return view('painel-recepcao.caixa.contas-receber.index', ['itens' => $itens, 'id2' => $id2]);
+
+        if($_SESSION['level_user'] == 'admin'){
+            return view('painel-admin.caixa.contas-receber.index', ['itens' => $itens, 'id2' => $id2]);
+        }else{
+            return view('painel-recepcao.caixa.contas-receber.index', ['itens' => $itens, 'id2' => $id2]);
+        }
+       
     }
 }

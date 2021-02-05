@@ -23,8 +23,8 @@ if(isset($data)){
 <div class="card-body col-lg-4 col-md-8 col-sm-12 ml-2" style="background: #fff; border-radius: 10px; box-shadow: 0px 0px 50px 10px rgba(102,54,16, .09)">
     <form class="form-inline mb-4" action="{{route('agendas.busca')}}" method="POST">
         @csrf
-        <input class="form-control col-md-7 mb-2 mr-2" name="data" value="{{$data}}" type="date" >
-        <button class="btn btn-outline-info col-md-4 " type="submit">Busar</button>
+        <input class="form-control col-md-7 mt-2" name="data" value="{{$data}}" type="date" >
+        <button class="btn btn-outline-info mt-2 col-md-4 " type="submit">Busar</button>
       </form>
     <h4 class="mb-4" style="color:#522b0d;"><i>AGENDA DO DIA {{implode('/', array_reverse(explode('-', $data)))}}</i></h4><hr>
     @foreach($agenda_hora as $item)

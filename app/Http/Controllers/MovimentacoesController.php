@@ -5,11 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Movimentacao;
 use Illuminate\Http\Request;
 
+@session_start();
+
 class MovimentacoesController extends Controller
 {
     public function index(){
         $itens = Movimentacao::orderby('id', 'desc')->paginate();
-        return view('painel-recepcao.caixa.movimentacoes.index', ['itens' => $itens]);
+
+        if($_SESSION['level_user'] == 'admin'){
+            return view('painel-admin.caixa.movimentacoes.index', ['itens' => $itens]);
+        }else{
+            return view('painel-recepcao.caixa.movimentacoes.index', ['itens' => $itens]);
+        }
     }
 
     public function indexMovimentacoes(Request $request){
@@ -27,13 +34,12 @@ class MovimentacoesController extends Controller
             $itens1 = Movimentacao::where('data', '>=', $request->dataInicial)->where('data', '<=', $request->dataFinal)->orderby('id', 'desc')->get();
         }
 
-        return view('painel-admin.movimentacoes.index', [
-    
-            'itens' => $itens1, 
-            'dataInicial' => $request->dataInicial, 
-            'dataFinal' => $request->dataFinal, 
-            'atendente' => $request->recepcionista
-                
-        ]);
+        if($_SESSION['level_user'] == 'admin'){
+            return view('painel-admin.movimentacoes.index', ['itens' => $itens1, 'dataInicial' => $request->dataInicial, 'dataFinal' => $request->dataFinal, 'atendente' => $request->recepcionista]);
+        }else{
+            return view('painel-recepcao.movimentacoes.index', ['itens' => $itens1, 'dataInicial' => $request->dataInicial, 'dataFinal' => $request->dataFinal, 'atendente' => $request->recepcionista]);
+        }
+
+       
     }
 }

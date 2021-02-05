@@ -9,6 +9,9 @@ $id_usuario = @$_SESSION['id_user'];
 $usuario = DB::select('select * from users where id ='.$id_usuario);
 $hoje = date('Y-m-d');
 
+@include "config.php";
+setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+date_default_timezone_set('America/Sao_Paulo');
 ?>
 
 <!DOCTYPE html>
@@ -76,6 +79,7 @@ $hoje = date('Y-m-d');
                     </div>
                 </div>
             </li>
+            
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" style="color:#663610" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
@@ -102,7 +106,29 @@ $hoje = date('Y-m-d');
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Agenda</span>
                 </a>
-            </li>          
+            </li>
+             <!-- Divider -->
+             <hr class="sidebar-divider my-0">
+             <!-- Divider -->
+             <hr class="sidebar-divider">
+             <!-- Heading -->
+             <div class="sidebar-heading">
+                 CAIXA
+             </div>
+         <li class="nav-item">
+             <a class="nav-link collapsed" style="color:#663610"  href="#" data-toggle="collapse" data-target="#collapseUtilities3" aria-expanded="true" aria-controls="collapseUtilities">
+                 <i class="fas fa-donate"></i>
+                 <span>Financeiro</span>
+             </a>
+             <div id="collapseUtilities3" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                 <div class="bg-white py-2 collapse-inner rounded">                            
+                     <a class="collapse-item" href="{{route('administrador.pagar.index')}}">Contas a Pagar</a>
+                     <a class="collapse-item" href="{{route('administrador.contas-receber.index')}}">Contas a Receber</a>
+                     <a class="collapse-item" href="{{route('administrador.movimentacao.index')}}">Movimentação</a>
+                 </div>
+             </div>
+         </li>  
+         <hr class="sidebar-divider">      
              <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" style="color:#663610" href="#" data-toggle="collapse" data-target="#collapseUtilities2" aria-expanded="true" aria-controls="collapseUtilities">
@@ -133,6 +159,10 @@ $hoje = date('Y-m-d');
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
+                    <div class="mt-4 mb-2" style="color:#663610" >
+                        <h5>{{$nome_estabelecimento}}</h5>
+                        <h6>{{$data_hoje = utf8_encode(strftime('%A, %d de %B de %Y', strtotime('today')))}} - {{$endereco}}</h6>
+                    </div>
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Nav Item - User Information -->

@@ -44,11 +44,8 @@ class AgendaController extends Controller
         }
     }
     
-
-
     public function insert(Request $request){
        
-        
         $value = implode('.', explode(',', $request->value_service));
 
         $agenda                 = new Agenda();
@@ -92,7 +89,6 @@ class AgendaController extends Controller
             $agenda2->status_pagamento  = 'Não';
             $agenda2->id_agenda         = $agenda->id;
     
-           
             $agenda2->save();
         }
 
@@ -201,7 +197,7 @@ class AgendaController extends Controller
         $tabela               = new ContasReceberes();
       
         $tabela->descricao          = $request->descricao;
-      
+    
         $tabela->value              = $request->value_service;
         $tabela->client             = $request->name_client;
         $tabela->responsavel_receb  = $_SESSION['name_user'];
@@ -213,8 +209,7 @@ class AgendaController extends Controller
         $tabela->save();
         
         DB::update('update agendas set status_baixa = 1 where id = '.$request->id_agenda);
-      
-              
+
         //Redirecionamento para as views pertinentes ao usuário logado
         $user_session =  $_SESSION['level_user'];
 

@@ -15,8 +15,8 @@ class ContasPagarController extends Controller
         $user_session =  $_SESSION['level_user'];
 
         if ($user_session == 'admin') {
-            return view('painel-admin.cliente.create');
-        }else{
+            return view('painel-admin.caixa.contas-pagar.create');
+        }else {
             return view('painel-recepcao.caixa.contas-pagar.create');
         }
     }
@@ -60,7 +60,7 @@ class ContasPagarController extends Controller
         $user_session =  $_SESSION['level_user'];
 
         if ($user_session == 'admin') {
-            return redirect()->route('clientes.index');
+            return redirect()->route('pagar.index');
         }else{
             return redirect()->route('pagar.index');
         }
@@ -73,12 +73,25 @@ class ContasPagarController extends Controller
 
     public function modal($id){
         $itens = ContasPagares::orderby('data_venc', 'asc')->paginate();
-        return view('painel-recepcao.caixa.contas-pagar.index', ['itens' => $itens, 'id' => $id]);
+        $user_session =  $_SESSION['level_user'];
+        if ($user_session == 'admin') {
+            return view('painel-admin.caixa.contas-pagar.index', ['itens' => $itens, 'id' => $id]);
+        }else{
+            return view('painel-recepcao.caixa.contas-pagar.index', ['itens' => $itens, 'id' => $id]);
+        }
+        
     }
 
     public function index(){
+
         $itens = ContasPagares::orderby('data_venc', 'asc')->paginate();
-        return view('painel-recepcao.caixa.contas-pagar.index', ['itens' => $itens]);
+        $user_session =  $_SESSION['level_user'];
+
+        if ($user_session == 'admin') {
+            return view('painel-admin.caixa.contas-pagar.index', ['itens' => $itens]);
+        }else{
+            return view('painel-recepcao.caixa.contas-pagar.index', ['itens' => $itens]);
+        }
     }
 
     public function baixa(Request $request){
@@ -110,12 +123,24 @@ class ContasPagarController extends Controller
         
 
         $itens = ContasPagares::orderby('data_venc', 'asc')->paginate();
-        
-        return view('painel-recepcao.caixa.contas-pagar.index', ['itens' => $itens]);
+
+        $user_session =  $_SESSION['level_user'];
+
+        if ($user_session == 'admin') {
+            return view('painel-admin.caixa.contas-pagar.index', ['itens' => $itens]);
+        }else{
+            return view('painel-recepcao.caixa.contas-pagar.index', ['itens' => $itens]);
+        }
     }
 
     public function modal_baixa($id2){
         $itens = ContasPagares::orderby('data_venc', 'asc')->paginate();
-        return view('painel-recepcao.caixa.contas-pagar.index', ['itens' => $itens, 'id2' => $id2]);
+        $user_session =  $_SESSION['level_user'];
+
+        if ($user_session == 'admin') {
+            return view('painel-admin.caixa.contas-pagar.index', ['itens' => $itens, 'id2' => $id2]);
+        }else{
+            return view('painel-recepcao.caixa.contas-pagar.index', ['itens' => $itens, 'id2' => $id2]);
+        }
     }
 }
