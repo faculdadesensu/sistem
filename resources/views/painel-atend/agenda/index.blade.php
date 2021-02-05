@@ -47,10 +47,10 @@ if(isset($data)){
             </button>
             </div>
             <div class="modal-body">
-                <?php $check = Agenda::where('id', '=', $id)->first(); ?>
-                <p>Cliente: {{@$check->name_client}}</p>
-                <p>Descrição: {{@$check->description}}</p>
-                <p>Valor: R$ {{@$check->value_service}}</p>
+                <?php $check2 = Agenda::where('id', '=', $id)->first(); ?>
+                <p>Cliente: {{@$check2->name_client}}</p>
+                <p>Descrição: {{@$check2->description}}</p>
+                <p>Valor: R$ {{@$check2->value_service}}</p>
 
             </div>
             <div class="modal-footer">
@@ -61,13 +61,14 @@ if(isset($data)){
                     <button type="submit" class="btn btn-danger">Excluir</button>
                 </form>
                
-                <form method="POST" action="{{route('painel-recepcao-agendas.cobrar')}}">
+                <form method="POST" action="{{route('painel-atendimentos-agendas.cobrar')}}">
                     @csrf
                     <input type="hidden" name="id_agenda" value="{{$id}}">
-                    <input type="hidden" name="descricao" value="{{@$check->description}}">
-                    <input type="hidden" name="name_client" value="{{@$check->name_client}}">
-                    <input type="hidden" name="value_service" value="{{@$check->value_service}}">
-                    <input type="hidden" name="atendente" value="{{@$check->atendente}}">
+                    <input type="hidden" name="descricao" value="{{@$check2->description}}">
+                    <input type="hidden" name="name_client" value="{{@$check2->name_client}}">
+                    <input type="hidden" name="value_service" value="{{@$check2->value_service}}">
+                    <input type="hidden" name="atendente" value="{{@$check2->atendente}}">
+                    <input type="hidden" name="responsavel_receb" value="{{@$_SESSION['name_user']}}">
                     <button type="submit" class="btn btn-primary ml-5" style="padding: 6px 50px">Finalizar</button>
                 </form>
             </div>

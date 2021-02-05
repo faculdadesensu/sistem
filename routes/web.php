@@ -136,6 +136,7 @@ Route::post('painel-atendimentos/agendas',                              [AgendaC
 Route::get('painel-atendimentos/agendas/{item}/{item2}/inserir',        [AgendaController::class, 'create'])->name('painel-atendimentos-agendas.inserir');
 Route::delete('painel-atendimentos/agendas/{item}/{item2}',             [AgendaController::class, 'delete'])->name('painel-atendimentos-agendas.delete');
 Route::get('painel-atendimentos/agendas/{item}/{item2}',                [AgendaController::class, 'modal'])->name('painel-atendimentos-agendas.modal');
+Route::post('painel-atendimentos/cobrar-agendas/',                      [AgendaController::class, 'cobrar'])->name('painel-atendimentos-agendas.cobrar');
 
 //Rotas Constas a receber
 Route::delete('painel-recepcao/constas-receber/{item}/delete',                  [ContasReceberController::class, 'delete'])->name('contas-receber.delete');

@@ -63,7 +63,7 @@ class AgendaController extends Controller
         $agenda->value_service  = $value;
        
 
-        $check = Agenda::where('data', '=', $request->date)->where('time', '=', $request->time)->where('atendente', '=', $request->atendente)->count();
+        $check = Agenda::where('data', '=', $request->date)->where('time', '=', $request->time)->where('atendente', '=', $request->atendente)->where('status_baixa', '=', 0)->count();
        
         if($check > 0){
             echo "<script language='javascript'> window.alert('Já existe um serviço agendado para este atendente no horário informado!') </script>";
@@ -81,18 +81,20 @@ class AgendaController extends Controller
 
         $agenda->save();
 
-        $agenda2                 = new ContasReceberes();
+        if($_SESSION['level_user'] != 'atend'){
+            $agenda2                 = new ContasReceberes();
         
-        $agenda2->date              = $request->date;
-        $agenda2->client            = $request->name_client;
-        $agenda2->atendente         = $request->atendente;
-        $agenda2->descricao         = $request->description;
-        $agenda2->value             = $value;
-        $agenda2->status_pagamento  = 'Não';
-        $agenda2->id_agenda         = $agenda->id;
-
-       
-        $agenda2->save();
+            $agenda2->date              = $request->date;
+            $agenda2->client            = $request->name_client;
+            $agenda2->atendente         = $request->atendente;
+            $agenda2->descricao         = $request->description;
+            $agenda2->value             = $value;
+            $agenda2->status_pagamento  = 'Não';
+            $agenda2->id_agenda         = $agenda->id;
+    
+           
+            $agenda2->save();
+        }
 
         $user_session =  $_SESSION['level_user'];
 
@@ -195,18 +197,21 @@ class AgendaController extends Controller
     }
 
     public function cobrar(Request $request){
-        
-        $tabela                     = new ContasReceberes();
-
+   
+        $tabela               = new ContasReceberes();
+      
         $tabela->descricao          = $request->descricao;
+      
         $tabela->value              = $request->value_service;
         $tabela->client             = $request->name_client;
-        $tabela->atendente          = $request->atendente;
         $tabela->responsavel_receb  = $_SESSION['name_user'];
         $tabela->status_pagamento   = 'Não';
         $tabela->date               = date('Y-m-d');
-
+        $tabela->atendente          = $request->atendente;
+        $tabela->id_agenda          = $request->id_agenda;      
+             
         $tabela->save();
+        
         DB::update('update agendas set status_baixa = 1 where id = '.$request->id_agenda);
       
               
