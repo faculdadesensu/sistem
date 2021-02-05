@@ -70,7 +70,7 @@ $total_entradas = number_format($total_entradas, 2, ',', '.');
                             <td>R$ {{$value}}</td>
                             @if(@$item->status_pagamento != 'Sim')
                             <td>                                   
-                                <a title="Finalizar Recebimento" href="{{route('contas-receber.modal-baixa', $item->id)}}"><i class="fas fa-coins text-success mr-3"></i></a>
+                                <a title="Finalizar Recebimento" href="{{route('contas-receber.modal-baixa', [$item->id, $item->value])}}"><i class="fas fa-coins text-success mr-3"></i></a>
                                 <a title="Excluir Recebimento" href="{{route('contas-receber.modal', $item)}}"><i class="fas fa-trash text-danger mr-1"></i></a>
                             </td>
                             @else
@@ -146,7 +146,7 @@ $total_entradas = number_format($total_entradas, 2, ',', '.');
                     @method('put')
                    
                     <input type="hidden" name='id' value="{{$id2}}">
-                    <input type="hidden" name='value' value="">
+                    <input type="hidden" name='value' value="{{@$valor}}">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-primary">Finalizar Pagamento</button>
                 </form>

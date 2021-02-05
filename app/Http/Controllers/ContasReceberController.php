@@ -59,6 +59,7 @@ class ContasReceberController extends Controller
         $tabela->status_pagamento   = 'Sim';
         $tabela->data_pagamento     = date('Y-m-d');
 
+
         $tabela2->save();
         $tabela->save();
 
@@ -69,7 +70,11 @@ class ContasReceberController extends Controller
         $tabela3->descricao     = $tabela->descricao;
 
         if($service->tipo_comissao == 'pct'){
+            
+            //verificar o calculo de comissões
             $tabela3->value         = ($request->value_service/100) * $service->qtd_comissao;
+    
+            
         }else{
             $tabela3->value         = $service->comissao;
         }
@@ -88,13 +93,13 @@ class ContasReceberController extends Controller
         }
     }
 
-    public function modal_baixa($id2){
+    public function modal_baixa($id2, $id3){
         $itens = ContasReceberes::orderby('id', 'desc')->paginate();
 
         if($_SESSION['level_user'] == 'admin'){
-            return view('painel-admin.caixa.contas-receber.index', ['itens' => $itens, 'id2' => $id2]);
+            return view('painel-admin.caixa.contas-receber.index', ['itens' => $itens, 'id2' => $id2, 'valor' => $id3]);
         }else{
-            return view('painel-recepcao.caixa.contas-receber.index', ['itens' => $itens, 'id2' => $id2]);
+            return view('painel-recepcao.caixa.contas-receber.index', ['itens' => $itens, 'id2' => $id2, 'valor' => $id3]);
         }
        
     }
