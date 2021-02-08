@@ -7,6 +7,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ComissaoController;
 use App\Http\Controllers\ContasPagarController;
 use App\Http\Controllers\ContasReceberController;
+use App\Http\Controllers\FilaController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HoraController;
@@ -182,3 +183,8 @@ Route::delete('painel-administrador/contas-pagar/{item}',                [Contas
 Route::get('painel-administrador/contas-pagar/{item}',                   [ContasPagarController::class, 'modal'])->name('administrador.pagar.modal');
 Route::get('painel-administrador/constas-pagar/{item}/modal-baixa',      [ContasPagarController::class, 'modal_baixa'])->name('administrador.pagar.modal-baixa');
 Route::put('painel-administrador/constas-pagar/baixa',                   [ContasPagarController::class, 'baixa'])->name('administrador.pagar.baixa');
+
+//Rotas de fila
+
+Route::get('fila',  [FilaController::class, 'index'])->name('fila.index');
+

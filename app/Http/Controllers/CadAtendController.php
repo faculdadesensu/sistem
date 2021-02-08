@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Atendente;
+use App\Models\File;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -86,6 +87,10 @@ class CadAtendController extends Controller
     }
 
     public function delete(Atendente $item){
+
+        $fila = File::where('id_user', '=', $item->id);
+
+        $fila->delete();
         $item->delete();
         return redirect()->route('cadAtend');
     }

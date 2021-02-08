@@ -111,7 +111,6 @@ $totalComissoesMes = number_format($totalComissoesMes, 2, ',', '.');
 
 <div class="text-xs font-weight-bold text-secondary text-uppercase mt-4">Agenda do Dia</div>
 <hr> 
-
 <div class="row">
 <?php
   $tabela = Agenda::where('data', '=', $hoje)->where('atendente', '=', $_SESSION['name_user'])->where('status_baixa', '=', 0)->orderby('time', 'asc')->get();
@@ -124,8 +123,8 @@ $totalComissoesMes = number_format($totalComissoesMes, 2, ',', '.');
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold  text-danger text-uppercase">{{$nome_cliente->name}}</div>
-                        <div class="text-xs text-secondary">Telefone: {{$nome_cliente->fone}}</div>
-                        <div class="text-xs text-secondary">Serviço: {{$tab->description}}</div>
+                        <div class="text-xs text-secondary"><b>{{$nome_cliente->fone}}</b></div>
+                        <div class="text-xs text-secondary"><b>{{$tab->description}}</b></div>
                         
                     </div>
                     <div class="col-auto">
@@ -138,7 +137,6 @@ $totalComissoesMes = number_format($totalComissoesMes, 2, ',', '.');
     </div>
 
   <?php } ?>
-    
 </div>
 
 @endsection
