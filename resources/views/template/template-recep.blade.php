@@ -3,6 +3,10 @@
 $id_user = @$_SESSION['id_user'];
 $user = DB::select('select * from users where id ='.$id_user);
 $hoje = date('Y-m-d');
+
+@include "config.php";
+setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+date_default_timezone_set('America/Sao_Paulo');
 ?>
 
 <!DOCTYPE html>
@@ -49,16 +53,16 @@ $hoje = date('Y-m-d');
                 <hr class="sidebar-divider">
                 <!-- Heading -->
                 <div class="sidebar-heading">
-                    Serviços
+                    Cadastros
                 </div>
                 <li class="nav-item" style="color:#663610" >
                     <a class="nav-link collapsed" style="color:#663610" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                         <i class="fas fa-users"></i>
-                        <span>Cadastros Pessoas</span>
+                        <span>Clientes</span>
                     </a>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="{{route('painel-recepcao-clientes.index')}}">Clientes</a>
+                            <a class="collapse-item" href="{{route('painel-recepcao-clientes.index')}}">Lista</a>
                         </div>
                     </div>
                 </li>
@@ -83,17 +87,7 @@ $hoje = date('Y-m-d');
                         </div>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" style="color:#663610" href="#" data-toggle="collapse" data-target="#collapseUtilities2" aria-expanded="true" aria-controls="collapseUtilities">
-                        <i class="fas fa-fw fa-chart-area"></i>
-                        <span>Relatórios</span>
-                    </a>
-                    <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="" data-toggle="modal" data-target="#relMov">Movimentaçôes</a>
-                        </div>
-                    </div>
-                </li>
+                
                 <!-- Divider -->
                 <hr class="sidebar-divider">
                 <!-- Heading -->
@@ -103,13 +97,25 @@ $hoje = date('Y-m-d');
                 <!-- Nav Item - Charts -->
                 <li class="nav-item" style="color:#663610" >
                     <a class="nav-link" style="color:#663610" href="{{route('painel-recepcao-agendas.index')}}">
-                        <i class="fas fa-calendar "></i>
+                        <i class="fas fa-calendar-alt "></i>
                         <span>Agenda</span>
                     </a>
                 </li>
+                <hr class="sidebar-divider d-none d-md-block">
+                <li class="nav-item">
+                    <a class="nav-link collapsed" style="color:#663610" href="#" data-toggle="collapse" data-target="#collapseUtilities2" aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-scroll"></i>
+                        <span>Relatórios</span>
+                    </a>
+                    <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="" data-toggle="modal" data-target="#relMov">Movimentaçôes</a>
+                        </div>
+                    </div>
+                </li>
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">
-
+                
                 <!-- Sidebar Toggler (Sidebar) -->
                 <div class="text-center d-none d-md-inline">
                     <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -124,8 +130,12 @@ $hoje = date('Y-m-d');
                     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                         <!-- Sidebar Toggle (Topbar) -->
                         <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                            <i class="fa fa-bars"></i>
+                            <i class="fa fa-bars " style="color:#663610" ></i>
                         </button>
+                        <div class="mt-4 mb-2" style="color:#663610" >
+                            <h5>{{$nome_estabelecimento}}</h5>
+                            <h6>{{$data_hoje = utf8_encode(strftime('%A, %d de %B de %Y', strtotime('today')))}} - {{$endereco}}</h6>
+                        </div>
                         <!-- Topbar Navbar -->
                         <ul class="navbar-nav ml-auto">
                             <!-- Nav Item - User Information -->

@@ -144,7 +144,7 @@ Route::get('painel-recepcao/contas-receber/{item}',                             
 Route::get('painel-recepcao/contas-receber',                                    [ContasReceberController::class, 'index'])->name('contas-receber.index');
 Route::get('painel-recepcao/constas-receber/{item}/edit',                       [ContasReceberController::class, 'edit'])->name('contas-receber.edit');
 Route::put('painel-recepcao/constas-receber/{item}',                            [ContasReceberController::class, 'editar'])->name('contas-receber.editar');
-Route::get('painel-recepcao/constas-receber/{item}/{item2}/modal-baixa',                [ContasReceberController::class, 'modal_baixa'])->name('contas-receber.modal-baixa');
+Route::get('painel-recepcao/constas-receber/{item}/modal-baixa',                [ContasReceberController::class, 'modal_baixa'])->name('contas-receber.modal-baixa');
 Route::put('painel-recepcao/constas-baixa',                                     [ContasReceberController::class, 'baixa'])->name('contas-receber.baixa');
 
 //Rotas Contas Pagar

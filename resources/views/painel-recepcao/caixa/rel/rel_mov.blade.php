@@ -93,19 +93,18 @@ $body1 = "
     }
 
     .table{
-        padding:15px;
+        padding:20px;
         font-family:Verdana, sans-serif;
         margin-top:20px;
     }
 
     .texto-tabela{
-        font-size:14px;
+        font-size:11px;
     }
 
     .areaTotais{
         border : 0.5px solid #bcbcbc;
         padding: 15px;
-        border-radius: 5px;
         margin-right:15px;
         margin-left:15px;
     }
@@ -126,7 +125,8 @@ $body1 = "
     <div align='center' class='datas'>
         De $dataInicial à $dataFinal
     </div>
-    <table class='table' width='100%'>
+   
+    <table  class='table' width='100%' border='1' cellspacing='0' cellpadding='3'>
         <tr bgcolor='#f9f9f9'>
             <td style='font-size:12px'> <b>Descrição</b> </td>
             <td style='font-size:12px'> <b> Recepcionista</b> </td>
@@ -154,10 +154,11 @@ $body1 = "
         ?>
         <?php $body3 = "
     </table>
+    
 </div>
 <div class='areaTotais'>
     <b>Total Entradas :</b> <span>R$ $total_entradas</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     
-    <b>Total Saídas :</b> <span>R$ $total_saidas</span>  
+    <b>Total Saídas :</b> <span>R$ $total_saidas</span>      
     <div align='right'><b>Saldo Total :</b> <span >R$ $saldo</span></div>       
 </div>
 ";

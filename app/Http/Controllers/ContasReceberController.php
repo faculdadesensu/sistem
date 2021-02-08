@@ -44,7 +44,7 @@ class ContasReceberController extends Controller
     }
 
     public function baixa(Request $request){
-        
+      
         $tabela  = ContasReceberes::find($request->id);
 
         $tabela2 =  new Movimentacao;
@@ -71,9 +71,9 @@ class ContasReceberController extends Controller
 
         if($service->tipo_comissao == 'pct'){
             
+           
             //verificar o calculo de comissões
-            $tabela3->value         = ($request->value_service/100) * $service->qtd_comissao;
-    
+            $tabela3->value         = ($tabela->value/100) * $service->qtd_comissao;
             
         }else{
             $tabela3->value         = $service->comissao;
@@ -93,13 +93,13 @@ class ContasReceberController extends Controller
         }
     }
 
-    public function modal_baixa($id2, $id3){
+    public function modal_baixa($id2){
         $itens = ContasReceberes::orderby('id', 'desc')->paginate();
 
         if($_SESSION['level_user'] == 'admin'){
-            return view('painel-admin.caixa.contas-receber.index', ['itens' => $itens, 'id2' => $id2, 'valor' => $id3]);
+            return view('painel-admin.caixa.contas-receber.index', ['itens' => $itens, 'id2' => $id2]);
         }else{
-            return view('painel-recepcao.caixa.contas-receber.index', ['itens' => $itens, 'id2' => $id2, 'valor' => $id3]);
+            return view('painel-recepcao.caixa.contas-receber.index', ['itens' => $itens, 'id2' => $id2]);
         }
        
     }

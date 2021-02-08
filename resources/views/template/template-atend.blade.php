@@ -79,7 +79,7 @@ date_default_timezone_set('America/Sao_Paulo');
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" style="color:#663610" href="{{route('painel-atendimentos-agendas.index')}}">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                    <i class="fas fa-calendar-alt fa-chart"></i>
                     <span>Agenda</span>
                 </a>
             </li>

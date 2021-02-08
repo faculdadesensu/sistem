@@ -60,7 +60,7 @@ $saldo = number_format($saldo, 2, ',', '.');
                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo @$totalContasVencidas ?></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-danger"></i>
+                        <i class="fas fa-donate fa-2x text-danger"></i>
                     </div>
                 </div>
             </div>
@@ -77,7 +77,7 @@ $saldo = number_format($saldo, 2, ',', '.');
                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo @$entradas ?></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-success"></i>
+                        <i class="fas fa-donate fa-2x text-success"></i>
                     </div>
                 </div>
             </div>
@@ -94,7 +94,7 @@ $saldo = number_format($saldo, 2, ',', '.');
                         <div class="h5 mb-0 font-weight-bold text-gray-800">R$ <?php echo @$saidas ?></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-danger"></i>
+                        <i class="fas fa-donate fa-2x text-danger"></i>
                     </div>
                 </div>
             </div>
@@ -111,7 +111,7 @@ $saldo = number_format($saldo, 2, ',', '.');
                         <div class="h5 mb-0 font-weight-bold text-gray-800">R$ <?php echo @$saldo ?></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x {{$classe}}"></i>
+                        <i class="fas fa-donate fa-2x {{$classe}}"></i>
                     </div>
                 </div>
             </div>

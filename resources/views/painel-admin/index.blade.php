@@ -94,15 +94,15 @@ $saldoMes = number_format($saldoMes, 2, ',', '.');
 <div class="row">
   <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card border-left-info shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Clientes</div>
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Clientes</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $totalCliente ?></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-users fa-2x text-primary"></i>
+                        <i class="fas fa-users fa-2x text-info"></i>
                     </div>
                 </div>
             </div>
@@ -118,7 +118,7 @@ $saldoMes = number_format($saldoMes, 2, ',', '.');
                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo @$totalAtendente ?></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-user fa-2x text-primary"></i>
+                        <i class="fas fa-users fa-2x text-primary"></i>
                     </div>
                 </div>
             </div>
@@ -134,27 +134,28 @@ $saldoMes = number_format($saldoMes, 2, ',', '.');
                         <div class="h5 mb-0 font-weight-bold text-gray-800"> <?php echo @$totalAgendaPendente ?></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-code-branch fa-2x {{$classe}}"></i>
+                        <i class="fas fa-calendar-alt fa-2x {{$classe}}"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card {{$classe2}} shadow h-100 py-2">
-          <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                  <div class="col mr-2">
-                      <div class="text-xs font-weight-bold {{$classe}} text-uppercase mb-1">Tipos Serviços</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800"> <?php echo @$totalServicos ?></div>
-                  </div>
-                  <div class="col-auto">
-                      <i class="fas fa-code-branch fa-2x {{$classe}}"></i>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+      <!-- Earnings (Monthly) Card Example -->
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Agendas no Mês</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo @$totalAgenda ?></div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-calendar-alt fa-2x text-primary"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="row">
   <!-- Earnings (Monthly) Card Example -->
@@ -167,7 +168,7 @@ $saldoMes = number_format($saldoMes, 2, ',', '.');
                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo @$totalContasVencidas ?></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-danger"></i>
+                        <i class="fas fa-donate fa-2x text-danger"></i>
                     </div>
                 </div>
             </div>
@@ -183,7 +184,7 @@ $saldoMes = number_format($saldoMes, 2, ',', '.');
                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo @$entradas ?></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-success"></i>
+                        <i class="fas fa-donate fa-2x text-success"></i>
                     </div>
                 </div>
             </div>
@@ -199,7 +200,7 @@ $saldoMes = number_format($saldoMes, 2, ',', '.');
                         <div class="h5 mb-0 font-weight-bold text-gray-800">R$ <?php echo @$saidas ?></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-danger"></i>
+                        <i class="fas fa-donate fa-2x text-danger"></i>
                     </div>
                 </div>
             </div>
@@ -215,7 +216,7 @@ $saldoMes = number_format($saldoMes, 2, ',', '.');
                         <div class="h5 mb-0 font-weight-bold text-gray-800">R$ <?php echo @$saldo ?></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x {{$classe}}"></i>
+                        <i class="fas fa-donate fa-2x {{$classe}}"></i>
                     </div>
                 </div>
             </div>
@@ -223,23 +224,22 @@ $saldoMes = number_format($saldoMes, 2, ',', '.');
     </div>
 </div>
 <div class="row">
-  <!-- Earnings (Monthly) Card Example -->
+
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card border-left-info shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Agendas no Mês</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo @$totalAgenda ?></div>
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tipos Serviços</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800"> <?php echo @$totalServicos ?></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-taxi fa-2x text-primary"></i>
+                        <i class="fas fa-code-branch fa-2x text-info"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-success shadow h-100 py-2">
@@ -250,7 +250,7 @@ $saldoMes = number_format($saldoMes, 2, ',', '.');
                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo @$entradasMes ?></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-success"></i>
+                        <i class="fas fa-donate fa-2x text-success"></i>
                     </div>
                 </div>
             </div>
@@ -267,7 +267,7 @@ $saldoMes = number_format($saldoMes, 2, ',', '.');
                         <div class="h5 mb-0 font-weight-bold text-gray-800">R$ <?php echo @$saidasMes ?></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-danger"></i>
+                        <i class="fas fa-donate fa-2x text-danger"></i>
                     </div>
                 </div>
             </div>
@@ -284,7 +284,7 @@ $saldoMes = number_format($saldoMes, 2, ',', '.');
                         <div class="h5 mb-0 font-weight-bold text-gray-800">R$ <?php echo @$saldoMes ?></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x {{$classeMes}}"></i>
+                        <i class="fas fa-donate fa-2x {{$classeMes}}"></i>
                     </div>
                 </div>
             </div>

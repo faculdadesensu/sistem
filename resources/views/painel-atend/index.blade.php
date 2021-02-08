@@ -49,7 +49,7 @@ $totalComissoesMes = number_format($totalComissoesMes, 2, ',', '.');
                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $totalAulasHoje ?></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-clipboard-list fa-2x text-primary"></i>
+                        <i class="fas fa-calendar-alt fa-2x text-primary"></i>
                     </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@ $totalComissoesMes = number_format($totalComissoesMes, 2, ',', '.');
                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $totalAulasMes ?></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-clipboard-list fa-2x text-secondary"></i>
+                        <i class="fas fa-calendar-alt fa-2x text-secondary"></i>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@ $totalComissoesMes = number_format($totalComissoesMes, 2, ',', '.');
                         <div class="h5 mb-0 font-weight-bold text-gray-800">R$ <?php echo $totalComissoesHoje ?></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-info"></i>
+                        <i class="fas fa-donate fa-2x text-info"></i>
                     </div>
                 </div>
             </div>
@@ -100,7 +100,7 @@ $totalComissoesMes = number_format($totalComissoesMes, 2, ',', '.');
                         <div class="h5 mb-0 font-weight-bold text-gray-800">R$ <?php echo $totalComissoesMes ?></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-success"></i>
+                        <i class="fas fa-donate fa-2x text-success"></i>
                     </div>
                 </div>
             </div>
@@ -124,7 +124,9 @@ $totalComissoesMes = number_format($totalComissoesMes, 2, ',', '.');
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold  text-danger text-uppercase">{{$nome_cliente->name}}</div>
-                        <div class="text-xs text-secondary">CATEGORIA {{$tab->description}}</div>
+                        <div class="text-xs text-secondary">Telefone: {{$nome_cliente->fone}}</div>
+                        <div class="text-xs text-secondary">Serviço: {{$tab->description}}</div>
+                        
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clock fa-2x  text-danger"></i><br>

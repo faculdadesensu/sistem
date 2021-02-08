@@ -83,7 +83,7 @@ date_default_timezone_set('America/Sao_Paulo');
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" style="color:#663610" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-home"></i>
+                    <i class="fas fa-code-branch"></i>
                     <span>Cadastro Serviço</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
@@ -103,7 +103,7 @@ date_default_timezone_set('America/Sao_Paulo');
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" style="color:#663610" href="{{route('agendas.index')}}">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                    <i class="fas fa-calendar-alt fa-chart"></i>
                     <span>Agenda</span>
                 </a>
             </li>
