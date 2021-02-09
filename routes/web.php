@@ -126,8 +126,8 @@ Route::post('painel-recepcao/agendas',                      [AgendaController::c
 Route::get('painel-recepcao/agendas/inserir/',              [AgendaController::class, 'createRecep'])->name('painel-recepcao-agendas.inserir');
 Route::get('painel-recepcao/agendas/{item}/edit',           [AgendaController::class, 'edit'])->name('painel-recepcao-agendas.edit');
 Route::put('painel-recepcao/agendas/{item}',                [AgendaController::class, 'editar'])->name('painel-recepcao-agendas.editar');
-Route::delete('painel-recepcao/agendas/{item}',             [AgendaController::class, 'delete'])->name('painel-recepcao-agendas.delete');
-Route::get('painel-recepcao/agendas/{item}',                [AgendaController::class, 'modal'])->name('painel-recepcao-agendas.modal');
+Route::delete('painel-recepcao/agendas/{item}/{item2}',     [AgendaController::class, 'delete'])->name('painel-recepcao-agendas.delete');
+Route::get('painel-recepcao/agendas/{item}/{item2}',        [AgendaController::class, 'modal'])->name('painel-recepcao-agendas.modal');
 Route::post('painel-recepcao/cobrar-agendas/',              [AgendaController::class, 'cobrar'])->name('painel-recepcao-agendas.cobrar');
 Route::get('painel-recepcao/cobrar-agendas/{item}',         [AgendaController::class, 'modal_cobrar'])->name('painel-recepcao-agendas.modal-cobrar');
 

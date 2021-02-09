@@ -2,50 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Atendente;
 use App\Models\File;
 use Illuminate\Http\Request;
 
 class FilaController extends Controller
 {
     public function index(){
-        $id_users = Atendente::get();
-
+       
         $id = [];
+        $idFila = [];
 
         $file = File::get();
 
         foreach ($file as $value) {
            $id [] = $value->id_user;
+           $id_fila [] = $value->id;
         }
-
-      
-        
-        foreach ($id_users as $value2) {
-
-            if (!in_array($value2->id ,$id)) { 
-              
-                $tabela = new File();
-            
-                $tabela->id_user = $value2->id;
-    
-                $tabela->save();
-            }
-           
-        }
-        dd('aqui');
-     
-                
-    }
-
-    public function fila(){
-
         array_push($id);
 
-        print_r($id);
-   
+        $ini = $id[0];
+
         array_shift($id);
+
+        $id [] = $ini;
         
-        print_r($id); 
+        for ($i=0; $i < count($id_fila); $i++) { 
+            $update = File::where('id','=', $id_fila[$i])->first();
+            $update->id_user = $id[$i];
+            $update->save();
+        }
+
+        return  $ini;
     }
 }

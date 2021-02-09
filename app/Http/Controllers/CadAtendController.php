@@ -48,6 +48,12 @@ class CadAtendController extends Controller
         $atendente2->save();
         $atendente->save();
 
+        $fila = new File();
+            
+        $fila->id_user = $atendente->id;
+
+        $fila->save();
+
         return redirect()->route('cadAtend');
     }
 

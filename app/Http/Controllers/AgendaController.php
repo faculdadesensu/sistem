@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agenda;
+use App\Models\Atendente;
 use App\Models\ContasReceberes;
 use App\Models\Hora;
 use Illuminate\Http\Request;
@@ -45,26 +46,49 @@ class AgendaController extends Controller
     }
     
     public function insert(Request $request){
-       
+
+        $user_session =  $_SESSION['level_user'];
         $value = implode('.', explode(',', $request->value_service));
 
         $agenda                 = new Agenda();
+        $fila = new FilaController();
 
+        $id_fila = $fila->index();
+
+        $atendente = Atendente::where('id', '=', $id_fila)->first();
+       
         $agenda->data           = $request->date;
         $agenda->time           = $request->time;
         $agenda->name_client    = $request->name_client;
         $agenda->fone_client    = $request->fone_client;
-        $agenda->atendente      = $request->atendente;
+
+        if ($_SESSION['level_user'] == 'atend') {
+            $agenda->atendente = $request->atendente;
+        }else{
+            $agenda->atendente      = $atendente->name;
+        }
+
         $agenda->create_by      = $request->create_by;
         $agenda->description    = $request->description;
         $agenda->value_service  = $value;
        
 
-        $check = Agenda::where('data', '=', $request->date)->where('time', '=', $request->time)->where('atendente', '=', $request->atendente)->where('status_baixa', '=', 0)->count();
+        $check = Agenda::where('data', '=', $request->date)->where('time', '=', $request->time)->where('atendente', '=', ($_SESSION['level_user'] == 'atend') ? $request->atendente : $atendente->name)->where('status_baixa', '=', 0)->first();
        
-        if($check > 0){
+        if($check->atendente != null){
+            if($check->atendente == $atendente->name){
+                if ($user_session == 'admin') {
+                    return view('painel-admin.agenda.create', ['create_by'=>$request->create_by, 'description'=>$request->description, 'value_service'=>$request->value_service, 'atendente' => $atendente->name, 'id'=>$id_fila, 'date2'=>$request->date, 'time2'=>$request->time, 'name_client' =>$request->name_client, 'fone_client'=>$request->fone_client]);
+                }if($user_session == 'recep'){
+                    return view('painel-recepcao.agenda.create', ['create_by'=>$request->create_by, 'description'=>$request->description, 'value_service'=>$request->value_service,'atendente' => $atendente->name, 'id'=>$id_fila, 'date2'=>$request->date, 'time2'=>$request->time, 'name_client' =>$request->name_client, 'fone_client'=>$request->fone_client]);
+                }else{
+                    echo "<script language='javascript'> window.alert('Já existe um serviço agendado para este atendente no horário informado 2!') </script>";
+                    $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
+                    return view('painel-atend.agenda.index', ['agenda_hora' => $agenda_hora]);
+                }
+            }
             echo "<script language='javascript'> window.alert('Já existe um serviço agendado para este atendente no horário informado!') </script>";
-            $user_session =  $_SESSION['level_user'];
+          
            
             if ($user_session == 'admin') {
                 return view('painel-admin.agenda.create');
@@ -192,6 +216,7 @@ class AgendaController extends Controller
         }
     }
 
+  
     public function cobrar(Request $request){
    
         $tabela               = new ContasReceberes();

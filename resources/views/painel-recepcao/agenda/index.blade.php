@@ -15,6 +15,7 @@ if(!isset($id)){
   $id = "";
 }
 
+
 if(!isset($id2)){
   $id2 = "";
 }
@@ -60,7 +61,7 @@ if(!isset($id2)){
               <td>
               <a title="Finalizar Atendimento" href="{{route('painel-recepcao-agendas.modal-cobrar', $item->id)}}"><i class="fas  fa-thumbs-up fa-frog text-success mr-3"></i></a>
               <a title="Editar agenda" href="{{route('painel-recepcao-agendas.edit', $item)}}"><i class="fas fa-edit text-info mr-3"></i></a>
-              <a title="Excluir agenda" href="{{route('painel-recepcao-agendas.modal', $item->id)}}"><i class="fas fa-trash text-danger mr-1"></i></a>
+              <a title="Excluir agenda" href="{{route('painel-recepcao-agendas.modal', [$item->id, 0])}}"><i class="fas fa-trash text-danger mr-1"></i></a>
               </td>
             </tr>
           @endforeach 
@@ -91,7 +92,7 @@ if(!isset($id2)){
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <form method="POST" action="{{route('painel-recepcao-agendas.delete', $id)}}">
+        <form method="POST" action="{{route('painel-recepcao-agendas.delete', [$id, 0])}}">
           @csrf
           @method('delete')
           <button type="submit" class="btn btn-danger">Excluir</button>
