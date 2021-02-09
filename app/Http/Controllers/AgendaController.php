@@ -49,33 +49,48 @@ class AgendaController extends Controller
 
         $user_session =  $_SESSION['level_user'];
         $value = implode('.', explode(',', $request->value_service));
+        $fila       = new FilaController();
+        $agenda     = new Agenda();
 
-        $agenda                 = new Agenda();
-        $fila = new FilaController();
+        $agenda->data           = $request->date;
+        $agenda->time           = $request->time;
+        $agenda->name_client    = $request->name_client;
+        $agenda->fone_client    = $request->fone_client;
+        $agenda->create_by      = $request->create_by;
+        $agenda->description    = $request->description;
+        $agenda->value_service  = $value;
+        
 
         $id_fila = $fila->index();
 
         $atendente = Atendente::where('id', '=', $id_fila)->first();
        
-        $agenda->data           = $request->date;
-        $agenda->time           = $request->time;
-        $agenda->name_client    = $request->name_client;
-        $agenda->fone_client    = $request->fone_client;
-
         if ($_SESSION['level_user'] == 'atend') {
             $agenda->atendente = $request->atendente;
         }else{
             $agenda->atendente      = $atendente->name;
         }
 
-        $agenda->create_by      = $request->create_by;
-        $agenda->description    = $request->description;
-        $agenda->value_service  = $value;
-       
+        $id_atendimento =  DB::select('select id_user from files');
+        $atend [] = $atendente->name;
+        for ($i=0; $i < count($id_atendimento); $i++) {
+            $check = Agenda::where('data', '=', $request->date)->where('time', '=', $request->time)->where('atendente', '=', ($_SESSION['level_user'] == 'atend') ? $request->atendente : $atend [0])->where('status_baixa', '=', 0)->count();
+            if($check == 0){
+                $id = $fila->index();
+                $atend [] = DB::select('select name from atendentes where id = '.$id);
+               // echo $atend[0];
+            }else{
+                $agenda->atendente      = $atend[0];
+                echo   $agenda->atendente;
+                break;
+            }
 
-        $check = Agenda::where('data', '=', $request->date)->where('time', '=', $request->time)->where('atendente', '=', ($_SESSION['level_user'] == 'atend') ? $request->atendente : $atendente->name)->where('status_baixa', '=', 0)->first();
+           
+        }
+
+        dd('fora do for');  
        
-        if($check->atendente != null){
+       /* if($check->atendente != null){
             if($check->atendente == $atendente->name){
                 if ($user_session == 'admin') {
                     return view('painel-admin.agenda.create', ['create_by'=>$request->create_by, 'description'=>$request->description, 'value_service'=>$request->value_service, 'atendente' => $atendente->name, 'id'=>$id_fila, 'date2'=>$request->date, 'time2'=>$request->time, 'name_client' =>$request->name_client, 'fone_client'=>$request->fone_client]);
@@ -98,7 +113,7 @@ class AgendaController extends Controller
                 $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
                 return view('painel-atend.agenda.index', ['agenda_hora' => $agenda_hora]);
             }
-        }
+        }*/
 
         $agenda->save();
 
