@@ -10,8 +10,7 @@ class FilaController extends Controller
     public function index(){
        
         $id = [];
-        $idFila = [];
-
+       
         $file = File::get();
 
         foreach ($file as $value) {

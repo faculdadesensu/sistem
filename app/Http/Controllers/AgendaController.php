@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Agenda;
 use App\Models\Atendente;
 use App\Models\ContasReceberes;
+use App\Models\File;
 use App\Models\Hora;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -51,6 +52,15 @@ class AgendaController extends Controller
         $value = implode('.', explode(',', $request->value_service));
         $fila       = new FilaController();
         $agenda     = new Agenda();
+        $id_atend = File::all();
+
+        $fila_id = [];
+
+        //dd($id_atend[0]->id_user);
+        foreach ($id_atend  as $val) {
+            $fila_id []= $val->id_user;
+        }
+        //dd($fila_id);
 
         $agenda->data           = $request->date;
         $agenda->time           = $request->time;
@@ -60,37 +70,59 @@ class AgendaController extends Controller
         $agenda->description    = $request->description;
         $agenda->value_service  = $value;
         
-
-        $id_fila = $fila->index();
-
-        $atendente = Atendente::where('id', '=', $id_fila)->first();
-       
         if ($_SESSION['level_user'] == 'atend') {
             $agenda->atendente = $request->atendente;
         }else{
-            $agenda->atendente      = $atendente->name;
-        }
+            $id_fila = $fila->index();
 
-        $id_atendimento =  DB::select('select id_user from files');
-        $atend [] = $atendente->name;
-        for ($i=0; $i < count($id_atendimento); $i++) {
-            $check = Agenda::where('data', '=', $request->date)->where('time', '=', $request->time)->where('atendente', '=', ($_SESSION['level_user'] == 'atend') ? $request->atendente : $atend [0])->where('status_baixa', '=', 0)->count();
-            if($check == 0){
-                $id = $fila->index();
-                $atend [] = DB::select('select name from atendentes where id = '.$id);
-               // echo $atend[0];
-            }else{
-                $agenda->atendente      = $atend[0];
-                echo   $agenda->atendente;
-                break;
+            $atendente = Atendente::where('id', '=', $id_fila)->first();
+            $agenda->atendente      = $atendente->name;
+            $atendente = $atendente->name;
+            echo "<br> Inicio".$atendente;
+            //dd($atendente);
+
+            $check = Agenda::where('data', '=', $request->date)->where('time', '=', $request->time)->where('atendente', '=', $atendente)->where('status_baixa', '=', 0)->first();
+            if(isset($check)){
+                $atend = $atendente;
+                for ($i=0; $i < count($fila_id); $i++) {
+                   // array_push($id);
+            
+                    //array_shift($id);
+                    $check = Agenda::where('data', '=', $request->date)->where('time', '=', $request->time)->where('atendente', '=', $atend)->where('status_baixa', '=', 0)->first();
+                    //Criar um array onde contem os ids dos atendentes que estão com a agenda ocupada neste horario
+                    //no looping for, verificar se o id do atendente que retornou está neste array, se não estiver, salva o agendamento, se tiver, continua o looping.
+                    if(isset($check)){
+                        
+                        $id_fila2 = $fila->index();
+                        echo "<br>".$id_fila2;
+                        $atendente2 = Atendente::where('id', '=', $id_fila2)->first();
+
+
+                       // dd($atendente2);
+
+                        //dd($atendente2);
+                        $atend2 = $atendente2;
+                        $atend = $atend2->name;
+                        echo "<br> no if ".$atend;
+                    }
+                    $agenda->atendente = $atend;
+
+                    //$agenda->save();
+                    echo "<br>fora do if ".$atend;
+                }
             }
+           
+            $new = $fila->index();
+           
+            dd('estou aqui');
+            echo "<br> final ".$atend.$new;
 
            
         }
 
-        dd('fora do for');  
+       $check = Agenda::where('data', '=', $request->date)->where('time', '=', $request->time)->where('atendente', '=', ($_SESSION['level_user'] == 'atend') ? $request->atendente : $atendente->name)->where('status_baixa', '=', 0)->first();
        
-       /* if($check->atendente != null){
+        if($check->atendente != null){
             if($check->atendente == $atendente->name){
                 if ($user_session == 'admin') {
                     return view('painel-admin.agenda.create', ['create_by'=>$request->create_by, 'description'=>$request->description, 'value_service'=>$request->value_service, 'atendente' => $atendente->name, 'id'=>$id_fila, 'date2'=>$request->date, 'time2'=>$request->time, 'name_client' =>$request->name_client, 'fone_client'=>$request->fone_client]);
@@ -113,9 +145,52 @@ class AgendaController extends Controller
                 $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
                 return view('painel-atend.agenda.index', ['agenda_hora' => $agenda_hora]);
             }
-        }*/
+        }
 
         $agenda->save();
+         /*if($check > 0){
+            if (($_SESSION['level_user'] != 'atend')) {
+
+                $count = 0;
+                do {
+                    $id_fila = $fila->index();
+                    $atendente = Atendente::where('id', '=', $id_fila)->first();
+                   
+                    $check2 = Agenda::where('data', '=', $request->date)->where('time', '=', $request->time)->where('atendente', '=', $atendente->name)->where('status_baixa', '=', 0)->first();
+                    
+                    if($check2->atendente != $atendente->name){
+                        $agenda->atendente = $atendente->name;
+                        $agenda->save();
+                        dd('estou aqui');
+                        echo "<script language='javascript'> window.alert('Já existe um serviço agendado para todos atendentes no horário informado!') </script>";
+                       
+                    }
+                    $count++;
+                    
+                } while ($count < count($id_atend));
+               
+                dd('fora while');
+              
+            }
+            echo "<script language='javascript'> window.alert('Já existe um serviço agendado para o horário informado!') </script>";
+            $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
+            return view('painel-atend.agenda.index', ['agenda_hora' => $agenda_hora]);
+           
+        }
+
+         $check = Agenda::where('data', '=', $request->date)->where('time', '=', $request->time)->where('atendente', '=', ($_SESSION['level_user'] == 'atend') ? $request->atendente : $atend [0])->where('status_baixa', '=', 0)->count();
+       //dd($check); 
+       if ($check == 0){
+            while ($check == 0) {
+                //dd('estou aqui');
+                $id = $fila->index();
+                $atend [] = DB::select('select name from atendentes where id = '.$id);
+                //dd($atend[0]);
+                $check = Agenda::where('data', '=', $request->date)->where('time', '=', $request->time)->where('atendente', '=', $atend [0])->where('status_baixa', '=', 0)->count();
+                dd($check);
+            }
+
+        }*/
 
         if($_SESSION['level_user'] != 'atend'){
             $agenda2                 = new ContasReceberes();
