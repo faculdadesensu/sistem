@@ -24,7 +24,7 @@ class ContasReceberController extends Controller
     }
 
     public function modal($id){
-        $itens = ContasReceberes::orderby('id', 'desc')->paginate();
+        $itens = ContasReceberes::orderby('id', 'desc')->where('status_pagamento', '!=', 'Sim')->get();
 
         if($_SESSION['level_user'] == 'admin'){
             return view('painel-admin.caixa.contas-receber.index', ['itens' => $itens, 'id' => $id]);
@@ -35,7 +35,7 @@ class ContasReceberController extends Controller
     }
 
     public function index(){
-        $itens = ContasReceberes::orderby('id', 'desc')->paginate();
+        $itens = ContasReceberes::orderby('id', 'desc')->where('status_pagamento', '!=', 'Sim')->get();
         if($_SESSION['level_user'] == 'admin'){
             return view('painel-admin.caixa.contas-receber.index', ['itens' => $itens]);
         }else{
@@ -84,7 +84,7 @@ class ContasReceberController extends Controller
 
         $tabela3->save();
         
-        $itens = ContasReceberes::orderby('id', 'desc')->paginate();
+        $itens = ContasReceberes::orderby('id', 'desc')->where('status_pagamento', '!=', 'Sim')->get();
 
         if($_SESSION['level_user'] == 'admin'){
             return view('painel-admin.caixa.contas-receber.index', ['itens' => $itens]);
@@ -94,7 +94,7 @@ class ContasReceberController extends Controller
     }
 
     public function modal_baixa($id2){
-        $itens = ContasReceberes::orderby('id', 'desc')->paginate();
+        $itens = ContasReceberes::orderby('id', 'desc')->where('status_pagamento', '!=', 'Sim')->get();
 
         if($_SESSION['level_user'] == 'admin'){
             return view('painel-admin.caixa.contas-receber.index', ['itens' => $itens, 'id2' => $id2]);

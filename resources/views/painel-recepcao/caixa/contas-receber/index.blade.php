@@ -41,9 +41,7 @@ $total_entradas = number_format($total_entradas, 2, ',', '.');
                     <tr>
                         <th>Status</th>
                         <th>Data Atendimento</th>
-                        <th>Data Pagamento</th>
                         <th>Nome Cliente</th>
-                        <th>Responsavel baixa</th>
                         <th>Atendente</th>
                         <th>Descrição</th>
                         <th>Valor</th>
@@ -60,11 +58,7 @@ $total_entradas = number_format($total_entradas, 2, ',', '.');
                         <tr>
                             <td><i class="fas fa-square mr-1 text-success <?php if($item->status_pagamento != 'Sim'){ ?> text-danger <?php } ?>"></i></td>
                             <td>{{$data}}</td>
-                            <td>@if ($data2 == "")
-                                Pendente
-                            @endif{{$data2}}</td>
                             <td>{{$item->client}}</td>
-                            <td>{{$item->responsavel_receb}}</td>
                             <td>{{$item->atendente}}</td>
                             <td>{{$item->descricao}}</td>
                             <td>R$ {{$value}}</td>

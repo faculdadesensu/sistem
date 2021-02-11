@@ -9,7 +9,8 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label for="exampleInputEmail1">Nome</label>
-                <input value="{{$item->name}}" type="text" class="form-control" id="name" name="name" required>
+                <input value="{{$item->name}}" type="text" class="form-control" disabled>
+                <input value="{{$item->name}}" type="hidden" name="name" >
             </div>
         </div>
         <div class="col-md-4">

@@ -12,9 +12,7 @@ use App\Models\cliente;
 use App\Models\Hora;
 
 $tabela = Service::all();
-$atendente_list = Atendente::all();
 $cliente_list = Cliente::all();
-$hora = Hora::all();
 
 $name_user = @$_SESSION['name_user']; 
 
@@ -42,11 +40,8 @@ $name_user = @$_SESSION['name_user'];
         <div class="col-md-3">
             <div class="form-group">
                 <label for="exampleInputEmail1">Atendente</label>
-                <select class="form-control" name="atendente" required>
-                    @foreach ($atendente_list as $item)
-                        <option value="{{$item->name}}">{{$item->name}}</option>
-                    @endforeach
-                </select>
+                <input type="text" class="form-control" value="{{$atendente}}" disabled>
+                <input type="hidden" value="{{$atendente}}" name="atendente">
             </div>
         </div>
     </div>
@@ -54,17 +49,14 @@ $name_user = @$_SESSION['name_user'];
         <div class="col-md-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">Data</label>
-                <input type="date"  value="<?php echo date('Y-m-d');?>" class="form-control" id="" name="date" required>
+                <input type="date"  value="<?php echo $data;?>" class="form-control"  name="date" required>
             </div>
         </div>
         <div class="col-md-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">Horário</label>
-                <select class="form-control" name="time" required>
-                    @foreach ($hora as $item)
-                        <option value="{{$item->hora}}">{{$item->hora}}</option>
-                    @endforeach
-                </select>
+                <input type="time" class="form-control" value="{{$hora}}" disabled>
+                <input type="hidden" value="{{$hora}}" name="time">
             </div>
         </div>
         <div class="col-md-2">

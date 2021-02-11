@@ -37,12 +37,14 @@ class AgendaController extends Controller
         return view('painel-atend.agenda.create', ['hora' => $item, 'data' => $item2]);
     }
 
-    public function createRecep(){
+    public function createRecep($item, $item2, $item3){
 
         $user_session =  $_SESSION['level_user'];
 
         if ($user_session == 'admin') {
-            return view('painel-admin.agenda.create');
+            return view('painel-admin.agenda.create',['hora' =>$item, 'data'=>$item2, 'atendente'=>$item3]);
+        }if ($user_session == 'recep') {
+            return view('painel-recepcao.agenda.create',['hora' =>$item, 'data'=>$item2, 'atendente'=>$item3]);
         }else{
             return view('painel-recepcao.agenda.create');
         }
@@ -55,6 +57,7 @@ class AgendaController extends Controller
         $fila       = new FilaController();
         $agenda     = new Agenda();
         $id_atend = File::all();
+        $atendentes = Atendente::get();
 
         $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
 
@@ -71,10 +74,10 @@ class AgendaController extends Controller
         $agenda->create_by      = $request->create_by;
         $agenda->description    = $request->description;
         $agenda->value_service  = $value;
-        
-        if ($_SESSION['level_user'] == 'atend') {
-            $agenda->atendente = $request->atendente;
-        }else{
+        $agenda->atendente = $request->atendente;
+   
+        //Fila
+        /*if(0 == 1){
             $id_fila = $fila->index();
 
             $atendente = Atendente::where('id', '=', $id_fila)->first();
@@ -135,9 +138,9 @@ class AgendaController extends Controller
                     }
                 }
             }
-        }
+        }*/
 
-       $check = Agenda::where('data', '=', $request->date)->where('time', '=', $request->time)->where('atendente', '=', ($_SESSION['level_user'] == 'atend') ? $request->atendente : $atendente)->where('status_baixa', '=', 0)->count();
+       $check = Agenda::where('data', '=', $request->date)->where('time', '=', $request->time)->where('atendente', '=', $request->atendente)->where('status_baixa', '=', 0)->count();
        
         if($check > 0){
             
@@ -155,7 +158,7 @@ class AgendaController extends Controller
 
         $agenda->save();
         
-        if($_SESSION['level_user'] != 'atend'){
+        /*if($_SESSION['level_user'] != 'atend'){
             $agenda2                 = new ContasReceberes();
         
             $agenda2->date              = $request->date;
@@ -167,14 +170,12 @@ class AgendaController extends Controller
             $agenda2->id_agenda         = $agenda->id;
     
             $agenda2->save();
-        }
-
-        $user_session =  $_SESSION['level_user'];
+        }*/
 
         if ($user_session == 'admin') {
             return view('painel-admin.agenda.index', ['agenda_hora' => $agenda_hora, 'data' => $request->date]);
         }if($user_session == 'recep'){
-            return view('painel-recep.agenda.index', ['agenda_hora' => $agenda_hora, 'data' => $request->date]);
+            return view('painel-recepcao.agenda.index', ['agenda_hora' => $agenda_hora, 'data' => $request->date, 'atendentes' =>$atendentes]);
         }else{
             
             return view('painel-atend.agenda.index', ['agenda_hora' => $agenda_hora, 'data' => $request->date]);
@@ -281,7 +282,6 @@ class AgendaController extends Controller
     
         $tabela->value              = $request->value_service;
         $tabela->client             = $request->name_client;
-        $tabela->responsavel_receb  = $_SESSION['name_user'];
         $tabela->status_pagamento   = 'Não';
         $tabela->date               = date('Y-m-d');
         $tabela->atendente          = $request->atendente;

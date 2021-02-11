@@ -34,7 +34,7 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label for="exampleInputEmail1">Telefone</label>
-                <input type="text" class="form-control" id="fone" name="fone">
+                <input type="text" class="form-control" id="telefone" name="fone">
             </div>
         </div>
 

@@ -112,24 +112,24 @@ Route::get('home-atendimento',                      [PainelAtendimentoController
 Route::put('painel-atendimento/{user}',             [PainelAtendimentoController::class, 'edit'])->name('painel-atend.edit');
 
 //Rotas painel recepcionista - Clientes
-Route::get('painel-recepcao/clientes',                [ClientController::class, 'index'])->name('painel-recepcao-clientes.index');
-Route::post('painel-recepcao/clientes',               [ClientController::class, 'insert'])->name('painel-recepcao-clientes.insert');
-Route::get('painel-recepcao/clientes/inserir',        [ClientController::class, 'create'])->name('painel-recepcao-clientes.inserir');
-Route::get('painel-recepcao/clientes/{item}/edit',    [ClientController::class, 'edit'])->name('painel-recepcao-clientes.edit');
-Route::put('painel-recepcao/clientes/{item}',         [ClientController::class, 'editar'])->name('painel-recepcao-clientes.editar');
-Route::delete('painel-recepcao/clientes/{item}',      [ClientController::class, 'delete'])->name('painel-recepcao-clientes.delete');
-Route::get('painel-recepcao/clientes/{item}',         [ClientController::class, 'modal'])->name('painel-recepcao-clientes.modal');
+Route::get('painel-recepcao/clientes',                                          [ClientController::class, 'index'])->name('painel-recepcao-clientes.index');
+Route::post('painel-recepcao/clientes',                                         [ClientController::class, 'insert'])->name('painel-recepcao-clientes.insert');
+Route::get('painel-recepcao/clientes/inserir',                                  [ClientController::class, 'create'])->name('painel-recepcao-clientes.inserir');
+Route::get('painel-recepcao/clientes/{item}/edit',                              [ClientController::class, 'edit'])->name('painel-recepcao-clientes.edit');
+Route::put('painel-recepcao/clientes/{item}',                                   [ClientController::class, 'editar'])->name('painel-recepcao-clientes.editar');
+Route::delete('painel-recepcao/clientes/{item}',                                [ClientController::class, 'delete'])->name('painel-recepcao-clientes.delete');
+Route::get('painel-recepcao/clientes/{item}',                                   [ClientController::class, 'modal'])->name('painel-recepcao-clientes.modal');
 
 //Rotas painel recepcionista - Agenda
-Route::get('painel-recepcao/agendas',                       [AgendaController::class, 'index'])->name('painel-recepcao-agendas.index');
-Route::post('painel-recepcao/agendas',                      [AgendaController::class, 'insert'])->name('painel-recepcao-agendas.insert');
-Route::get('painel-recepcao/agendas/inserir/',              [AgendaController::class, 'createRecep'])->name('painel-recepcao-agendas.inserir');
-Route::get('painel-recepcao/agendas/{item}/edit',           [AgendaController::class, 'edit'])->name('painel-recepcao-agendas.edit');
-Route::put('painel-recepcao/agendas/{item}',                [AgendaController::class, 'editar'])->name('painel-recepcao-agendas.editar');
-Route::delete('painel-recepcao/agendas/{item}/{item2}',     [AgendaController::class, 'delete'])->name('painel-recepcao-agendas.delete');
-Route::get('painel-recepcao/agendas/{item}/{item2}',        [AgendaController::class, 'modal'])->name('painel-recepcao-agendas.modal');
-Route::post('painel-recepcao/cobrar-agendas/',              [AgendaController::class, 'cobrar'])->name('painel-recepcao-agendas.cobrar');
-Route::get('painel-recepcao/cobrar-agendas/{item}',         [AgendaController::class, 'modal_cobrar'])->name('painel-recepcao-agendas.modal-cobrar');
+Route::get('painel-recepcao/agendas',                                       [AgendaController::class, 'index'])->name('painel-recepcao-agendas.index');
+Route::post('painel-recepcao/agendas',                                      [AgendaController::class, 'insert'])->name('painel-recepcao-agendas.insert');
+Route::get('painel-recepcao/agendas/{item}/{item2}/{item3}/inserir/',     [AgendaController::class, 'createRecep'])->name('painel-recepcao-agendas.inserir');
+Route::get('painel-recepcao/agendas/{item}/edit',                           [AgendaController::class, 'edit'])->name('painel-recepcao-agendas.edit');
+Route::put('painel-recepcao/agendas/{item}',                                [AgendaController::class, 'editar'])->name('painel-recepcao-agendas.editar');
+Route::delete('painel-recepcao/agendas/{item}/{item2}',                     [AgendaController::class, 'delete'])->name('painel-recepcao-agendas.delete');
+Route::get('painel-recepcao/agendas/{item}/{item2}',                        [AgendaController::class, 'modal'])->name('painel-recepcao-agendas.modal');
+Route::post('painel-recepcao/cobrar-agendas/',                              [AgendaController::class, 'cobrar'])->name('painel-recepcao-agendas.cobrar');
+Route::get('painel-recepcao/cobrar-agendas/{item}',                         [AgendaController::class, 'modal_cobrar'])->name('painel-recepcao-agendas.modal-cobrar');
 
 //Rotas painel Atendimento - Agenda
 Route::get('painel-atendimentos/agendas',                               [AgendaController::class, 'index'])->name('painel-atendimentos-agendas.index');
