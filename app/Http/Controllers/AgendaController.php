@@ -18,13 +18,15 @@ class AgendaController extends Controller
     public function index(){                
         $agenda = Agenda::where('status_baixa', '=', 0)->orderby('id', 'desc')->paginate();
         $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
+
+        $atendentes = Atendente::get();
         
         $user_session =  $_SESSION['level_user'];
 
         if ($user_session == 'admin') {
-            return view('painel-admin.agenda.index', ['agenda' => $agenda]);
+            return view('painel-admin.agenda.index', ['agenda' => $agenda, 'agenda_hora' => $agenda_hora, 'atendentes' => $atendentes]);
         }if($user_session == 'recep'){
-            return view('painel-recepcao.agenda.index', ['agenda' => $agenda]);
+            return view('painel-recepcao.agenda.index', ['agenda' => $agenda, 'agenda_hora' => $agenda_hora, 'atendentes' => $atendentes]);
         }else{
             return view('painel-atend.agenda.index', ['agenda_hora' => $agenda_hora]);
         }
@@ -53,6 +55,8 @@ class AgendaController extends Controller
         $fila       = new FilaController();
         $agenda     = new Agenda();
         $id_atend = File::all();
+
+        $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
 
         $fila_id = [];
 
@@ -124,9 +128,9 @@ class AgendaController extends Controller
                         $agenda->save();
                         $fila->index();
                         if ($user_session == 'admin') {
-                            return redirect()->route('agendas.index');
+                            return view('painel-admin.agenda.index', ['agenda_hora' => $agenda_hora, 'data' => $request->date]);
                         }if($user_session == 'recep'){
-                            return redirect()->route('painel-recepcao-agendas.index');
+                            return view('painel-recep.agenda.index', ['agenda_hora' => $agenda_hora, 'data' => $request->date]);
                         }
                     }
                 }
@@ -145,9 +149,7 @@ class AgendaController extends Controller
             }if($user_session == 'recep'){
                 return view('painel-recepcao.agenda.create');
             }else{
-               
-                $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
-                return view('painel-atend.agenda.index', ['agenda_hora' => $agenda_hora]);
+                return view('painel-atend.agenda.index', ['agenda_hora' => $agenda_hora, 'data' => $request->date]);
             }
         }
 
@@ -170,11 +172,11 @@ class AgendaController extends Controller
         $user_session =  $_SESSION['level_user'];
 
         if ($user_session == 'admin') {
-            return redirect()->route('agendas.index');
+            return view('painel-admin.agenda.index', ['agenda_hora' => $agenda_hora, 'data' => $request->date]);
         }if($user_session == 'recep'){
-            return redirect()->route('painel-recepcao-agendas.index');
+            return view('painel-recep.agenda.index', ['agenda_hora' => $agenda_hora, 'data' => $request->date]);
         }else{
-            $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
+            
             return view('painel-atend.agenda.index', ['agenda_hora' => $agenda_hora, 'data' => $request->date]);
         }
     }
@@ -231,38 +233,41 @@ class AgendaController extends Controller
 
     public function delete(Agenda $item, $data){
         
-        //Redirecionamento para as views pertinentes ao usuário logado
-        $user_session =  $_SESSION['level_user'];
+        $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
+        $atendentes = Atendente::get();
 
-        if($user_session == 'atend'){
+        if ($_SESSION['level_user'] == 'atend') {
             $contaReceber = ContasReceberes::where('id_agenda', '=', $item->id);
             $contaReceber->delete();
         }
+        
 
         $item->delete();
 
-        if ($user_session == 'admin') {
-            return redirect()->route('agendas.index');
-        }if($user_session == 'recep'){
-            return redirect()->route('painel-recepcao-agendas.index');
+        if ($_SESSION['level_user'] == 'admin') {
+            return view('painel-admin.agenda.index', ['agenda_hora' => $agenda_hora, 'data' => $data, 'atendentes' => $atendentes]);
+        }if($_SESSION['level_user'] == 'recep'){
+            return view('painel-recepcao.agenda.index', ['agenda_hora' => $agenda_hora, 'data' => $data, 'atendentes' => $atendentes]);
         }else{
-            $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
+           
             return view('painel-atend.agenda.index', ['agenda_hora' => $agenda_hora, 'data' => $data]);
         }
     }
 
     public function modal($id, $data){
         $agenda = Agenda::orderby('id', 'desc')->paginate();
+        $atendentes = Atendente::get();
+        $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
       
         //Redirecionamento para as views pertinentes ao usuário logado
         $user_session =  $_SESSION['level_user'];
 
         if ($user_session == 'admin') {
-            return view('painel-admin.agenda.index', ['agenda' => $agenda, 'id' => $id]);
+            return view('painel-admin.agenda.index', ['agenda' => $agenda, 'id' => $id, 'data' => $data, 'agenda_hora' => $agenda_hora, 'atendentes' => $atendentes]);
         }if($user_session == 'recep'){
-            return view('painel-recepcao.agenda.index', ['agenda' => $agenda, 'id' => $id]);
+            return view('painel-recepcao.agenda.index', ['agenda' => $agenda, 'id' => $id, 'agenda_hora' => $agenda_hora, 'atendentes' => $atendentes, 'data' => $data]);
         }else{
-            $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
+           
             return view('painel-atend.agenda.index', ['agenda_hora' => $agenda_hora, 'id' => $id, 'data' => $data]);
         }
     }
@@ -305,7 +310,7 @@ class AgendaController extends Controller
         //dd($item);
 
         $agenda = Agenda::where('status_baixa', '=', 0)->orderby('id', 'desc')->paginate();
-
+        $atendentes = Atendente::get();
         //Redirecionamento para as views pertinentes ao usuário logado
         $user_session =  $_SESSION['level_user'];
 
@@ -319,13 +324,14 @@ class AgendaController extends Controller
     public function busca(Request $request){
         $agenda = Agenda::orderby('id', 'desc')->paginate();
         $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
+        $atendentes = Atendente::get();
         
         $user_session =  $_SESSION['level_user'];
 
         if ($user_session == 'admin') {
-            return view('painel-admin.agenda.index', ['agenda' => $agenda]);
+            return view('painel-admin.agenda.index', ['agenda' => $agenda, 'agenda_hora' => $agenda_hora, 'data' => $request->data, 'atendentes' => $atendentes]);
         }if($user_session == 'recep'){
-            return view('painel-recepcao.agenda.index', ['agenda' => $agenda]);
+            return view('painel-recepcao.agenda.index', ['agenda' => $agenda, 'agenda_hora' => $agenda_hora, 'data' => $request->data, 'atendentes' => $atendentes]);
         }else{
             return view('painel-atend.agenda.index', ['agenda_hora' => $agenda_hora, 'data' => $request->data]);
         }

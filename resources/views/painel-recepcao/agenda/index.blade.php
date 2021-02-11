@@ -15,172 +15,91 @@ if(!isset($id)){
   $id = "";
 }
 
-
-if(!isset($id2)){
-  $id2 = "";
+if(isset($data)){
+    @$data = $data;
+}else{
+    @$data = date('Y-m-d');
 }
 ?>
-
-<h6 class="mb-4"><i> AGENDA</i></h6><hr>
-
-<a href="{{route('painel-recepcao-agendas.inserir', [@$item, @$item2])}}" type="button" class="mt-2 mb-4 btn btn-primary">Nova Agenda</a>
-<!-- DataTales Example -->
-<div class="card shadow mb-4">
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
-        <thead>
-          <tr>
-          <th>Data</th>
-          <th>Horário</th>
-          <th>Nome Cliente</th>
-          <th>Telefone Cliente</th>
-          <th>Atendente</th>
-          <th>Responsavel por agenda</th>
-          <th>Serviço</th>
-          <th>Valor</th>
-          <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach($agenda as $item)
-          <?php 
-            $data = implode('/', array_reverse(explode('-', $item->data)));
-            $value = implode(',',explode('.', $item->value_service));
-            
-            ?>
-            <tr>
-              <td>{{$data}}</td>
-              <td>{{$item->time}}</td>
-              <td>{{$item->name_client}}</td>
-              <td>{{$item->fone_client}}</td>
-              <td>{{$item->atendente}}</td>
-              <td>{{$item->create_by}}</td>
-              <td>{{$item->description}}</td>
-              <td>R$ {{$value}}</td>
-              <td>
-              <a title="Finalizar Atendimento" href="{{route('painel-recepcao-agendas.modal-cobrar', $item->id)}}"><i class="fas  fa-thumbs-up fa-frog text-success mr-3"></i></a>
-              <a title="Editar agenda" href="{{route('painel-recepcao-agendas.edit', $item)}}"><i class="fas fa-edit text-info mr-3"></i></a>
-              <a title="Excluir agenda" href="{{route('painel-recepcao-agendas.modal', [$item->id, 0])}}"><i class="fas fa-trash text-danger mr-1"></i></a>
-              </td>
-            </tr>
-          @endforeach 
-        </tbody>
-      </table>
-    </div>
+<div class="row">
+  <div class="col-md-4 mb-4 border-left-primary">
+    <h6><i>SELECIONE UMA DATA PARA PESQUISA</i></h6>
+    <form class="form-inline mb-4" action="{{route('agendas.busca')}}" method="POST">
+      @csrf
+      <input class="form-control col-md-5 mt-2" name="data" value="{{$data}}" type="date" >
+      <button class="btn btn-outline-info mt-2 col-md-4 " type="submit">Buscar</button>
+    </form>
   </div>
+  <div class="col-md-4 mt-4 ">
+    <h4 class="mb-4" style="color:#522b0d; text-align:center;">AGENDA DO DIA {{implode('/', array_reverse(explode('-', $data)))}}</h4><hr>
+  </div>
+</div>
 
-<script type="text/javascript">
-  $(document).ready(function () {
-    $('#dataTable').dataTable({
-      "ordering": false
-    })
-  });
-</script>
-<!-- Modal -->
+ 
+<div class="row">
+    @foreach ($atendentes as $atendente)
+    <div class="col-md-4 mb-4">
+      <div class="card-body " style="background: #fff; border-radius: 10px; box-shadow: 0px 0px 50px 10px rgba(102,54,16, .09)">
+        
+        <h4>{{$atendente->name}}</h4>
+        <hr>
+        @foreach($agenda_hora as $item)
+            <?php $check = Agenda::where('data', '=', $data)->where('time', '=', $item->hora)->where('atendente', '=', $atendente->name)->where('status_baixa', '=', 0)->first(); ?>
+            @if (!isset($check))
+                <a href="{{route('painel-atendimentos-agendas.inserir', [$item->hora, $data, $atendente->name])}}" class="btn btn-outline-info mb-2 mt-2 " style="margin-left: 10px">{{$item->hora}}</a>
+            @else 
+                <a href="{{route('painel-atendimentos-agendas.modal', [$check->id, $data])}}" class="btn btn-primary mb-2 mt-2 " style="margin-left: 10px">{{$item->hora}}</a>
+            @endif
+        @endforeach
+      </div>
+    </div>
+      
+    @endforeach
+</div>
+
+<!-- Modal Relatório de atendimento -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content ">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Deletar Registro</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Deseja Realmente Excluir este Registro?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <form method="POST" action="{{route('painel-recepcao-agendas.delete', [$id, 0])}}">
-          @csrf
-          @method('delete')
-          <button type="submit" class="btn btn-danger">Excluir</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Modal Cobrança -->
-<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-lg">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Finalizar atendimento?</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="row">
-        <div class="col-md-6">
-        <form method="POST" action="{{route('painel-recepcao-agendas.cobrar')}}">
-          @csrf
-          @php
-            $cliente = Agenda::where('id', '=', $id2)->first();
-            $value = implode(',',explode('.', @$cliente->value_service));
-          @endphp
-          <div>
-            <ul>
-              <li>
-                Cliente: {{@$cliente->name_client}}
-              </li>
-              <li>
-                Descrição do serviço: {{@$cliente->description}}
-              </li>
-              <li>
-                Valor a receber: R$ {{$value}}
-              </li>
-              <li>
-                Atendente: {{@$cliente->atendente}}
-              </li>
-            </ul>
+      <div class="modal-content">
+          <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Detalhes Agenda</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
           </div>
-            <div align="right">
-              <input type="hidden" value="{{$id2}}" name="id_agenda">
-              <input type="hidden" value="{{@$cliente->value_service}}" name="value_service">
-              <input type="hidden"  value="{{@$cliente->description}}" name="descricao">
-              <input type="hidden" value="{{@$cliente->name_client}}" name="name_client">
-              <input type="hidden" value="{{@$cliente->atendente}}" name="atendente">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-              <button type="submit" class="btn btn-primary">Finalizar</button>
-            </div>
-        </form>
+          <div class="modal-body">
+              <?php $check2 = Agenda::where('id', '=', $id)->first(); ?>
+              <p>Cliente: {{@$check2->name_client}}</p>
+              <p>Descrição: {{@$check2->description}}</p>
+              <p>Valor: R$ {{@$check2->value_service}}</p>
+
+          </div>
+          <div class="modal-footer">
+              <a href="{{route('painel-recepcao-agendas.index')}}" class="btn btn-secondary mb-2 mt-2 " style="margin-left: 10px">Cancelar</a>
+              <form method="POST" action="{{route('painel-atendimentos-agendas.delete', [$id, $data])}}">
+                  @csrf
+                  @method('delete')
+                  <button type="submit" class="btn btn-danger">Excluir</button>
+              </form>
+             
+              <form method="POST" action="{{route('painel-atendimentos-agendas.cobrar')}}">
+                  @csrf
+                  <input type="hidden" name="id_agenda" value="{{$id}}">
+                  <input type="hidden" name="descricao" value="{{@$check2->description}}">
+                  <input type="hidden" name="name_client" value="{{@$check2->name_client}}">
+                  <input type="hidden" name="value_service" value="{{@$check2->value_service}}">
+                  <input type="hidden" name="atendente" value="{{@$check2->atendente}}">
+                  <input type="hidden" name="responsavel_receb" value="{{@$_SESSION['name_user']}}">
+                  <button type="submit" class="btn btn-primary ml-5" style="padding: 6px 50px">Finalizar</button>
+              </form>
+          </div>
       </div>
-      <div class="col-md-6">
-        <span> Histórico do cliente</span>
-          <div class="mt-02">
-            @php
-                $historyClient = ContasReceberes::where('client', '=', @$cliente->name_client)->orderby('id', 'desc')->get();
-              
-            @endphp
-            @foreach($historyClient as $item)            
-            <?php $data = implode('/', array_reverse(explode('-', @$item->date)));?>
-            <ul>
-              <li>
-                Nome: {{@$item->client}}<br>
-                Serviço: {{@$item->descricao}}<br>      
-                Valor pago: {{@$item->value}}<br>
-                Atendente: {{@$item->atendente}}<br>
-                Data: {{$data}}<br>
-                <span><i class="fas fa-check text-success <?php if(@$item->status_pagamento != 'Sim'){ ?> text-danger <?php }?> "> Status Pagamento</i></span>
-              </li>
-            </ul>
-            <hr>
-            @endforeach
-            </div>
-      </div>
-      </div>
-    </div>
   </div>
 </div>
-<?php 
+<?php
 if(@$id != ""){
-  echo "<script>$('#exampleModal').modal('show');</script>";
-}
-
-if(@$id2 != ""){
-  echo "<script>$('#exampleModal2').modal('show');</script>";
+echo "<script>$('#exampleModal').modal('show');</script>";
 }
 ?>
+
 @endsection
