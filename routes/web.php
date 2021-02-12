@@ -139,9 +139,10 @@ Route::delete('painel-atendimentos/agendas/{item}/{item2}',             [AgendaC
 Route::get('painel-atendimentos/agendas/{item}/{item2}',                [AgendaController::class, 'modal'])->name('painel-atendimentos-agendas.modal');
 Route::post('painel-atendimentos/cobrar-agendas/',                      [AgendaController::class, 'cobrar'])->name('painel-atendimentos-agendas.cobrar');
 
-//Rotas Contas a receber
+//Rotas Contas a receber recepção
 Route::delete('painel-recepcao/constas-receber/{item}/delete',                  [ContasReceberController::class, 'delete'])->name('contas-receber.delete');
 Route::get('painel-recepcao/contas-receber/{item}',                             [ContasReceberController::class, 'modal'])->name('contas-receber.modal');
+Route::get('painel-recepcao/contas-receber/{item}/modal-de-selecao',            [ContasReceberController::class, 'modalPrincipal'])->name('contas-receber.modalPrincipal');
 Route::get('painel-recepcao/contas-receber',                                    [ContasReceberController::class, 'index'])->name('contas-receber.index');
 Route::get('painel-recepcao/constas-receber/{item}/edit',                       [ContasReceberController::class, 'edit'])->name('contas-receber.edit');
 Route::put('painel-recepcao/constas-receber/{item}',                            [ContasReceberController::class, 'editar'])->name('contas-receber.editar');

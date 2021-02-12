@@ -34,6 +34,19 @@ class ContasReceberController extends Controller
        
     }
 
+    public function modalPrincipal($id){
+        $itens = ContasReceberes::orderby('id', 'desc')->where('status_pagamento', '!=', 'Sim')->get();
+
+        if($_SESSION['level_user'] == 'admin'){
+            return view('painel-admin.caixa.contas-receber.index', ['itens' => $itens, 'id3' => $id]);
+        }else{
+            return view('painel-recepcao.caixa.contas-receber.index', ['itens' => $itens, 'id3' => $id]);
+        }
+       
+    }
+
+
+
     public function index(){
         $itens = ContasReceberes::orderby('id', 'desc')->where('status_pagamento', '!=', 'Sim')->get();
         if($_SESSION['level_user'] == 'admin'){

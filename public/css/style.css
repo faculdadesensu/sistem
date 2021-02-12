@@ -149,3 +149,9 @@ html,body{
   -webkit-animation-name: fadeInUp;
   animation-name: fadeInUp;
 }
+
+.overflow-b {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

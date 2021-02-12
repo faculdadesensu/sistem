@@ -1,5 +1,5 @@
 @extends('template.template-recep')
-@section('title', 'Contas a Pagar')
+@section('title', 'Contas a Receber')
 @section('content')
 
 <?php
@@ -12,6 +12,10 @@ if (!isset($id)) {
 }
 if (!isset($id2)) {
     $id2 = "";
+}
+
+if (!isset($id3)) {
+    $id3 = "";
 }
 
 use App\Models\Movimentacao;
@@ -31,55 +35,77 @@ foreach($tabela as $tab){
 $total_entradas = number_format($total_entradas, 2, ',', '.');
 
 ?>
-<h6 class="mb-4"><i> CONTAS A RECEBER</i></h6><hr>
+<div class="row">  
+   
+    <h3 class="mt-4 ml-4"><i> CONTAS A RECEBER</i></h3><hr>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Entradas do Dia</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">R$ {{@$total_entradas}}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-donate fa-2x text-success"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>Status</th>
-                        <th>Data Atendimento</th>
-                        <th>Nome Cliente</th>
-                        <th>Atendente</th>
-                        <th>Descrição</th>
-                        <th>Valor</th>
-                        <th>Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($itens as $item)
-                        <?php 
-                            $data = implode('/', array_reverse(explode('-', $item->date)));
-                            $data2 = implode('/', array_reverse(explode('-', $item->data_pagamento)));
-                            $value = implode(',', explode('.', $item->value));
-                        ?>
-                        <tr>
-                            <td><i class="fas fa-square mr-1 text-success <?php if($item->status_pagamento != 'Sim'){ ?> text-danger <?php } ?>"></i></td>
-                            <td>{{$data}}</td>
-                            <td>{{$item->client}}</td>
-                            <td>{{$item->atendente}}</td>
-                            <td>{{$item->descricao}}</td>
-                            <td>R$ {{$value}}</td>
-                            @if(@$item->status_pagamento != 'Sim')
-                            <td>                                   
-                                <a title="Finalizar Recebimento" href="{{route('contas-receber.modal-baixa', $item->id)}}"><i class="fas fa-coins text-success mr-3"></i></a>
-                                <a title="Excluir Recebimento" href="{{route('contas-receber.modal', $item)}}"><i class="fas fa-trash text-danger mr-1"></i></a>
-                            </td>
-                            @else
-                            <td>Finalizado</td>
-                            @endif
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="row mb-4 mr-2 " align="right">
-        <div class="col-md-12" >
-            <span class="">Entradas do Dia: <span class="text-success">R$ {{@$total_entradas}}</span></span>
-        </div>
+        <button type="button" class="btn btn-primary btn-lg btn-block mb-2">
+            <div class="row">
+                <div class="col-sm-2 offset-sm-1">
+                    DATA
+                </div>
+                <div class="col-sm-2 overflow-b">
+                    CLIENTE
+                </div>
+                <div class="col-sm-2 overflow-b">
+                    ATENDENTE
+                </div>
+                <div class="col-sm-2 overflow-b">
+                    DESCRIÇÃO
+                </div>
+                <div class="col-sm-2 overflow-b">
+                    VALOR
+                </div>
+            </div>
+        </button>
+        @foreach($itens as $item)
+            <?php
+                $data = implode('/', array_reverse(explode('-', $item->date)));
+                $data2 = implode('/', array_reverse(explode('-', $item->data_pagamento)));
+                $value = implode(',', explode('.', $item->value));
+            ?>
+            <form action="{{route('contas-receber.modalPrincipal', $item->id)}}" method="GET" >
+                @csrf
+                <button type="submit" class="btn btn-outline-info btn-lg btn-block mb-2">
+                    <div class="row">
+                        <div class="col-sm-2 offset-sm-1">
+                            {{$data}} 
+                        </div>
+                        <div class="col-sm-2 overflow-b">
+                            {{$item->client}}
+                        </div>
+                        <div class="col-sm-2 overflow-b">
+                            {{$item->atendente}}
+                        </div>
+                        <div class="col-sm-2 overflow-b">
+                            {{$item->descricao}}
+                        </div>
+                        <div class="col-sm-2 overflow-b">
+                            R$ {{$value}}
+                        </div>
+                    </div>
+                </button>
+            </form>
+        @endforeach
     </div>
 </div>
 
@@ -98,15 +124,12 @@ $total_entradas = number_format($total_entradas, 2, ',', '.');
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Deletar Registro</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
         </div>
         <div class="modal-body">
           Deseja Realmente Excluir este Registro?
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <a href="{{route('contas-receber.index')}}" type="button" class="mt-4 mb-4 btn btn-secondary">Cancelar</a>
           <form method="POST" action="{{route('contas-receber.delete', $id)}}">
             @csrf
             @method('delete')
@@ -123,31 +146,65 @@ $total_entradas = number_format($total_entradas, 2, ',', '.');
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Baixar Recebimento</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
             <div class="modal-body">
-                Deseja realmente finalizar esse recebimento?
-
-                <hr><p><b>Responsável por receber pagamento : <br>{{$_SESSION['name_user']}}</b></p>
-
+                Deseja receber este pagamento?
+                <hr><p><b>Recebido por: <br>{{$_SESSION['name_user']}}</b></p>
+                <?php
+                    use App\Models\ContasReceberes;
+                    $contaReceber = ContasReceberes::where('id', '=', $id2)->first(); 
+                ?>
+                <hr>
+                <p><b>Dados do atendimento</b></p>
+                <b>Cliente</b><br>
+                <p>{{@$contaReceber->client}}</p>
+                <b>Atendente</b><br>
+                <p>{{@$contaReceber->atendente}}</p>
+                <b>Valor</b><br>
+                <p>R$ {{@$contaReceber->value}}</p>
+                <b>Descrição</b><br>
+                <p>{{@$contaReceber->descricao}}</p>
             </div>
             <div class="modal-footer">
-                
+                <a href="{{route('contas-receber.index')}}" type="button" class="mt-4 mb-4 btn btn-secondary">Cancelar</a>
                 <form method="POST" action="{{route('contas-receber.baixa', $id2)}}">
                     @csrf
                     @method('put')
                    
                     <input type="hidden" name='id' value="{{$id2}}">
                     <input type="hidden" name='value' value="">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Finalizar Pagamento</button>
+                    <button type="submit" class="btn btn-primary">Receber</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal Baixa escolha de opções -->
+<div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Selecione uma opção</h5>
+            </div>
+            <div class="modal-body">
+                Selecione uma opção para esta conta a receber
+            </div>
+            <div class="modal-footer">
+                <a href="{{route('contas-receber.index')}}" type="button" class="mt-4 mb-4 btn btn-secondary">Cancelar</a>
+                <form method="GET" action="{{route('contas-receber.modal', $id3)}}">
+                    @csrf
+                    <button type="submit" class="btn btn-danger mr-4">Excluir</button>
+                </form>
+                <form method="GET" action="{{route('contas-receber.modal-baixa', $id3)}}">
+                    @csrf
+                    <button type="submit" class="btn btn-primary">Receber Pagamento</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <?php
 if (@$id != "") {
@@ -156,6 +213,10 @@ if (@$id != "") {
 
 if (@$id2 != "") {
     echo "<script>$('#exampleModal2').modal('show');</script>";
+}
+
+if (@$id3 != "") {
+    echo "<script>$('#exampleModal3').modal('show');</script>";
 }
 ?>
 
