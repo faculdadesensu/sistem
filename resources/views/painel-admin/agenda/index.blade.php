@@ -44,7 +44,7 @@ if(isset($data)){
         <h4>{{$atendente->name}}</h4>
         <hr>
         @foreach($agenda_hora as $item)
-            <?php $check = Agenda::where('data', '=', $data)->where('time', '=', $item->hora)->where('atendente', '=', $atendente->name)->where('status_baixa', '=', 0)->first(); ?>
+            <?php $check = Agenda::where('data', '=', $data)->where('time', '=', $item->hora)->where('atendente', '=', $atendente->id)->where('status_baixa', '=', 0)->first(); ?>
             @if (!isset($check))
                 <a href="{{route('painel-recepcao-agendas.inserir', [$item->hora, $data, $atendente->name])}}" class="btn btn-outline-info mb-2 mt-2 " style="margin-left: 10px">{{$item->hora}}</a>
             @else 

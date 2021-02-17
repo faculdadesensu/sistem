@@ -7,6 +7,7 @@ use App\Models\Atendente;
 use App\Models\ContasReceberes;
 use App\Models\File;
 use App\Models\Hora;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -33,8 +34,6 @@ class AgendaController extends Controller
     }
     
     public function create($item, $item2){
-
-
         return view('painel-atend.agenda.create', ['hora' => $item, 'data' => $item2]);
     }
 
@@ -72,10 +71,13 @@ class AgendaController extends Controller
         $agenda->time           = $request->time;
         $agenda->name_client    = $request->name_client;
         $agenda->fone_client    = $request->fone_client;
-        $agenda->create_by      = $request->create_by;
+
+        $create_by = User::where('name', '=', $_SESSION['name_user'])->first();
+        $agenda->create_by      = $create_by->id;
         $agenda->description    = $request->description;
         $agenda->value_service  = $value;
-        $agenda->atendente = $request->atendente;
+        $id_user = Atendente::where('name', '=', $request->atendente )->first();
+        $agenda->atendente = $id_user->id;
    
         //Fila
         /*if(0 == 1){

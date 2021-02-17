@@ -27,8 +27,12 @@ if(isset($data)){
         <button class="btn btn-outline-info mt-2 col-md-4 " type="submit">Busar</button>
       </form>
     <h4 class="mb-4" style="color:#522b0d;"><i>AGENDA DO DIA {{implode('/', array_reverse(explode('-', $data)))}}</i></h4><hr>
+    @php
+        use App\Models\Atendente;
+        $id_atend = Atendente::where('name', '=', $_SESSION['name_user'])->first();
+    @endphp
     @foreach($agenda_hora as $item)
-        <?php $check = Agenda::where('data', '=', $data)->where('time', '=', $item->hora)->where('atendente', '=', $_SESSION['name_user'])->where('status_baixa', '=', 0)->first(); ?>
+        <?php $check = Agenda::where('data', '=', $data)->where('time', '=', $item->hora)->where('atendente', '=', $id_atend->id)->where('status_baixa', '=', 0)->first(); ?>
         @if (!isset($check))
             <a href="{{route('painel-atendimentos-agendas.inserir', [$item->hora, $data])}}" class="btn btn-outline-info mb-2 mt-2 " style="margin-left: 10px">{{$item->hora}}</a>
         @else 

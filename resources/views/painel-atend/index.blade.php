@@ -10,6 +10,7 @@ if(@$_SESSION['level_user'] != 'atend'){
 use App\Models\Agenda;
 use App\Models\Comissoe;
 use App\Models\Cliente;
+use App\Models\Atendente;
 
 //totais dos cards
 $hoje = date('Y-m-d');
@@ -17,8 +18,10 @@ $mes_atual = Date('m');
 $ano_atual = Date('Y');
 $dataInicioMes = $ano_atual."-".$mes_atual."-01";
 
-$totalAulasHoje = Agenda::where('data', '=', $hoje)->where('atendente', '=', $_SESSION['name_user'])->count();
-$totalAulasMes = Agenda::where('data', '>=', $dataInicioMes)->where('data', '<=', $hoje)->where('atendente', '=', $_SESSION['name_user'])->count();
+$atendente = Atendente::where('name', '=', $_SESSION['name_user'])->first();
+
+$totalAulasHoje = Agenda::where('data', '=', $hoje)->where('atendente', '=', $atendente->id)->count();
+$totalAulasMes = Agenda::where('data', '>=', $dataInicioMes)->where('data', '<=', $hoje)->where('atendente', '=', $atendente->id)->count();
 
 
 $totalComissoesHoje = 0;
