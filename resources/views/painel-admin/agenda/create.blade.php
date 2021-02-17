@@ -1,3 +1,4 @@
+
 @extends('template.template-admin')
 @section('title', 'Cadastro Agenda')
 @section('content')
@@ -5,46 +6,43 @@
 <?php 
 @session_start();
 
-use App\Models\Service;
-use App\Models\Atendente;
-use App\Models\Cliente;
+use App\Models\service;
+use App\Models\atendente;
+use App\Models\cliente;
 use App\Models\Hora;
 
-$tabela = service::all();
-$atendente_list = atendente::all();
-$cliente_list = cliente::all();
-$hora = Hora::all();
+$tabela = Service::all();
+$cliente_list = Cliente::all();
 
 $name_user = @$_SESSION['name_user']; 
+
 ?>
-<h6 class="mb-4"><i>Cadastro Agenda</i></h6><hr>
-<form method="POST" action="{{route('agendas.insert')}}">
+<h4 class="mb-4"><i>CADASTRO DE AGENDA</i></h4><hr>
+<a href="{{route('painel-recepcao-clientes.inserir')}}" type="button" class="mt-4 mb-4 btn btn-primary">Novo Cliente</a>
+<form method="POST" action="{{route('painel-recepcao-agendas.insert')}}">
     @csrf
     <div class="row">
         <div class="col-md-5">
             <div class="form-group">
                 <label for="exampleInputEmail1">Nome cliente</label>
-                <select class="form-control" name="name_client" required>
+                <select class="form-control"id="name_client" name="name_client" required>
                     @foreach ($cliente_list as $item)
-                        <option  name="name" value="{{$item->name}}">{{$item->name}}</option>
+                        <option value="{{$item->name}}">{{$item->name}}</option>
                     @endforeach
                 </select>
-            </div>
-        </div>
-        <div class="col-md-2">
-            <div class="form-group">
-                <label for="exampleInputEmail1">Telefone Cliente</label>
-                <input type="text" class="form-control" id="fone" name="fone_client" required>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
+                <label for="exampleInputEmail1">Telefone Cliente</label>
+                <input type="text" class="form-control" id="fone_client" name="fone_client" required>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
                 <label for="exampleInputEmail1">Atendente</label>
-                <select class="form-control" name="atendente" required>
-                    @foreach ($atendente_list as $item)
-                        <option value="{{$item->name}}">{{$item->name}}</option>
-                    @endforeach
-                </select>
+                <input type="text" class="form-control" value="{{$atendente}}" disabled>
+                <input type="hidden" value="{{$atendente}}" name="atendente">
             </div>
         </div>
     </div>
@@ -52,23 +50,20 @@ $name_user = @$_SESSION['name_user'];
         <div class="col-md-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">Data</label>
-                <input type="date" class="form-control" id="" name="date" required>
+                <input type="date"  value="<?php echo $data;?>" class="form-control"  name="date" required>
             </div>
         </div>
         <div class="col-md-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">Horário</label>
-                <select class="form-control" name="time" required>
-                    @foreach ($hora as $item)
-                        <option value="{{$item->hora}}">{{$item->hora}}</option>
-                    @endforeach
-                </select>
+                <input type="time" class="form-control" value="{{$hora}}" disabled>
+                <input type="hidden" value="{{$hora}}" name="time">
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="form-group">
                 <label for="exampleInputEmail1">Serviço</label>
-                <select class="form-control" name="description" required>
+                <select class="form-control" id="description" name="description" required>
                     @foreach ($tabela as $item)
                         <option value="{{$item->description}}">{{$item->description}}</option>
                     @endforeach
@@ -78,10 +73,10 @@ $name_user = @$_SESSION['name_user'];
         <div class="col-md-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">Valor</label>
-                <input type="number" class="form-control" id="preco" name="value_service">
+                <input type="text" class="form-control" id="value_service" name="value_service">
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="form-group">
                 <label for="exampleInputEmail1">Responsável por agenda</label>
                 <input type="text" class="form-control" value="{{$name_user}}" disabled>
@@ -93,4 +88,31 @@ $name_user = @$_SESSION['name_user'];
     <button type="submit" class="btn btn-primary">Salvar</button>
     </p>
 </form>
+<script>
+    $(document).on("change", "#description", function () {
+        var value = $(this).val();
+        $.ajax({
+            url:"{{ route('getService') }}",
+            method:"get",
+            data:{value:value},
+            success:function(result){
+            $("#value_service").val(result[0]['valor']);
+            }
+        })
+    });
+
+    $(document).on("change", "#name_client", function () {
+        var value = $(this).val();
+        $.ajax({
+            url:"{{ route('getClientes') }}",
+            method:"get",
+            data:{value:value},
+            success:function(result){
+            $("#fone_client").val(result[0]['fone']);
+            }
+        })
+    });
+   
+</script>
+
 @endsection

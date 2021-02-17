@@ -157,6 +157,8 @@ Route::delete('painel-recepcao/contas-pagar/{item}',                [ContasPagar
 Route::get('painel-recepcao/contas-pagar/{item}',                   [ContasPagarController::class, 'modal'])->name('pagar.modal');
 Route::get('painel-recepcao/constas-pagar/{item}/modal-baixa',      [ContasPagarController::class, 'modal_baixa'])->name('pagar.modal-baixa');
 Route::put('painel-recepcao/constas-pagar/baixa',                   [ContasPagarController::class, 'baixa'])->name('pagar.baixa');
+Route::get('painel-recepcao/contas-pagar/{item}/modal-de-selecao',  [ContasPagarController::class, 'modalPrincipal'])->name('contas-pagar.modalPrincipal');
+
 
 //Rotas painel atendentes - Solicitações
 Route::get('solicitacoes',                [SolicitacoesController::class, 'index'])->name('solicitacoes.index');

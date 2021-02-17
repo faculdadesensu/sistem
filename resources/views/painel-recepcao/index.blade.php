@@ -46,9 +46,6 @@ $saidas = number_format($saidas, 2, ',', '.');
 $saldo = number_format($saldo, 2, ',', '.');
 
 ?>
-
-
-
 <div class="row">
   <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
@@ -73,7 +70,7 @@ $saldo = number_format($saldo, 2, ',', '.');
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Entradas do Dia</div>
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Entradas</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo @$entradas ?></div>
                     </div>
                     <div class="col-auto">
@@ -90,7 +87,7 @@ $saldo = number_format($saldo, 2, ',', '.');
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Total Saídas</div>
+                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Saídas</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">R$ <?php echo @$saidas ?></div>
                     </div>
                     <div class="col-auto">
@@ -118,18 +115,14 @@ $saldo = number_format($saldo, 2, ',', '.');
         </div>
     </div>
 </div>
-
-
 <div class="text-xs font-weight-bold text-secondary text-uppercase mt-4">CONTAS À PAGAR</div>
 <hr> 
-
 <div class="row">
 <?php
   $tabela = ContasPagares::where('status', '!=', 'Pago')->orderby('data_venc', 'asc')->get();
   foreach ($tabela as $tab) {
     $data = implode('/', array_reverse(explode('-', $tab->data_venc)));
-  
-  ?>
+?>
     <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-danger shadow h-100 py-2">
             <div class="card-body">
@@ -146,8 +139,6 @@ $saldo = number_format($saldo, 2, ',', '.');
             </div>
         </div>
     </div>
-
-  <?php } ?>
-    
+    <?php } ?>
 </div>
 @endsection

@@ -34,6 +34,7 @@ class AgendaController extends Controller
     
     public function create($item, $item2){
 
+
         return view('painel-atend.agenda.create', ['hora' => $item, 'data' => $item2]);
     }
 
@@ -173,7 +174,7 @@ class AgendaController extends Controller
         }*/
 
         if ($user_session == 'admin') {
-            return view('painel-admin.agenda.index', ['agenda_hora' => $agenda_hora, 'data' => $request->date]);
+            return view('painel-admin.agenda.index', ['agenda_hora' => $agenda_hora, 'data' => $request->date, 'atendentes' =>$atendentes]);
         }if($user_session == 'recep'){
             return view('painel-recepcao.agenda.index', ['agenda_hora' => $agenda_hora, 'data' => $request->date, 'atendentes' =>$atendentes]);
         }else{

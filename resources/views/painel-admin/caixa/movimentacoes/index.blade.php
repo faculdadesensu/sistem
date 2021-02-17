@@ -32,92 +32,128 @@ $saldo = $total_entradas - $total_saidas;
 
 $total_entradas = number_format($total_entradas, 2, ',', '.');          
 $total_saidas = number_format($total_saidas, 2, ',', '.');          
-$saldo = number_format($saldo, 2, ',', '.');          
+$saldo = number_format($saldo, 2, ',', '.'); 
+
+if($saldo < 0){
+  $classe = 'text-danger';
+  $classe2 = 'border-left-danger';
+}else{
+  $classe = 'text-success';
+  $classe2 = 'border-left-success';
+}
+
 ?>
+<div class="row">
+  <h3 class="mt-4 ml-4"><b>MOVIMENTAÇÃO DO DIA</b></h3><hr>
+<!-- Earnings (Monthly) Card Example -->
+<div class="col-xl-3 col-md-6 mb-4 " >
+  <div class="card border-left-success shadow h-100 py-2">
+      <div class="card-body">
+          <div class="row no-gutters align-items-center">
+              <div class="col mr-2 ">
+                  <div class="text-xs font-weight-bold text-success text-uppercase mb-1" >Entradas</div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo @$total_entradas ?></div>
+              </div>
+              <div class="col-auto">
+                  <i class="fas fa-donate fa-2x text-success"></i>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Earnings (Monthly) Card Example -->
+<div class="col-xl-3 col-md-6 mb-4">
+  <div class="card border-left-danger shadow h-100 py-2">
+      <div class="card-body">
+          <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Saídas</div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800">R$ <?php echo @$total_saidas ?></div>
+              </div>
+              <div class="col-auto">
+                  <i class="fas fa-donate fa-2x text-danger"></i>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Pending Requests Card Example -->
+<div class="col-xl-3 col-md-6 mb-4">
+  <div class="card {{$classe2}} shadow h-100 py-2">
+      <div class="card-body">
+          <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                  <div class="text-xs font-weight-bold {{$classe}} text-uppercase mb-1">Total</div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800">R$ <?php echo @$saldo ?></div>
+              </div>
+              <div class="col-auto">
+                  <i class="fas fa-donate fa-2x {{$classe}}"></i>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+</div>
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-        <thead>
-          <tr>
-          <th>Tipo</th>
-          <th>Descrição</th>
-          <th>Responsável</th>
-          <th>Data</th>
-          <th>Entradas</th>
-          <th>Saidas</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach($itens as $item)
-          <?php 
-            $data = implode('/', array_reverse(explode('-', $item->data)));
-            $value = implode(',', explode('.', $item->value));
+      <button type="button" class="btn btn-lg btn-block mb-2" style="background-color: #D9D9D9; color:#663610">
+          <div class="row">
+            <div class="col-xl-2  overflow-b offset-xl-1">
+              Data
+            </div>
+            <div class="col-xl-2 ">
+              Descrição
+            </div>                  
+            <div class="col-xl-2 ">
+              Respnsável
+            </div>                  
+            <div class="col-xl-2 overflow-b">
+              Entradas
+            </div>
+            <div class="col-xl-2 overflow-b">
+              Saidas
+            </div>
+          </div>
+      </button>
+      @foreach($itens as $item)
+          <?php
+              $data2 = implode('/', array_reverse(explode('-', $item->data)));
+              $value2 = implode(',', explode('.', $item->value));
           ?>
-            <tr>
-              <td><i class="fas fa-square mr-1 text-success <?php if($item->tipo != 'Entrada'){ ?> text-danger <?php } ?>"></i></td>
-              <td>{{$item->descricao}}</td>
-              <td>{{$item->recep}}</td>
-              <td>{{$data}}</td>
-              @if ($item->tipo == 'Entrada')
-                <td>{{$value}}</td>
-                <td> ---</td>
-              @else
-              <td>---</td>
-              <td>{{$value}}</td>
-              @endif
-            </tr>
-          @endforeach 
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div class="row ml-2 mb-4 mr-4">
-    <div class="col-md-8">
-      <span class="">Entradas do Dia: <span class="text-success">R$ {{@$total_entradas}}</span></span>
-      <span class="ml-4 ">Saídas do Dia: <span class="text-danger">R$ {{@$total_saidas}}</span></span>
-    </div>
-    <div class="col-md-4" align="right">
-      <span class="">Saldo do Dia: <span class="text-success <?php if (@$saldo < 0) { ?> text-danger <?php } ?>">R$ {{@$saldo}}</span></span>
-    </div>
-  </div>
-</div>
-<script type="text/javascript">
-  $(document).ready(function () {
-    $('#dataTable').dataTable({
-      "ordering": false
-    })
-  });
-</script>
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Deletar Registro</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Deseja Realmente Excluir este Registro?        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <form method="POST" action="{{route('users.delete', $id)}}">
-          @csrf
-          @method('delete')
-          <button type="submit" class="btn btn-danger">Excluir</button>
-        </form>
-      </div>
-    </div>
+              <button type="submit" class="btn btn-outline-info btn-lg btn-block" disabled >
+                <div class="row">
+                  <div class="col-xl-2  overflow-b  offset-xl-1">
+                    {{$data2}}
+                  </div>
+                  <div class="col-xl-2 overflow-b">
+                    {{$item->descricao}}
+                  </div>
+                  <div class="col-xl-2 overflow-b">
+                    {{$item->recep}} 
+                  </div>
+                  @if ($item->tipo == 'Entrada')
+                    <div class="col-xl-2 overflow-b">
+                      {{$value2}}
+                    </div>
+                    <div class="col-xl-2 overflow-b">
+                      ---
+                    </div>
+                  @else
+                    <div class="col-xl-2 overflow-b">
+                      ---
+                    </div>
+                    <div class="col-xl-2 overflow-b">
+                      {{$value2}}
+                    </div>
+                  @endif
+                </div>
+            </button>
+      @endforeach
   </div>
 </div>
-<?php 
-if(@$id != ""){
-  echo "<script>$('#exampleModal').modal('show');</script>";
-}
-?>
 @endsection

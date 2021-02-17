@@ -72,7 +72,7 @@ class ContasPagarController extends Controller
      }
 
     public function modal($id){
-        $itens = ContasPagares::orderby('data_venc', 'asc')->paginate();
+        $itens = ContasPagares::orderby('id', 'desc')->where('status', '!=', 'Pago')->get();
         $user_session =  $_SESSION['level_user'];
         if ($user_session == 'admin') {
             return view('painel-admin.caixa.contas-pagar.index', ['itens' => $itens, 'id' => $id]);
@@ -84,7 +84,7 @@ class ContasPagarController extends Controller
 
     public function index(){
 
-        $itens = ContasPagares::orderby('id', 'desc')->get();
+        $itens = ContasPagares::orderby('id', 'desc')->where('status', '!=', 'Pago')->get();
         $user_session =  $_SESSION['level_user'];
 
         if ($user_session == 'admin') {
@@ -122,7 +122,7 @@ class ContasPagarController extends Controller
         $tabela2->save();
         
 
-        $itens = ContasPagares::orderby('data_venc', 'asc')->paginate();
+        $itens =  ContasPagares::orderby('id', 'desc')->where('status', '!=', 'Pago')->get();
 
         $user_session =  $_SESSION['level_user'];
 
@@ -134,7 +134,7 @@ class ContasPagarController extends Controller
     }
 
     public function modal_baixa($id2){
-        $itens = ContasPagares::orderby('data_venc', 'asc')->paginate();
+        $itens =  ContasPagares::orderby('id', 'desc')->where('status', '!=', 'Pago')->get();
         $user_session =  $_SESSION['level_user'];
 
         if ($user_session == 'admin') {
@@ -143,4 +143,17 @@ class ContasPagarController extends Controller
             return view('painel-recepcao.caixa.contas-pagar.index', ['itens' => $itens, 'id2' => $id2]);
         }
     }
+
+    
+    public function modalPrincipal($id){
+        $itens = ContasPagares::orderby('id', 'desc')->where('status', '!=', 'Pago')->get();
+
+        if($_SESSION['level_user'] == 'admin'){
+            return view('painel-admin.caixa.contas-pagar.index', ['itens' => $itens, 'id3' => $id]);
+        }else{
+            return view('painel-recepcao.caixa.contas-pagar.index', ['itens' => $itens, 'id3' => $id]);
+        }
+       
+    }
+
 }
