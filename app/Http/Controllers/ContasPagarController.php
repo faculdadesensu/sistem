@@ -84,7 +84,7 @@ class ContasPagarController extends Controller
 
     public function index(){
 
-        $itens = ContasPagares::orderby('data_venc', 'asc')->paginate();
+        $itens = ContasPagares::orderby('id', 'desc')->get();
         $user_session =  $_SESSION['level_user'];
 
         if ($user_session == 'admin') {

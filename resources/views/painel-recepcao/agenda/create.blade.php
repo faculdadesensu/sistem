@@ -17,7 +17,8 @@ $cliente_list = Cliente::all();
 $name_user = @$_SESSION['name_user']; 
 
 ?>
-<h6 class="mb-4"><i>Cadastro Agenda</i></h6><hr>
+<h4 class="mb-4"><i>CADASTRO DE AGENDA</i></h4><hr>
+<a href="{{route('painel-recepcao-clientes.inserir')}}" type="button" class="mt-4 mb-4 btn btn-primary">Novo Cliente</a>
 <form method="POST" action="{{route('painel-recepcao-agendas.insert')}}">
     @csrf
     <div class="row">
@@ -31,13 +32,13 @@ $name_user = @$_SESSION['name_user'];
                 </select>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="form-group">
                 <label for="exampleInputEmail1">Telefone Cliente</label>
                 <input type="text" class="form-control" id="fone_client" name="fone_client" required>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="form-group">
                 <label for="exampleInputEmail1">Atendente</label>
                 <input type="text" class="form-control" value="{{$atendente}}" disabled>
@@ -59,7 +60,7 @@ $name_user = @$_SESSION['name_user'];
                 <input type="hidden" value="{{$hora}}" name="time">
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="form-group">
                 <label for="exampleInputEmail1">Serviço</label>
                 <select class="form-control" id="description" name="description" required>
@@ -75,7 +76,7 @@ $name_user = @$_SESSION['name_user'];
                 <input type="text" class="form-control" id="value_service" name="value_service">
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="form-group">
                 <label for="exampleInputEmail1">Responsável por agenda</label>
                 <input type="text" class="form-control" value="{{$name_user}}" disabled>

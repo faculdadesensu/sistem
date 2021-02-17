@@ -10,7 +10,8 @@ use Illuminate\Http\Request;
 class MovimentacoesController extends Controller
 {
     public function index(){
-        $itens = Movimentacao::orderby('id', 'desc')->get();
+
+        $itens = Movimentacao::orderby('id', 'desc')->where('data', '=', date('Y-m-d'))->get();
 
         if($_SESSION['level_user'] == 'admin'){
             return view('painel-admin.caixa.movimentacoes.index', ['itens' => $itens]);

@@ -132,7 +132,8 @@ date_default_timezone_set('America/Sao_Paulo');
                         <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                             <i class="fa fa-bars " style="color:#663610" ></i>
                         </button>
-                        <div class="mt-4 mb-2" style="color:#663610" >
+                        
+                        <div class="mt-4 mb-2 infonav " style="color:#663610" >
                             <h5>{{$nome_estabelecimento}}</h5>
                             <h6>{{$data_hoje = utf8_encode(strftime('%A, %d de %B de %Y', strtotime('today')))}} - {{$endereco}}</h6>
                         </div>
