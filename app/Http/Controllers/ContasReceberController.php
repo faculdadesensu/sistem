@@ -114,6 +114,5 @@ class ContasReceberController extends Controller
         }else{
             return view('painel-recepcao.caixa.contas-receber.index', ['itens' => $itens, 'id2' => $id2]);
         }
-       
     }
 }

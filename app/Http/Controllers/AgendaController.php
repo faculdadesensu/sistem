@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Agenda;
 use App\Models\Atendente;
+use App\Models\cliente;
 use App\Models\ContasReceberes;
 use App\Models\File;
 use App\Models\Hora;
+use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,8 +19,8 @@ class AgendaController extends Controller
 {
 
     public function index(){                
-        $agenda = Agenda::where('status_baixa', '=', 0)->orderby('id', 'desc')->paginate();
-        $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
+        $agenda = Agenda::where('status_baixa', '=', 0)->orderby('id', 'desc')->get();
+        $agenda_hora = Hora::orderby('hora', 'asc')->get();
 
         $atendentes = Atendente::get();
         
@@ -53,13 +55,16 @@ class AgendaController extends Controller
     public function insert(Request $request){
 
         $user_session =  $_SESSION['level_user'];
-        $value = implode('.', explode(',', $request->value_service));
-        $fila       = new FilaController();
-        $agenda     = new Agenda();
-        $id_atend = File::all();
-        $atendentes = Atendente::get();
-
-        $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
+        $value        = implode('.', explode(',', $request->value_service));
+        $fila         = new FilaController();
+        $agenda       = new Agenda();
+        $id_atend     = File::all();
+        $atendentes   = Atendente::get();
+        $create_by    = User::where('name', '=', $_SESSION['name_user'])->first();
+        $name_client  = Cliente::where('name','=', $request->name_client)->first();
+        $description  = Service::where('description','=', $request->description)->first();
+        $id_user      = Atendente::where('name', '=', $request->atendente )->first();
+        $agenda_hora  = Hora::orderby('hora', 'asc')->get();
 
         $fila_id = [];
 
@@ -69,14 +74,12 @@ class AgendaController extends Controller
        
         $agenda->data           = $request->date;
         $agenda->time           = $request->time;
-        $agenda->name_client    = $request->name_client;
+        $agenda->name_client    = $name_client->id;
         $agenda->fone_client    = $request->fone_client;
-
-        $create_by = User::where('name', '=', $_SESSION['name_user'])->first();
         $agenda->create_by      = $create_by->id;
-        $agenda->description    = $request->description;
+        $agenda->description    = $description->id;
         $agenda->value_service  = $value;
-        $id_user = Atendente::where('name', '=', $request->atendente )->first();
+       
         $agenda->atendente = $id_user->id;
    
         //Fila
@@ -237,7 +240,7 @@ class AgendaController extends Controller
 
     public function delete(Agenda $item, $data){
         
-        $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
+        $agenda_hora = Hora::orderby('hora', 'asc')->get();
         $atendentes = Atendente::get();
 
         if ($_SESSION['level_user'] == 'atend') {
@@ -280,6 +283,9 @@ class AgendaController extends Controller
     public function cobrar(Request $request){
    
         $tabela               = new ContasReceberes();
+        $atendentes = Atendente::get();
+        $agenda_hora = Hora::orderby('hora', 'asc')->get();
+       
       
         $tabela->descricao          = $request->descricao;
     
@@ -293,6 +299,7 @@ class AgendaController extends Controller
         $tabela->save();
         
         DB::update('update agendas set status_baixa = 1 where id = '.$request->id_agenda);
+        $agenda = Agenda::where('status_baixa', '=', 0)->orderby('id', 'desc')->paginate();
 
         //Redirecionamento para as views pertinentes ao usuário logado
         $user_session =  $_SESSION['level_user'];
@@ -302,9 +309,9 @@ class AgendaController extends Controller
             return redirect()->route('agendas.index');
         }else if ($user_session == 'recep'){
 
-            return redirect()->route('painel-recepcao-agendas.index');
+            return view('painel-recepcao.agenda.index', ['agenda' => $agenda, 'agenda_hora' => $agenda_hora, 'atendentes' => $atendentes, 'data' => $request->date]);
         }else {
-            $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
+           
             return view('painel-atend.agenda.index', ['agenda_hora' => $agenda_hora]);
         }
     }

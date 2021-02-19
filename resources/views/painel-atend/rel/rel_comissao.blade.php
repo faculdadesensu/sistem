@@ -8,6 +8,7 @@
 use Dompdf\Dompdf;
 use App\Models\Movimentacao;
 use App\Models\Comissoe;
+use App\Models\Atendente;
 
 
 setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
@@ -19,8 +20,9 @@ $total_saidas = 0;
 $saldo = 0;
 
 $data = date('Y-m-d');
+$atendente = Atendente::where('name', '=', $_SESSION['name_user'])->first();
 
-$tabela = Comissoe::where('data', '>=', $dataInicial)->where('data', '<=', $dataFinal)->where('atendente', '=', $_SESSION['name_user'])->get();
+$tabela = Comissoe::where('data', '>=', $dataInicial)->where('data', '<=', $dataFinal)->where('atendente', '=', $atendente->id)->get();
 
 foreach($tabela as $tab){
 

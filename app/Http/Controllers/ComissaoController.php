@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Atendente;
 use App\Models\Comissoe;
 use Illuminate\Http\Request;
 session_start();
@@ -9,8 +10,10 @@ session_start();
 class ComissaoController extends Controller
 {
     public function index(){
-     
-        $itens = Comissoe::where('atendente', '=', $_SESSION['name_user'])->orderby('id', 'desc')->paginate();
+        $atendente = Atendente::where('name', '=', $_SESSION['name_user'])->first();
+           
+        $itens = Comissoe::where('atendente', '=', $atendente->id)->orderby('id', 'desc')->get();
+      
         return view('painel-atend.comissao.index', ['itens' => $itens]);
     }
 

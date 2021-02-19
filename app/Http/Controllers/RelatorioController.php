@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Atendente;
 use App\Models\Comissoe;
 use App\Models\Movimentacao;
 use Illuminate\Http\Request;
@@ -25,8 +26,10 @@ class RelatorioController extends Controller
 
             $data_inicial = $request->dataInicial;
             $data_final = $request->dataFinal;
+
+            $atendente = Atendente::where('name', '=', $_SESSION['name_user'])->first();
     
-            $itens = Comissoe::where('data', '>=', $data_inicial)->where('data', '<=', $data_final)->where('atendente', '=', $_SESSION['name_user'])->get();
+            $itens = Comissoe::where('data', '>=', $data_inicial)->where('data', '<=', $data_final)->where('atendente', '=', $atendente->id)->get();
             return view('painel-atend.rel.rel_comissao', ['itens' => $itens, 'dataInicial' => $data_inicial, 'dataFinal' => $data_final]);
         }else{
             $data_inicial = $request->dataInicial;

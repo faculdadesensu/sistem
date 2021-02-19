@@ -25,7 +25,7 @@ $totalAulasMes = Agenda::where('data', '>=', $dataInicioMes)->where('data', '<='
 
 
 $totalComissoesHoje = 0;
-$tabela = Comissoe::where('data', '=', $hoje)->where('atendente', '=', $_SESSION['name_user'])->get();
+$tabela = Comissoe::where('data', '=', $hoje)->where('atendente', '=',$atendente->id)->get();
 foreach ($tabela as $tab) {
  $totalComissoesHoje = $totalComissoesHoje + $tab->value;
 }
@@ -33,7 +33,7 @@ $totalComissoesHoje = number_format($totalComissoesHoje, 2, ',', '.');
 
 
 $totalComissoesMes = 0;
-$tabela = Comissoe::where('data', '>=', $dataInicioMes)->where('data', '<=', $hoje)->where('atendente', '=', $_SESSION['name_user'])->get();
+$tabela = Comissoe::where('data', '>=', $dataInicioMes)->where('data', '<=', $hoje)->where('atendente', '=', $atendente->id)->get();
 foreach ($tabela as $tab) {
  $totalComissoesMes = $totalComissoesMes + $tab->value;
 }

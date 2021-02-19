@@ -6,6 +6,8 @@
 
 use App\Models\ContasReceberes;
 use App\Models\Agenda;
+use App\Models\Cliente;
+use App\Models\Service;
 
 if(@$_SESSION['level_user'] != 'recep'){ 
   echo "<script language='javascript'> window.location='./' </script>";
@@ -44,7 +46,7 @@ if(isset($data)){
         <h4>{{$atendente->name}}</h4>
         <hr>
         @foreach($agenda_hora as $item)
-            <?php $check = Agenda::where('data', '=', $data)->where('time', '=', $item->hora)->where('atendente', '=', $atendente->name)->where('status_baixa', '=', 0)->first(); ?>
+            <?php $check = Agenda::where('data', '=', $data)->where('time', '=', $item->hora)->where('atendente', '=', $atendente->id)->where('status_baixa', '=', 0)->first(); ?>
             @if (!isset($check))
                 <a href="{{route('painel-recepcao-agendas.inserir', [$item->hora, $data, $atendente->name])}}" class="btn btn-outline-info mb-2 mt-2 " style="margin-left: 10px">{{$item->hora}}</a>
             @else 
@@ -68,10 +70,14 @@ if(isset($data)){
           </button>
           </div>
           <div class="modal-body">
-              <?php $check2 = Agenda::where('id', '=', $id)->first(); ?>
-              <p>Cliente: {{@$check2->name_client}}</p>
-              <p>Descrição: {{@$check2->description}}</p>
-              <p>Valor: R$ {{@$check2->value_service}}</p>
+              <?php 
+                $check2 = Agenda::where('id', '=', $id)->first();
+                $client = Cliente::where('id', '=', @$check2->name_client)->first(); 
+                $service = Service::where('id', '=', @$check2->description)->first(); 
+              ?>
+                <p>Cliente: {{@$client->name}}</p>
+                <p>Descrição: {{@$service->description}}</p>
+                <p>Valor: R$ {{@$check2->value_service}}</p>
 
           </div>
           <div class="modal-footer">
@@ -89,6 +95,7 @@ if(isset($data)){
                   <input type="hidden" name="name_client" value="{{@$check2->name_client}}">
                   <input type="hidden" name="value_service" value="{{@$check2->value_service}}">
                   <input type="hidden" name="atendente" value="{{@$check2->atendente}}">
+                  <input type="hidden" name="date" value="{{@$check2->data}}">
                   <button type="submit" class="btn btn-primary ml-5" style="padding: 6px 50px">Finalizar</button>
               </form>
           </div>
@@ -100,5 +107,4 @@ if(@$id != ""){
 echo "<script>$('#exampleModal').modal('show');</script>";
 }
 ?>
-
 @endsection

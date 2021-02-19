@@ -36,4 +36,11 @@ if(@$_SESSION['level_user'] != 'atend'){
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('#dataTable').dataTable({
+      "ordering": false
+    })
+  });
+</script>
 @endsection

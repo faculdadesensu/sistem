@@ -19,6 +19,10 @@ if (!isset($id3)) {
 }
 
 use App\Models\Movimentacao;
+use App\Models\Atendente;
+use App\Models\ContasReceberes;
+use App\Models\Cliente;
+use App\Models\Service;
 
 $total_entradas = 0;
 
@@ -81,6 +85,11 @@ $total_entradas = number_format($total_entradas, 2, ',', '.');
                 $data = implode('/', array_reverse(explode('-', $item->date)));
                 $data2 = implode('/', array_reverse(explode('-', $item->data_pagamento)));
                 $value = implode(',', explode('.', $item->value));
+
+                $atendente = Atendente::where('id', '=', $item->atendente)->first();
+                $cliente = Cliente::where('id', '=', $item->client)->first();
+                $service = Service::where('id', '=', $item->descricao)->first();
+             
             ?>
             <form action="{{route('contas-receber.modalPrincipal', $item->id)}}" method="GET" >
                 @csrf
@@ -90,13 +99,13 @@ $total_entradas = number_format($total_entradas, 2, ',', '.');
                             {{$data}} 
                         </div>
                         <div class="col-sm-2 overflow-b">
-                            {{$item->client}}
+                            {{$cliente->name}}
                         </div>
                         <div class="col-sm-2 overflow-b">
-                            {{$item->atendente}}
+                            {{$atendente->name}}
                         </div>
                         <div class="col-sm-2 overflow-b">
-                            {{$item->descricao}}
+                            {{$service->description}}
                         </div>
                         <div class="col-sm-2 overflow-b">
                             R$ {{$value}}
@@ -116,7 +125,6 @@ $total_entradas = number_format($total_entradas, 2, ',', '.');
     });
 </script>
 
-
 <!-- Modal Delete -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -129,15 +137,15 @@ $total_entradas = number_format($total_entradas, 2, ',', '.');
         </div>
         <div class="modal-footer">
             <a href="{{route('contas-receber.index')}}" type="button" class="mt-4 mb-4 btn btn-secondary">Cancelar</a>
-          <form method="POST" action="{{route('contas-receber.delete', $id)}}">
-            @csrf
-            @method('delete')
-            <button type="submit" class="btn btn-danger">Excluir</button>
-          </form>
+            <form method="POST" action="{{route('contas-receber.delete', $id)}}">
+                @csrf
+                @method('delete')
+                <button type="submit" class="btn btn-danger">Excluir</button>
+            </form>
         </div>
       </div>
     </div>
-  </div>
+</div>
 
 <!-- Modal Baixa Recebimento -->
 <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -150,15 +158,17 @@ $total_entradas = number_format($total_entradas, 2, ',', '.');
                 Deseja receber este pagamento?
                 <hr><p><b>Recebido por: <br>{{$_SESSION['name_user']}}</b></p>
                 <?php
-                    use App\Models\ContasReceberes;
-                    $contaReceber = ContasReceberes::where('id', '=', $id2)->first(); 
+                  
+                    $contaReceber = ContasReceberes::where('id', '=', $id2)->first();
+                    $atendente2 = Atendente::where('id', '=', @$contaReceber->atendente)->first();
                 ?>
                 <hr>
                 <p><b>Dados do atendimento</b></p>
                 <b>Cliente</b><br>
                 <p>{{@$contaReceber->client}}</p>
                 <b>Atendente</b><br>
-                <p>{{@$contaReceber->atendente}}</p>
+
+                <p>{{@$atendente2->name}}</p>
                 <b>Valor</b><br>
                 <p>R$ {{@$contaReceber->value}}</p>
                 <b>Descrição</b><br>
@@ -203,7 +213,6 @@ $total_entradas = number_format($total_entradas, 2, ',', '.');
         </div>
     </div>
 </div>
-
 
 <?php
 if (@$id != "") {

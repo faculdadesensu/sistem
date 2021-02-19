@@ -3,6 +3,9 @@
 @section('content')
 <?php 
 use App\Models\Agenda;
+use App\Models\Atendente;
+use App\Models\Cliente;
+use App\Models\Service;
 @session_start();
 if(@$_SESSION['level_user'] != 'atend'){ 
   echo "<script language='javascript'> window.location='./' </script>";
@@ -28,7 +31,7 @@ if(isset($data)){
       </form>
     <h4 class="mb-4" style="color:#522b0d;"><i>AGENDA DO DIA {{implode('/', array_reverse(explode('-', $data)))}}</i></h4><hr>
     @php
-        use App\Models\Atendente;
+       
         $id_atend = Atendente::where('name', '=', $_SESSION['name_user'])->first();
     @endphp
     @foreach($agenda_hora as $item)
@@ -51,9 +54,13 @@ if(isset($data)){
             </button>
             </div>
             <div class="modal-body">
-                <?php $check2 = Agenda::where('id', '=', $id)->first(); ?>
-                <p>Cliente: {{@$check2->name_client}}</p>
-                <p>Descrição: {{@$check2->description}}</p>
+                <?php 
+                    $check2 = Agenda::where('id', '=', $id)->first(); 
+                    $client = Cliente::where('id', '=', @$check2->name_client)->first(); 
+                    $service = Service::where('id', '=', @$check2->description)->first();
+                ?>
+                <p>Cliente: {{@$client->name}}</p>
+                <p>Descrição: {{@$service->description}}</p>
                 <p>Valor: R$ {{@$check2->value_service}}</p>
 
             </div>
