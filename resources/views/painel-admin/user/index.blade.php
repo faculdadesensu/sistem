@@ -21,9 +21,7 @@ if(!isset($id)){
           <th>Nome</th>
           <th>CPF</th>
           <th>Login</th>
-          <th>Senha</th>
           <th>Level</th>
-          <th>Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -32,11 +30,7 @@ if(!isset($id)){
               <td>{{$item->name}}</td>
               <td>{{$item->cpf}}</td>
               <td>{{$item->user}}</td>
-              <td>{{$item->password}}</td>
               <td>{{$item->level}}</td>
-              <td>
-              <a href="{{route('users.modal', $item->id)}}"><i class="fas fa-trash text-danger mr-1"></i></a>
-              </td>
             </tr>
           @endforeach 
         </tbody>
