@@ -14,13 +14,13 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label for="exampleInputEmail1">CPF</label>
-                <input type="text" class="form-control" id="cpf" name="cpf">
+                <input type="text" class="form-control" id="cpf" name="cpf" required>
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label for="exampleInputEmail1">Email</label>
-                <input type="email" class="form-control" id="" name="email">
+                <input type="email" class="form-control" id="" name="email" required>
             </div>
         </div>
     </div>
@@ -28,13 +28,13 @@
         <div class="col-md-8">
             <div class="form-group">
                 <label for="exampleInputEmail1">Endereço</label>
-                <input type="text" class="form-control" id="endereco" name="endereco">
+                <input type="text" class="form-control" id="endereco" name="endereco" required>
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label for="exampleInputEmail1">Telefone</label>
-                <input type="text" class="form-control" id="fone" name="fone">
+                <input type="text" class="form-control" id="telefone" name="fone" required>
             </div>
         </div>
 

@@ -72,18 +72,28 @@ class RecepController extends Controller
             }
         }
 
+        $user = User::where('cpf', '=', $request->oldCpf)->first();
+      
+        $user->name       = $request->name;
+        $user->cpf        = $request->cpf;
+        $user->user       = $request->email;        
+
+        $user->save();
         $item->save();
         
         return redirect()->route('recep.index');
      }
 
     public function delete(Recepcionista $item){
+        $user = User::where('cpf', '=', $item->cpf);
+
+        $user->delete();
         $item->delete();
         return redirect()->route('recep.index');
     }
 
     public function modal($id){
-        $recepcionista = Recepcionista::orderby('id', 'desc')->paginate();
+        $recepcionista = Recepcionista::orderby('id', 'desc')->get();
         return view('painel-admin.recep.index', ['recepcionista' => $recepcionista, 'id' => $id]);
     }
 }
