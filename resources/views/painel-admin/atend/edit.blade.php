@@ -9,8 +9,7 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label for="exampleInputEmail1">Nome</label>
-                <input value="{{$item->name}}" type="text" class="form-control" disabled>
-                <input value="{{$item->name}}" type="hidden" name="name" >
+                <input value="{{$item->name}}" type="text" class="form-control" name="name" >
             </div>
         </div>
         <div class="col-md-4">
@@ -36,21 +35,33 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label for="exampleInputEmail1">Telefone</label>
-                <input value="{{$item->fone}}" type="text" class="form-control" id="fone" name="fone">
+                <input value="{{$item->fone}}" type="text" class="form-control" id="telefone" name="fone">
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label for="exampleInputEmail1">Expecialização 1</label>
-                <input value="{{$item->expec1}}" type="text" class="form-control" id="expec1" name="expec1">
+                <label for="exampleInputEmail1">Expecialização A</label>
+                <select class="form-control" name="expec1">
+                    <?php
+                        use App\Models\service;
+                        $tabela = service::all();    
+                    ?>
+                    @foreach ($tabela as $item2)
+                        <option value="{{$item2->description}}">{{$item2->description}}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label for="exampleInputEmail1">Expecialização 2</label>
-                <input value="{{$item->expec2}}" type="text" class="form-control" id="expec2" name="expec2">
+                <label for="exampleInputEmail1">Expecialização B</label>
+                <select class="form-control" name="expec2">
+                    @foreach ($tabela as $item3)
+                        <option value="{{$item3->description}}">{{$item3->description}}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
     </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Atendente;
 use App\Models\File;
+use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -27,8 +28,18 @@ class CadAtendController extends Controller
         $atendente->email       = $request->email;
         $atendente->endereco    = $request->endereco;
         $atendente->fone        = $request->fone;
-        $atendente->expec1      = $request->expec1;
-        $atendente->expec2      = $request->expec2;
+
+        $descriptionEsp = Service::find(2);
+        
+        if($request->expec1 == $descriptionEsp->description || $request->expec2 == $descriptionEsp->description){
+            echo "<script language='javascript'> window.alert('Selecione as expecializações do(a) atendente!') </script>";
+            return view('painel-admin.atend.create');  
+        }
+
+        $expec1 = Service::where('description','=', $request->expec1)->first();
+        $expec2 = Service::where('description','=', $request->expec2)->first();
+        $atendente->expec1      = $expec1->id;
+        $atendente->expec2      = $expec2->id;
 
         $atendente2             = new User();
 
@@ -68,8 +79,19 @@ class CadAtendController extends Controller
         $item->email    = $request->email;
         $item->endereco = $request->endereco;
         $item->fone     = $request->fone;
-        $item->expec1   = $request->expec1;
-        $item->expec2   = $request->expec2;
+
+        $descriptionEsp = Service::find(2);
+        
+        if($request->expec1 == $descriptionEsp->description || $request->expec2 == $descriptionEsp->description){
+            echo "<script language='javascript'> window.alert('Selecione as expecializações do(a) atendente!') </script>";
+            return view('painel-admin.atend.edit', ['item' => $item]);  
+        }
+
+        $expec1 = Service::where('description','=', $request->expec1)->first();
+        $expec2 = Service::where('description','=', $request->expec2)->first();
+        $item->expec1      = $expec1->id;
+        $item->expec2      = $expec2->id;
+
         $oldCpf         = $request->oldCpf;
         $oldEmail       = $request->oldEmail;
 
@@ -87,27 +109,37 @@ class CadAtendController extends Controller
             }
         }
 
+        $user = User::where('cpf', '=', $request->oldCpf)->first();
+      
+        $user->name       = $request->name;
+        $user->cpf        = $request->cpf;
+        $user->user       = $request->email;        
+
+        $user->save();
         $item->save();
         
         return redirect()->route('cadAtend');
     }
 
     public function delete(Atendente $item){
-
+     
         $fila = File::where('id_user', '=', $item->id);
+        $user = User::where('cpf', '=', $item->cpf);
 
+        $user->delete();
         $fila->delete();
         $item->delete();
+
         return redirect()->route('cadAtend');
     }
 
     public function modal($id){
-        $atendente = Atendente::orderby('id', 'desc')->paginate();
+        $atendente = Atendente::orderby('id', 'desc')->get();
         return view('painel-admin.atend.index', ['atendentes' => $atendente, 'id' => $id]);
     }
 
     public function modal_history($id){
-        $atendente = Atendente::orderby('id', 'desc')->paginate();
+        $atendente = Atendente::orderby('id', 'desc')->get();
         return view('painel-admin.atend.index', ['atendentes' => $atendente, 'id2' => $id]);
     }
 

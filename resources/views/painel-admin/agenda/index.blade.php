@@ -6,6 +6,8 @@
 
 use App\Models\ContasReceberes;
 use App\Models\Agenda;
+use App\Models\Cliente;
+use App\Models\Service;
 
 if(@$_SESSION['level_user'] != 'admin'){ 
   echo "<script language='javascript'> window.location='./' </script>";
@@ -68,9 +70,14 @@ if(isset($data)){
           </button>
           </div>
           <div class="modal-body">
-              <?php $check2 = Agenda::where('id', '=', $id)->first(); ?>
-              <p>Cliente: {{@$check2->name_client}}</p>
-              <p>Descrição: {{@$check2->description}}</p>
+              <?php 
+              
+                $check2 = Agenda::where('id', '=', $id)->first(); 
+                $cliente = Cliente::where('id', '=', @$check2->name_client)->first(); 
+                $descricao = Service::where('id', '=', @$check2->description)->first(); 
+              ?>
+              <p>Cliente: {{@$cliente->name}}</p>
+              <p>Descrição: {{@$descricao->description}}</p>
               <p>Valor: R$ {{@$check2->value_service}}</p>
 
           </div>

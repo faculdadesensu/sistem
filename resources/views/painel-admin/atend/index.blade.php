@@ -13,6 +13,7 @@ if(!isset($id)){
 if(!isset($id2)){
   $id2 = "";
 }
+use App\Models\Service;
 ?>
 <a href="{{route('atend.inserir')}}" type="button" class="mt-4 mb-4 btn btn-primary">Novo Atendente</a>
 <!-- DataTales Example -->
@@ -33,13 +34,17 @@ if(!isset($id2)){
         </thead>
         <tbody>
           @foreach($atendentes as $item)
+            @php
+              $expec1 = Service::where('id','=',$item->expec1)->first();
+              $expec2 = Service::where('id','=',$item->expec2)->first();
+            @endphp
             <tr>
               <td>{{$item->name}}</td>
               <td>{{$item->cpf}}</td>
               <td>{{$item->email}}</td>
               <td>{{$item->fone}}</td>
-              <td>{{$item->expec1}}</td>
-              <td>{{$item->expec2}}</td>
+              <td>{{$expec1->description}}</td>
+              <td>{{$expec2->description}}</td>
               <td>
               <a href="{{route('atend.history', $item->id)}}"><i class="fas fa-history text-success mr-1"></i></a>
               <a href="{{route('atend.edit', $item)}}"><i class="fas fa-edit text-info mr-1"></i></a>
@@ -66,15 +71,13 @@ if(!isset($id2)){
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Deletar Registro</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <a href="{{route('cadAtend')}}" type="button" class="close">x</a>
       </div>
       <div class="modal-body">
         Deseja Realmente Excluir este Registro?        
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <a href="{{route('cadAtend')}}" type="button" class="mt-4 mb-4 btn btn-secondary">Cancelar</a>
         <form method="POST" action="{{route('atend.delete', $id)}}">
           @csrf
           @method('delete')
@@ -90,37 +93,40 @@ if(!isset($id2)){
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Histórico de Atendimento</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <a href="{{route('cadAtend')}}" type="button" class="close">x</a>
       </div>
       <div class="modal-body">
         <div class="row">
-        <div class="col-md-14">
+          <div class="col-md-14">
             <div class="mt-02 ">
               @php
                 use App\Models\Atendente;
-                use App\Models\ContasReceberes;
+                use App\Models\Agenda;
+                use App\Models\Cliente;
 
                 $atendente = Atendente::where('id', '=', $id2)->first();
-                $historyAtendente = ContasReceberes::where('atendente', '=', @$atendente->name)->orderby('id', 'desc')->get();
+                $historyAtendente = Agenda::where('atendente', '=', @$atendente->id)->orderby('id', 'desc')->get();
                 
               @endphp
               @foreach($historyAtendente as $item)            
-              <?php $data = implode('/', array_reverse(explode('-', @$item->date)));?>
-              <ul>
-                <li>
-                  <b>Nome:</b> {{@$item->client}} - 
-                  <b>Serviço:</b> {{@$item->descricao}} -    
-                  <b>Valor pago:</b> R$ {{@$item->value}} - 
-                  <b>Data:</b> {{$data}}<br>
-                  <span><i class="fas fa-check text-success <?php if(@$item->status_pagamento != 'Sim'){ ?> text-danger <?php }?> "> Status Pagamento</i></span>
-                </li>
-              </ul>
-              <hr>
+                <?php 
+                  $data = implode('/', array_reverse(explode('-', @$item->data)));
+                  $cliente = Cliente::where('id', '=', @$item->name_client)->first();
+                  $service = Service::where('id', '=', @$item->description)->first();
+                ?>
+                <ul>
+                  <li>
+                    <b>Nome:</b> {{$cliente->name }} - 
+                    <b>Serviço:</b> {{@$service->description}} -    
+                    <b>Valor pago:</b> R$ {{@$item->value_service}} - 
+                    <b>Data:</b> {{$data}}<br>
+                    <span><i class="fas fa-check text-success <?php if(@$item->status_baixa != 1){ ?> text-danger <?php }?> "> Status Pagamento</i></span>
+                  </li>
+                </ul>
+                <hr>
               @endforeach
-              </div>
-        </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\ContasReceberes;
 use App\Models\Movimentacao;
 use App\Models\Service;
+use App\Models\User;
 
 session_start();
 
@@ -59,8 +60,10 @@ class ContasReceberController extends Controller
     public function baixa(Request $request){
       
         $tabela  = ContasReceberes::find($request->id);
+        $resp_baixa  = User::where('name', '=', $_SESSION['name_user'])->first();
 
         $tabela2 =  new Movimentacao;
+        $tabela3 = new Comissoe();
 
         $tabela2->tipo      = 'Entrada';
         $tabela2->recep     = $_SESSION['name_user'];
@@ -68,30 +71,26 @@ class ContasReceberController extends Controller
         $tabela2->value     = $tabela->value;
         $tabela2->descricao = $tabela->descricao;
 
-        $tabela->responsavel_receb  = $_SESSION['name_user'];
+        $tabela->responsavel_receb  = $resp_baixa->id;
         $tabela->status_pagamento   = 'Sim';
         $tabela->data_pagamento     = date('Y-m-d');
-
 
         $tabela2->save();
         $tabela->save();
 
-        $tabela3 = new Comissoe();
+        $service = Service::where('id', '=', $tabela->descricao)->first();
 
-        $service = Service::where('description', '=', $tabela->descricao)->first();
-       
         $tabela3->descricao     = $tabela->descricao;
 
         if($service->tipo_comissao == 'pct'){
             
-           
             //verificar o calculo de comissões
             $tabela3->value         = ($tabela->value/100) * $service->qtd_comissao;
             
         }else{
             $tabela3->value         = $service->comissao;
         }
-       
+
         $tabela3->atendente     = $tabela->atendente;
         $tabela3->data          = date('Y-m-d');
 

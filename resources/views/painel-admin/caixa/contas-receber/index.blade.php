@@ -151,18 +151,26 @@ $total_entradas = number_format($total_entradas, 2, ',', '.');
                 <hr><p><b>Recebido por: <br>{{$_SESSION['name_user']}}</b></p>
                 <?php
                     use App\Models\ContasReceberes;
+                    use App\Models\Service;
+                    use App\Models\Cliente;
+                    use App\Models\Atendente;
+
+
                     $contaReceber = ContasReceberes::where('id', '=', $id2)->first(); 
+                    $service = Service::where('id', '=', @$contaReceber->descricao)->first();
+                    $cliente = Cliente::where('id', '=', @$contaReceber->client)->first();
+                    $atendente = Atendente::where('id', '=', @$contaReceber->atendente)->first();
                 ?>
                 <hr>
                 <p><b>Dados do atendimento</b></p>
                 <b>Cliente</b><br>
-                <p>{{@$contaReceber->client}}</p>
+                <p>{{@$cliente->name}}</p>
                 <b>Atendente</b><br>
-                <p>{{@$contaReceber->atendente}}</p>
+                <p>{{@$atendente->name}}</p>
                 <b>Valor</b><br>
                 <p>R$ {{@$contaReceber->value}}</p>
                 <b>Descrição</b><br>
-                <p>{{@$contaReceber->descricao}}</p>
+                <p>{{@$service->description}}</p>
             </div>
             <div class="modal-footer">
                 <a href="{{route('contas-receber.index')}}" type="button" class="mt-4 mb-4 btn btn-secondary">Cancelar</a>

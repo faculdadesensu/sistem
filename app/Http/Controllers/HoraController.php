@@ -41,7 +41,7 @@ class HoraController extends Controller
      public function editar(Request $request, Hora $item){
 
         $item->hora      = $request->hora;
-        $old                    = $request->old;
+        $old             = $request->old;
 
         if($old != $request->description){
             $check = Hora::where('hora', '=', $request->description)->count();
