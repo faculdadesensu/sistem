@@ -124,7 +124,8 @@ class ClientController extends Controller
     }
 
     public function delete(Cliente $item){
-        $item->delete();
+        $item->status = 0;
+        $item->save();
         $user_session =  $_SESSION['level_user'];
         if ($user_session == 'admin') {
             return redirect()->route('clientes.index');

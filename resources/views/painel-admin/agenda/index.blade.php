@@ -60,9 +60,9 @@ if(isset($data)){
 </div>
 
 <!-- Modal Relatório de atendimento -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content ">
           <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Detalhes Agenda</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -74,6 +74,7 @@ if(isset($data)){
               
                 $check2 = Agenda::where('id', '=', $id)->first(); 
                 $cliente = Cliente::where('id', '=', @$check2->name_client)->first(); 
+                
                 $descricao = Service::where('id', '=', @$check2->description)->first(); 
               ?>
               <p>Cliente: {{@$cliente->name}}</p>
@@ -107,5 +108,4 @@ if(@$id != ""){
 echo "<script>$('#exampleModal').modal('show');</script>";
 }
 ?>
-
 @endsection

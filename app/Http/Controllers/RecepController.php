@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class RecepController extends Controller
 {
     public function index(){
-        $recepcionista = Recepcionista::orderby('id', 'desc')->paginate();
+        $recepcionista = Recepcionista::where('status', '=', 1)->orderby('id', 'desc')->paginate();
         return view('painel-admin.recep.index', ['recepcionista' => $recepcionista]);
     }
     
@@ -85,15 +85,17 @@ class RecepController extends Controller
      }
 
     public function delete(Recepcionista $item){
+
+        $item->status = 0;
         $user = User::where('cpf', '=', $item->cpf);
 
         $user->delete();
-        $item->delete();
+        $item->save();
         return redirect()->route('recep.index');
     }
 
     public function modal($id){
-        $recepcionista = Recepcionista::orderby('id', 'desc')->get();
+        $recepcionista = Recepcionista::where('status', '=', 1)->orderby('id', 'desc')->get();
         return view('painel-admin.recep.index', ['recepcionista' => $recepcionista, 'id' => $id]);
     }
 }

@@ -6,23 +6,23 @@
     @csrf
     @method('put')
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="form-group">
                 <label for="exampleInputEmail1">Nome</label>
                 <input value="{{$item->name}}" type="text" class="form-control" id="name" name="name" required>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-4">
             <div class="form-group">
                 <label for="exampleInputEmail1">Telefone</label>
-                <input value="{{$item->fone}}" type="text" class="form-control" id="fone" name="fone">
+                <input value="{{$item->fone}}" type="text" class="form-control" id="telefone" name="fone">
+            </div>
+            <div align="right">
+                <input value="{{$item->name}}" type="hidden" name="oldName">
+                <input value="{{$item->fone}}" type="hidden" name="oldFone">
+                <button type="submit" class="btn btn-primary">Salvar</button>
             </div>
         </div>
     </div>
-    <input value="{{$item->name}}" type="hidden" name="oldName">
-    <input value="{{$item->fone}}" type="hidden" name="oldFone">
-    <button type="submit" class="btn btn-primary">Salvar</button>
 </form>
 @endsection

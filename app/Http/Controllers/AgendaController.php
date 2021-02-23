@@ -22,7 +22,7 @@ class AgendaController extends Controller
         $agenda = Agenda::where('status_baixa', '=', 0)->orderby('id', 'desc')->get();
         $agenda_hora = Hora::orderby('hora', 'asc')->get();
 
-        $atendentes = Atendente::get();
+        $atendentes = Atendente::where('status', '=', 1)->get();
         
         $user_session =  $_SESSION['level_user'];
 
@@ -59,17 +59,63 @@ class AgendaController extends Controller
         $fila         = new FilaController();
         $agenda       = new Agenda();
         $id_atend     = File::all();
-        $atendentes   = Atendente::get();
+        $atendentes   = Atendente::where('status', '=', 1)->get();
         $create_by    = User::where('name', '=', $_SESSION['name_user'])->first();
         $name_client  = Cliente::where('name','=', $request->name_client)->first();
         $description  = Service::where('description','=', $request->description)->first();
         $id_user      = Atendente::where('name', '=', $request->atendente )->first();
         $agenda_hora  = Hora::orderby('hora', 'asc')->get();
 
+        date_default_timezone_set('America/Sao_Paulo');
+        $hora_atual = date('H:i');
+
+        if($hora_atual > $request->time){
+            echo "<script language='javascript'> window.alert('Você não pode fazer um agendamento retroativo!') </script>";
+             if ($user_session == 'admin') {
+                return view('painel-admin.agenda.index', ['agenda' => $agenda, 'agenda_hora' => $agenda_hora, 'atendentes' => $atendentes]);
+            }if($user_session == 'recep'){
+                return view('painel-recepcao.agenda.index', ['agenda' => $agenda, 'agenda_hora' => $agenda_hora, 'atendentes' => $atendentes]);
+            }else{
+                return view('painel-atend.agenda.index', ['agenda_hora' => $agenda_hora]);
+            }
+        }
+       
         $fila_id = [];
 
         foreach ($id_atend  as $val) {
             $fila_id []= $val->id_user;
+        }
+
+        $name_client2 = Cliente::where('id', '=', 1)->first();
+        
+        if($request->name_client == $name_client2->name){
+
+            echo "<script language='javascript'> window.alert('Selecione um cliente!') </script>";
+          
+            //Redirecionamento para as views pertinentes ao usuário logado
+            if ($user_session == 'admin') {
+                return view('painel-admin.agenda.create',  ['atendente' => $request->atendente, 'hora' =>  $request->time, 'data' => $request->date ]);
+            }if($user_session == 'recep'){
+                return view('painel-recepcao.agenda.create',  ['atendente' => $request->atendente, 'hora' =>  $request->time, 'data' => $request->date]);
+            }else{
+                return view('painel-atend.agenda.index', ['agenda_hora' => $agenda_hora, 'data' => $request->date]);
+            }
+        }
+
+        $service = Service::where('id', '=', 2)->first();
+        
+        if($request->description == $service->description){
+            echo "<script language='javascript'> window.alert('Selecione um serviço!') </script>";
+            $user_session =  $_SESSION['level_user'];
+
+            //Redirecionamento para as views pertinentes ao usuário logado
+            if ($user_session == 'admin') {
+                return view('painel-admin.agenda.create',   ['atendente' => $request->atendente, 'hora' =>  $request->time, 'data' => $request->date ]);
+            }if($user_session == 'recep'){
+                return view('painel-recepcao.agenda.create',   ['atendente' => $request->atendente, 'hora' =>  $request->time, 'data' => $request->date ]);
+            }else{
+                return view('painel-atend.agenda.index', ['agenda_hora' => $agenda_hora, 'data' => $request->date]);
+            }
         }
        
         $agenda->data           = $request->date;
@@ -199,7 +245,7 @@ class AgendaController extends Controller
         }
     }
 
-    public function editar(Request $request, Agenda $item){
+    /*public function editar(Request $request, Agenda $item){
 
         $item->data             = $request->date;
         $item->time             = $request->time;
@@ -236,12 +282,12 @@ class AgendaController extends Controller
         }else{
             return redirect()->route('painel-recepcao-agendas.index');
         }
-    }
+    }*/
 
     public function delete(Agenda $item, $data){
         
         $agenda_hora = Hora::orderby('hora', 'asc')->get();
-        $atendentes = Atendente::get();
+        $atendentes = Atendente::where('status', '=', 1)->get();
 
         if ($_SESSION['level_user'] == 'atend') {
             $contaReceber = ContasReceberes::where('id_agenda', '=', $item->id);
@@ -262,9 +308,9 @@ class AgendaController extends Controller
     }
 
     public function modal($id, $data){
-        $agenda = Agenda::orderby('id', 'desc')->paginate();
-        $atendentes = Atendente::get();
-        $agenda_hora = Hora::orderby('hora', 'asc')->paginate();
+        $agenda = Agenda::orderby('id', 'desc')->get();
+        $atendentes = Atendente::where('status', '=', 1)->get();
+        $agenda_hora = Hora::orderby('hora', 'asc')->get();
       
         //Redirecionamento para as views pertinentes ao usuário logado
         $user_session =  $_SESSION['level_user'];

@@ -18,8 +18,8 @@ class HoraController extends Controller
 
     public function insert(Request $request){
      
-        $hora               = new Hora();
-       
+        $hora = new Hora();
+
         $hora->hora  = $request->hora;
 
         $check = Hora::where('hora', '=', $request->hora)->count();

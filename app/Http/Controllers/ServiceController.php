@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class ServiceController extends Controller
 {
     public function index(){
-        $service = Service::orderby('id', 'desc')->paginate();
+        $service = Service::where('status', '=', 1)->orderby('id', 'desc')->paginate();
         return view('painel-admin.serv.index', ['service' => $service]);
     }
 
@@ -96,12 +96,17 @@ class ServiceController extends Controller
      }
 
      public function delete(Service $item){
-        $item->delete();
+         if($item->id == 2){
+            return redirect()->route('service.index');
+         }
+
+        $item->status = 0;
+        $item->save();
         return redirect()->route('service.index');
      }
 
      public function modal($id){
-        $service = Service::orderby('id', 'desc')->paginate();
+        $service = Service::where('status', '=', 1)->orderby('id', 'desc')->paginate();
         return view('painel-admin.serv.index', ['service' => $service, 'id' => $id]);
 
      }

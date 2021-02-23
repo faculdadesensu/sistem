@@ -29,8 +29,10 @@ if(!isset($id)){
                 <td>{{$item->name}}</td>
                 <td>{{$item->fone}}</td>
                 <td>
-                <a href="{{route('clientes.edit', $item)}}"><i class="fas fa-edit text-info mr-1"></i></a>
-                <a href="{{route('clientes.modal', $item->id)}}"><i class="fas fa-trash text-danger mr-1"></i></a>
+                  @if ($item->name != 'Selecione um Cliente')
+                    <a href="{{route('clientes.edit', $item)}}"><i class="fas fa-edit text-info mr-1"></i></a>
+                    <a href="{{route('clientes.modal', $item->id)}}"><i class="fas fa-trash text-danger mr-1"></i></a>
+                  @endif
                 </td>
               </tr>
             @endforeach 

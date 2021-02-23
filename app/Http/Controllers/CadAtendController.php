@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class CadAtendController extends Controller
 {
     public function index(){
-        $atendentes = Atendente::orderby('id', 'desc')->paginate();
+        $atendentes = Atendente::where('status', '=', 1)->orderby('id', 'desc')->get();
         return view('painel-admin.atend.index', ['atendentes' => $atendentes]);
     }
     
@@ -122,24 +122,25 @@ class CadAtendController extends Controller
     }
 
     public function delete(Atendente $item){
-     
+
+        $item->status = 0;
         $fila = File::where('id_user', '=', $item->id);
         $user = User::where('cpf', '=', $item->cpf);
 
         $user->delete();
         $fila->delete();
-        $item->delete();
+        $item->save();
 
         return redirect()->route('cadAtend');
     }
 
     public function modal($id){
-        $atendente = Atendente::orderby('id', 'desc')->get();
+        $atendente = Atendente::where('status', '=', 1)->orderby('id', 'desc')->get();
         return view('painel-admin.atend.index', ['atendentes' => $atendente, 'id' => $id]);
     }
 
     public function modal_history($id){
-        $atendente = Atendente::orderby('id', 'desc')->get();
+        $atendente = Atendente::where('status', '=', 1)->orderby('id', 'desc')->get();
         return view('painel-admin.atend.index', ['atendentes' => $atendente, 'id2' => $id]);
     }
 

@@ -31,8 +31,10 @@ if(!isset($id)){
               <td>{{$item->valor}}</td>
               <td>{{$item->comissao}}</td>
               <td>
-              <a href="{{route('service.edit', $item)}}"><i class="fas fa-edit text-info mr-1"></i></a>
-              <a href="{{route('service.modal', $item->id)}}"><i class="fas fa-trash text-danger mr-1"></i></a>
+                @if ($item->description != "Selecione um Serviço")
+                  <a href="{{route('service.edit', $item)}}"><i class="fas fa-edit text-info mr-1"></i></a>
+                  <a href="{{route('service.modal', $item->id)}}"><i class="fas fa-trash text-danger mr-1"></i></a>
+                @endif
               </td>
             </tr>
           @endforeach 
