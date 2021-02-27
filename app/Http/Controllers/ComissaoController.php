@@ -19,15 +19,13 @@ class ComissaoController extends Controller
 
     public function adminComissoes(Request $request){
 
-        $itens = Comissoe::where('atendente', '=', $request->atendente)->where('data', '>=', $request->dataInicial)->where('data', '<=', $request->dataFinal)->orderby('id', 'desc')->get();
-        
-        return view('painel-admin.comissoes.index', [
-                
-            'itens' => $itens, 
-            'dataInicial' => $request->dataInicial, 
-            'dataFinal' => $request->dataFinal, 
-            'atendente' => $request->atendente
-                
-        ]);
+        if(!$request->atendente == 'all'){
+            $atendente = Atendente::where('name', '=', $request->atendente)->first();
+            $itens = Comissoe::where('atendente', '=', $atendente->id)->where('data', '>=', $request->dataInicial)->where('data', '<=', $request->dataFinal)->orderby('id', 'desc')->get();
+        }else{
+            $itens = Comissoe::where('data', '>=', $request->dataInicial)->where('data', '<=', $request->dataFinal)->orderby('id', 'desc')->get();
+        };
+       
+        return view('painel-admin.comissoes.index', ['itens' => $itens, 'dataInicial' => $request->dataInicial, 'dataFinal' => $request->dataFinal, 'atendente' => ($request->atendente == 'all') ? 0 :  $request->atendente]);
     }
 }

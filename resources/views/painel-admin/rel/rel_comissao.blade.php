@@ -8,6 +8,8 @@
 use Dompdf\Dompdf;
 use App\Models\Movimentacao;
 use App\Models\Comissoe;
+use App\Models\Service;
+use App\Models\Atendente;
 
 
 setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
@@ -21,6 +23,7 @@ $saldo = 0;
 $data = date('Y-m-d');
 
 $tabela = Comissoe::where('data', '>=', $dataInicial)->where('data', '<=', $dataFinal)->where('atendente', '=', $atendente)->get();
+$atendente_name = Atendente::where('id', '=', $atendente)->first();
 
 foreach($tabela as $tab){
 
@@ -123,7 +126,7 @@ $body1 = "
     <h3 align='center' class='titulo'>Relatório de Movimentações</h3>
     <div align='center' class='datas'>
         De $dataInicial à $dataFinal
-        <h2>$atendente</h2>
+        <h2>$atendente_name->name</h2>
     </div>
     <table class='table' width='100%' border='1' cellspacing='0' cellpadding='3'>
         <tr bgcolor='#f9f9f9'>
@@ -137,10 +140,11 @@ $body1 = "
             foreach($itens as $item){
                 $valor = number_format($item->value, 2, ',', '.');
                 $data = implode('/', array_reverse(explode('-', $item->data)));
+                $service = Service::where('id', '=', $item->descricao)->first();
                 $body2 = "
                     <tr>
                         <td>$data</td>
-                        <td>$item->descricao</td>
+                        <td>$service->description</td>
                         <td>$valor</td>
                     </tr>
                 ";

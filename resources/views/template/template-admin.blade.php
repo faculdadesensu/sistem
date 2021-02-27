@@ -273,7 +273,7 @@ date_default_timezone_set('America/Sao_Paulo');
                             <div class="col-md-6 mt-4">
                                 <h6><i>Atendente</i></h6>
                                 <select class="form-control" name="atendente" required>
-                                    <option selected>Selecione um atendente</option>
+                                    <option value="all" selected>Todos</option>
                                     <?php $atendente = Atendente::orderby('id', 'desc')->get() ?>
                                     @foreach ($atendente as $item)
                                     <option value="{{$item->name}}">{{$item->name}}</option>

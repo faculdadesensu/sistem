@@ -6,10 +6,13 @@
 if(@$_SESSION['level_user'] != 'admin' ){ 
   echo "<script language='javascript'> window.location='./' </script>";
 }
+
+use App\Models\Service;
+
 ?>
 <div class="mb-4">
   <h4><i>RELATÓRIO DE COMISSÕES</i></h4>
-  <h5><i><b>{{$dataInicial}}</b> à <b>{{$dataFinal}}</b> - Colaborador: <b>{{$atendente}}</b></i></h5>
+  <h5><i><b>{{$dataInicial}}</b> à <b>{{$dataFinal}}</b> <?php if (!$atendente == 0){ ?> - Colaborador: <b>{{$atendente}}</b> <?php }else{ ?> <b>Comissão Geral</b><?php } ?></i></h5>
 </div>
 <form action="{{route('comissoes.index')}}" method="GET" target="_blank">
   <input type="hidden" value="{{$dataInicial}}" name="dataInicial">
@@ -24,9 +27,10 @@ if(@$_SESSION['level_user'] != 'admin' ){
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
-          <th>Descrição</th>
-          <th>Data</th>
-          <th>Valor</th>
+            <th>Data</th>
+            <?php if ($atendente == 0){ ?> <th>Atendente</th><?php }?>
+            <th>Descrição</th>
+            <th>Valor</th>
           </tr>
         </thead>
         <tbody>
@@ -34,10 +38,12 @@ if(@$_SESSION['level_user'] != 'admin' ){
              <?php
               $value = implode(',', explode('.', $item->value));
               $data = implode('/', array_reverse(explode('-', $item->data)));
+              $service = Service::where('id', '=', $item->descricao)->first();
              ?>
               <tr>
-                <td>{{$item->descricao}}</td>
-                <td>{{$data}}</td>
+                <td>{{$data}}</td>              
+                <?php if ($atendente == 0){ ?> <td> {{$item->atendente}}</td><?php } ?>
+                <td>{{$service->description}}</td>
                 <td>{{$value}}</td>
               </tr>
             @endforeach 
