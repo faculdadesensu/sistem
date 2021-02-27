@@ -8,6 +8,8 @@ $(document).ready(function () {
 
 });
 
+
+// Funcional em campos do type number
 $('.float').change(function () {
     $(this).val(parseFloat($(this).val()).toFixed(2));
 });

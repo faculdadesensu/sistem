@@ -19,6 +19,11 @@ if (!isset($id3)) {
 }
 
 use App\Models\Movimentacao;
+use App\Models\ContasReceberes;
+use App\Models\Service;
+use App\Models\Cliente;
+use App\Models\Atendente;
+
 
 $total_entradas = 0;
 
@@ -78,6 +83,10 @@ $total_entradas = number_format($total_entradas, 2, ',', '.');
         </button>
         @foreach($itens as $item)
             <?php
+                $service = Service::where('id', '=', $item->descricao)->first();
+                $cliente = Cliente::where('id', '=', $item->client)->first();
+                $atendente = Atendente::where('id', '=', $item->atendente)->first();
+
                 $data = implode('/', array_reverse(explode('-', $item->date)));
                 $data2 = implode('/', array_reverse(explode('-', $item->data_pagamento)));
                 $value = implode(',', explode('.', $item->value));
@@ -90,13 +99,13 @@ $total_entradas = number_format($total_entradas, 2, ',', '.');
                             {{$data}} 
                         </div>
                         <div class="col-sm-2 overflow-b">
-                            {{$item->client}}
+                            {{$cliente->name}}
                         </div>
                         <div class="col-sm-2 overflow-b">
-                            {{$item->atendente}}
+                            {{$atendente->name}}
                         </div>
                         <div class="col-sm-2 overflow-b">
-                            {{$item->descricao}}
+                            {{$service->description}}
                         </div>
                         <div class="col-sm-2 overflow-b">
                             R$ {{$value}}
@@ -115,7 +124,6 @@ $total_entradas = number_format($total_entradas, 2, ',', '.');
         })
     });
 </script>
-
 
 <!-- Modal Delete -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -150,11 +158,7 @@ $total_entradas = number_format($total_entradas, 2, ',', '.');
                 Deseja receber este pagamento?
                 <hr><p><b>Recebido por: <br>{{$_SESSION['name_user']}}</b></p>
                 <?php
-                    use App\Models\ContasReceberes;
-                    use App\Models\Service;
-                    use App\Models\Cliente;
-                    use App\Models\Atendente;
-
+                    
 
                     $contaReceber = ContasReceberes::where('id', '=', $id2)->first(); 
                     $service = Service::where('id', '=', @$contaReceber->descricao)->first();

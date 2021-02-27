@@ -32,7 +32,6 @@ class ContasReceberController extends Controller
         }else{
             return view('painel-recepcao.caixa.contas-receber.index', ['itens' => $itens, 'id' => $id]);
         }
-       
     }
 
     public function modalPrincipal($id){
@@ -45,9 +44,7 @@ class ContasReceberController extends Controller
         }
        
     }
-
-
-
+    
     public function index(){
         $itens = ContasReceberes::orderby('id', 'desc')->where('status_pagamento', '!=', 'Sim')->get();
         if($_SESSION['level_user'] == 'admin'){
@@ -66,7 +63,7 @@ class ContasReceberController extends Controller
         $tabela3 = new Comissoe();
 
         $tabela2->tipo      = 'Entrada';
-        $tabela2->recep     = $_SESSION['name_user'];
+        $tabela2->recep     = $resp_baixa->id;
         $tabela2->data      = date('Y-m-d');
         $tabela2->value     = $tabela->value;
         $tabela2->descricao = $tabela->descricao;

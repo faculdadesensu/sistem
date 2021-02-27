@@ -10,6 +10,8 @@ if(!isset($id)){
   $id = "";
 }
 use App\Models\Movimentacao;
+use App\Models\User;
+use App\Models\Service;
 
 $total_entradas = 0;
 $total_saidas = 0;
@@ -103,56 +105,54 @@ if($saldo < 0){
   <div class="card-body">
       <button type="button" class="btn btn-lg btn-block mb-2" style="background-color: #D9D9D9; color:#663610">
           <div class="row">
-            <div class="col-xl-2  overflow-b offset-xl-1">
-              Data
-            </div>
-            <div class="col-xl-2 ">
-              Descrição
-            </div>                  
-            <div class="col-xl-2 ">
-              Respnsável
-            </div>                  
-            <div class="col-xl-2 overflow-b">
-              Entradas
-            </div>
-            <div class="col-xl-2 overflow-b">
-              Saidas
-            </div>
+            <div class="col-xl-2  overflow-b offset-xl-1">Data</div>
+            <div class="col-xl-2 ">Descrição</div>                  
+            <div class="col-xl-2 ">Respnsável</div>                  
+            <div class="col-xl-2 overflow-b">Entradas</div>
+            <div class="col-xl-2 overflow-b">Saidas</div>
           </div>
       </button>
       @foreach($itens as $item)
           <?php
-              $data2 = implode('/', array_reverse(explode('-', $item->data)));
-              $value2 = implode(',', explode('.', $item->value));
+            $data2 = implode('/', array_reverse(explode('-', $item->data)));
+            $value2 = implode(',', explode('.', $item->value));
+            $resp = User::where('id', '=', $item->recep)->first();~
+            $descricao = ''; 
+            if($item->tipo == 'Entrada'){
+              $service = Service::where('id', '=', $item->descricao)->first();
+              $descricao = $service->description;
+            }else{
+              $descricao = $item->descricao;
+            }
           ?>
-              <button type="submit" class="btn btn-outline-info btn-lg btn-block" disabled >
-                <div class="row">
-                  <div class="col-xl-2  overflow-b  offset-xl-1">
-                    {{$data2}}
-                  </div>
-                  <div class="col-xl-2 overflow-b">
-                    {{$item->descricao}}
-                  </div>
-                  <div class="col-xl-2 overflow-b">
-                    {{$item->recep}} 
-                  </div>
-                  @if ($item->tipo == 'Entrada')
-                    <div class="col-xl-2 overflow-b">
-                      {{$value2}}
-                    </div>
-                    <div class="col-xl-2 overflow-b">
-                      ---
-                    </div>
-                  @else
-                    <div class="col-xl-2 overflow-b">
-                      ---
-                    </div>
-                    <div class="col-xl-2 overflow-b">
-                      {{$value2}}
-                    </div>
-                  @endif
+          <button type="submit" class="btn btn-outline-info btn-lg btn-block" disabled >
+            <div class="row">
+              <div class="col-xl-2  overflow-b  offset-xl-1">
+                {{$data2}}
+              </div>
+              <div class="col-xl-2 overflow-b">
+                {{$descricao}}
+              </div>
+              <div class="col-xl-2 overflow-b">
+                {{$resp->name}} 
+              </div>
+              @if ($item->tipo == 'Entrada')
+                <div class="col-xl-2 overflow-b">
+                  {{$value2}}
                 </div>
-            </button>
+                <div class="col-xl-2 overflow-b">
+                  ---
+                </div>
+              @else
+                <div class="col-xl-2 overflow-b">
+                  ---
+                </div>
+                <div class="col-xl-2 overflow-b">
+                  {{$value2}}
+                </div>
+              @endif
+            </div>
+        </button>
       @endforeach
   </div>
 </div>

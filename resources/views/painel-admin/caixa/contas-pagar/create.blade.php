@@ -27,7 +27,7 @@ $name_user = @$_SESSION['name_user'];
         <div class="col-md-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">Valor</label>
-                <input type="text" class="form-control" id="money" name="value">
+                <input type="number" class="form-control float" id="valor" name="value" step="0.01" required>
             </div>
         </div>
         <div class="col-md-2">

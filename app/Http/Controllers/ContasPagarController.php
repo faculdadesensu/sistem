@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\ContasPagares;
 use App\Models\Movimentacao;
+use App\Models\Service;
 use App\Models\Solicitacao;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 @session_start();
@@ -97,11 +99,11 @@ class ContasPagarController extends Controller
     public function baixa(Request $request){
         
         $tabela = ContasPagares::find($request->id);
-
+        $resp_baixa  = User::where('name', '=', $_SESSION['name_user'])->first();
         $tabela2 =  new Movimentacao;
 
         $tabela2->tipo      = 'Saida';
-        $tabela2->recep     = $_SESSION['name_user'];
+        $tabela2->recep     = $resp_baixa->id;
         $tabela2->data      = date('Y-m-d');
         $tabela2->value     = $tabela->value;
         $tabela2->descricao = $tabela->descricao;
